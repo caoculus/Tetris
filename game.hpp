@@ -11,14 +11,10 @@ public:
     void tick();
 
 private:
-    struct piece
+    class piece
     {
-        uint8_t orientation{0};
-        uint8_t subpixel{0};
-        square type;
-        ivec2 pos{0, 3};
-
-        static constexpr ivec2 lut[7][4][4] = {
+    public:
+        static constexpr ivec2 LUT[7][4][4] = {
             // I piece
             {
                 {{1, 0}, {1, 1}, {1, 2}, {1, 3}},
@@ -70,6 +66,9 @@ private:
             },
         };
 
+    public:
+        piece(square _type) : type(_type) {}
+        
         void tick(uint16_t g);
 
         void move_left();
@@ -79,6 +78,13 @@ private:
         void rotate_left();
 
         void rotate_right();
+
+    private:
+        uint8_t orientation{0};
+        uint8_t subpixel{0};
+        const square type;
+        ivec2 pos{0, 3};
+        const board_t &board;
     };
 
     board_t board;

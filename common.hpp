@@ -51,12 +51,18 @@ enum class square
 bool is_empty(const square &);
 
 /**
+ * @brief A row of 10 squares representing a horizontal line of the play-field. 
+ * If the row is occupied, the line should clear. 
+ */
+using row_t = std::array<square, 10>;
+
+/**
  * @brief Board should be indexed as [row][column].
  * 
  * @warning The zero-th row is the top row, and it is not really a part of the 
  * game. 
  */
-using board_t = std::array<std::array<square, 10>, 21>;
+using board_t = std::array<row_t, 21>;
 
 /**
  * @brief A pair of two integers that can represent the position of a piece on the board.
