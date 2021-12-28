@@ -22,7 +22,7 @@ public:
      * @param other the inputs of the previous frame. 
      * @return inputs the key down events during this frame.
      */
-    inputs operator-(const inputs& other) const;
+    inputs operator-(const inputs &other) const;
 
 private:
     static constexpr int K_LEFT = GLFW_KEY_A;
@@ -35,10 +35,11 @@ private:
 
 /**
  * @brief enum class representing the objects that can occupy a square in the 
- * game's board. 
+ * game's board.
  * 
  */
-enum class square {
+enum class square
+{
     none, i, j, l, o, s, t, z, I, J, L, O, S, T, Z
 };
 
@@ -55,5 +56,37 @@ bool is_empty(const square &);
  * @warning The zero-th row is the top row, and it is not really a part of the 
  * game. 
  */
-using board = std::array<std::array<square, 10>, 21>;
+using board_t = std::array<std::array<square, 10>, 21>;
+
+/**
+ * @brief A pair of two integers that can represent the position of a piece on the board.
+ */
+class ivec2
+{
+public:
+    int x, y;
+
+    constexpr ivec2(int x, int y) : x(x), y(y)
+    {}
+
+    ivec2 operator+(const ivec2 &other) const
+    {
+        return {x + other.x, y + other.y};
+    }
+
+    ivec2 operator-(const ivec2 &other) const
+    {
+        return {x - other.x, y - other.y};
+    }
+
+    bool operator==(const ivec2 &other) const
+    {
+        return x == other.x && y == other.y;
+    }
+
+    bool operator!=(const ivec2 &other) const
+    {
+        return !(*this == other);
+    }
+};
 
