@@ -13,7 +13,8 @@ public:
 private:
     struct piece
     {
-        uint8_t orientation;
+        uint8_t orientation{0};
+        uint8_t subpixel{0};
         square type;
         ivec2 pos{0, 3};
 
@@ -68,6 +69,16 @@ private:
                 {{0, 2}, {1, 1}, {1, 2}, {2, 1}},
             },
         };
+
+        void tick(uint16_t g);
+
+        void move_left();
+
+        void move_right();
+
+        void rotate_left();
+
+        void rotate_right();
     };
 
     board_t board;
