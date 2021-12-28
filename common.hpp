@@ -64,24 +64,24 @@ using board_t = std::array<std::array<square, 10>, 21>;
 class ivec2
 {
 public:
-    int x, y;
+    int y, x;
 
-    constexpr ivec2(int x, int y) : x(x), y(y)
+    constexpr ivec2(int y, int x) : y(y), x(x)
     {}
 
     ivec2 operator+(const ivec2 &other) const
     {
-        return {x + other.x, y + other.y};
+        return {y + other.y, x + other.x};
     }
 
     ivec2 operator-(const ivec2 &other) const
     {
-        return {x - other.x, y - other.y};
+        return {y - other.y, x - other.x};
     }
 
     bool operator==(const ivec2 &other) const
     {
-        return x == other.x && y == other.y;
+        return y == other.y && x == other.x;
     }
 
     bool operator!=(const ivec2 &other) const
