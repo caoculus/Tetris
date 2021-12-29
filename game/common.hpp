@@ -45,7 +45,7 @@ public:
      * @param shift reference for storing the shift
      * @param rotation reference for storing the rotation
      */
-    void get(shift_t &shift, rotation_t &rotation);
+    void get(shift_t &shift, rotation_t &rotation) const;
 
 private:
     static constexpr int K_LEFT = GLFW_KEY_A;

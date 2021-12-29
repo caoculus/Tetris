@@ -54,7 +54,7 @@ void inputs::update()
     prev_k_ccw2_pressed = k_ccw2_pressed;
 }
 
-void inputs::get(shift_t &shift, rotation_t &rotation)
+void inputs::get(shift_t &shift, rotation_t &rotation) const 
 {
     shift = shift_;
     rotation = rotation_;
