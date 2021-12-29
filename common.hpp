@@ -15,7 +15,7 @@ enum class shift {
  * Represents a piece rotation input for the game.
  */
 enum class rotation {
-    none, ccw_p, cw_p, ccw_h, cw_h
+    none, ccw_d, cw_d, ccw_p, cw_p
 };
 
 class inputs
@@ -48,6 +48,10 @@ private:
     static constexpr int K_CW = GLFW_KEY_K;
     static constexpr int K_CCW2 = GLFW_KEY_L;
 
+    bool prev_k_ccw1_pressed{false};
+    bool prev_k_cw_pressed{false};
+    bool prev_k_ccw2_pressed{false};
+
     GLFWwindow *window;
 
     shift shift_{shift::none};
@@ -61,7 +65,7 @@ private:
  */
 enum class square
 {
-    none, i, j, l, o, s, t, z, I, J, L, O, S, T, Z
+    none, I, J, L, O, S, T, Z, i, j, l, o, s, t, z
 };
 
 /**
