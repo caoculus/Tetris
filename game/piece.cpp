@@ -1,6 +1,7 @@
-#include "game.hpp"
+#include "piece.hpp"
+#include <stdexcept>
 
-std::size_t tetris::piece::index(square type)
+std::size_t piece::index(square type)
 {
     if (type == square::none)
         throw std::invalid_argument("square::none cannot be indexed as there is no piece there");
@@ -8,7 +9,7 @@ std::size_t tetris::piece::index(square type)
 
 }
 
-tetris::locking_state tetris::piece::tick(uint16_t g)
+locking_state piece::tick(uint16_t g)
 {
     // check for collision, if it cannot move down, tick and reset subpixel to 0
     for (const auto &offset : LUT[index(type)][orientation])
@@ -51,7 +52,7 @@ tetris::locking_state tetris::piece::tick(uint16_t g)
     return locking_state::reset;
 }
 
-void tetris::piece::translate(bool left)
+void piece::translate(bool left)
 {
     int move = left ? -1 : 1;
     for (const auto &offset : LUT[index(type)][orientation])
@@ -66,7 +67,7 @@ void tetris::piece::translate(bool left)
     pos.x += move;
 }
 
-void tetris::piece::rotate(bool left)
+void piece::rotate(bool left)
 {
     int new_orientation = orientation + (left ? -1 : 1);
     if (new_orientation < 0)
@@ -86,4 +87,3 @@ void tetris::piece::rotate(bool left)
 
     orientation = new_orientation;
 }
-

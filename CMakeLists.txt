@@ -13,6 +13,6 @@ include_directories(${OPENGL_INCLUDE_DIR} ${GLFW_INCLUDE_DIRS})
 
 include_directories(.)
 
-add_executable(Tetris main.cpp common.cpp)
+add_executable(Tetris main.cpp game/common.cpp game/game.cpp)
 
 target_link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY} ${OpenGlLinkers})

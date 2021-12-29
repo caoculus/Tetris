@@ -18,6 +18,13 @@ enum class rotation {
     none, ccw_d, cw_d, ccw_p, cw_p
 };
 
+/**
+ * @brief Represents a locking state of a piece.
+ */
+enum class locking_state {
+    none, tick, reset
+};
+
 class inputs
 {
 public:
