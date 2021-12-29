@@ -32,7 +32,7 @@ square randomizer::operator()()
     return ret;
 }
 
-square randomizer::next() const noexcept
+[[nodiscard]] square randomizer::next() const noexcept
 {
     return next_piece;
 }

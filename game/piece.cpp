@@ -137,4 +137,3 @@ bool piece::can_rotate_jlt()
     }
     return true;
 }
-
