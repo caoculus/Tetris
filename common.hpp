@@ -4,25 +4,41 @@
 #include <cstdint>
 #include <GLFW/glfw3.h>
 
+/**
+ * Represents a piece shift input for the game.
+ */
+enum class shift {
+    none, left, down, right
+};
+
+/**
+ * Represents a piece rotation input for the game.
+ */
+enum class rotation {
+    none, ccw_p, cw_p, ccw_h, cw_h
+};
 
 class inputs
 {
 public:
-    const bool left, down, right, ccw1, cw, ccw2;
-
     /**
      * @brief Construct a new inputs object by checking for the specific keys
-     * the user pressed in the window during the current frame. 
+     * the user pressed in the window during the current frame.
      */
-    inputs(GLFWwindow *);
+    inputs(GLFWwindow *_window) : window(_window) {};
 
     /**
-     * @brief Get the deltas of user inputs between two frames.
-     * 
-     * @param other the inputs of the previous frame. 
-     * @return inputs the key down events during this frame.
+     * @brief Update the input state based on the keys pressed in the window.
      */
-    inputs operator-(const inputs &other) const;
+    void update();
+
+    /**
+     * @brief Get the input state.
+     *
+     * @param s reference for storing the shift
+     * @param r reference for storing the rotation
+     */
+    void get(shift &s, rotation &r);
 
 private:
     static constexpr int K_LEFT = GLFW_KEY_A;
@@ -31,6 +47,11 @@ private:
     static constexpr int K_CCW1 = GLFW_KEY_J;
     static constexpr int K_CW = GLFW_KEY_K;
     static constexpr int K_CCW2 = GLFW_KEY_L;
+
+    GLFWwindow *window;
+
+    shift shift_{shift::none};
+    rotation rotation_{rotation::none};
 };
 
 /**
