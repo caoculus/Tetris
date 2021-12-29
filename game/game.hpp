@@ -17,7 +17,7 @@ public:
 
     [[nodiscard]] int time() const noexcept { return clk; }
 
-    [[nosiscard]] piece next() const noexcept;
+    [[nodiscard]] piece next() const noexcept;
     [[nodiscard]] const board_t &b() const noexcept;
     
 private:
