@@ -36,7 +36,7 @@ public:
      * 
      * @return the next square that will be generated.
      */
-    square next() const noexcept;
+    [[nodiscard]] square next() const noexcept;
 
 private: 
     std::mt19937 rng {std::random_device{}()};

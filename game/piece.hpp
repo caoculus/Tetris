@@ -106,7 +106,8 @@ private:
     bool collide(ivec2 old_pos, shift_t shift);
 
     /**
-     * @brief Check if this piece can be rotated.
+     * @brief Check if this piece can be rotated, according to TGM middle column
+     * rules for J, L, and T pieces.
      * @requires the type of this piece is J, L, or T
      *
      * @return true if the piece can be rotated, false otherwise.
