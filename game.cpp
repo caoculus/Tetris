@@ -30,7 +30,7 @@ bool tetris::piece::tick(uint16_t g)
         {
             const ivec2 offset = LUT[index(type)][orientation][sq];
             const ivec2 square_pos = pos + offset;
-            if (square_pos.y < 0 or square_pos.y >= board.size() or 
+            if (square_pos.y >= board.size() or 
             board[square_pos.y][square_pos.x] != square::none)
                 return true;
         }

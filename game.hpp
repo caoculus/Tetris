@@ -1,5 +1,7 @@
+#pragma once
+
 #include "common.hpp"
-#include <exception>
+#include <stdexcept>
 
 class tetris
 {
