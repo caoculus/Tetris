@@ -86,9 +86,14 @@ private:
          */
         bool tick(uint16_t g);
 
-        void move_left();
-
-        void move_right();
+        /**
+         * @brief Translate the piece horizontally, and does nothing if the 
+         * piece is already at the edge of the board.
+         * @requires the piece to be in a valid position on the board before the
+         * 
+         * @param left true to move left, false to move right.
+         */
+        void translate(bool left);
 
         void rotate_left();
 

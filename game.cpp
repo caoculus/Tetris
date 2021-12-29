@@ -31,9 +31,26 @@ bool tetris::piece::tick(uint16_t g)
             const ivec2 offset = LUT[index(type)][orientation][sq];
             const ivec2 square_pos = pos + offset;
             if (square_pos.y >= board.size() or 
-            board[square_pos.y][square_pos.x] != square::none)
+                !is_empty(board[square_pos.y][square_pos.x]))
                 return true;
         }
     }
     return false;
 }
+
+void tetris::piece::translate(bool left)
+{
+    int move = left ? -1 : 1;
+    for (int sq = 0; sq < 4; sq++)
+    {
+        const ivec2 offset = LUT[index(type)][orientation][sq];
+        const ivec2 square_pos = pos + offset;
+        int new_x = square_pos.x + move;
+        if (new_x < 0 or new_x >= board.size() or 
+            !is_empty(board[square_pos.y][new_x]))
+            return;
+    }
+
+    pos.x += move;
+}
+
