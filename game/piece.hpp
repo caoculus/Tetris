@@ -62,7 +62,7 @@ public:
 public:
     piece(square _type, const board_t &_board) : type(_type), board(_board)
     {}
-    
+
     /**
      * @brief Process one tick of the piece with one frame. 
      * @requires the piece to be in a valid position on the board before the
@@ -81,7 +81,7 @@ public:
      * 
      * @param left true to move left, false to move right.
      */
-    void translate(bool left);
+    bool translate(bool left);
 
     /**
      * @brief 
@@ -96,4 +96,20 @@ private:
     const square type;
     ivec2 pos{0, 3};
     const board_t &board;
+
+    /**
+     * @brief Check if this piece would collide after shifting it in the given direction.
+     *
+     * @param shift direction to shift the piece, or none for no shift
+     * @return true if the piece would collide, false otherwise.
+     */
+    bool collide(ivec2 old_pos, shift_t shift);
+
+    /**
+     * @brief Check if this piece can be rotated.
+     * @requires the type of this piece is J, L, or T
+     *
+     * @return true if the piece can be rotated, false otherwise.
+     */
+    bool can_rotate_jlt();
 };
