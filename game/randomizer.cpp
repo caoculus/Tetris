@@ -20,7 +20,7 @@ randomizer::randomizer()
 square randomizer::operator()()
 {
     square ret = next_piece;
-    for (int _ = 0; _ < 4; ++_)
+    for (int i = 0; i < 4; ++i)
     {
         // generate a new piece
         next_piece = static_cast<square>(dist(rng));
