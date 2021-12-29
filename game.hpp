@@ -1,4 +1,5 @@
 #include "common.hpp"
+#include <exception>
 
 class tetris
 {
@@ -66,11 +67,22 @@ private:
             },
         };
 
+        static std::size_t index(square sq);
+
     public:
         piece(square _type, const board_t &_board) : type(_type), board(_board)
         {}
-
-        void tick(uint16_t g);
+        
+        /**
+         * @brief Process one tick of the piece with one frame. 
+         * @requires the piece to be in a valid position on the board before the
+         * tick
+         * 
+         * @param g the gravity value divided by 128.
+         * 
+         * @return true if the piece would land, false otherwise. 
+         */
+        bool tick(uint16_t g);
 
         void move_left();
 
