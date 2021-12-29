@@ -67,8 +67,9 @@ private:
         };
 
     public:
-        piece(square _type) : type(_type) {}
-        
+        piece(square _type, const board_t &_board) : type(_type), board(_board)
+        {}
+
         void tick(uint16_t g);
 
         void move_left();
