@@ -14,7 +14,7 @@ public:
     void tick();
 
 private:
-    enum locking_state {
+    enum class locking_state {
         none, tick, reset
     };
 
