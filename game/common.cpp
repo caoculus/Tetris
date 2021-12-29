@@ -8,19 +8,19 @@ void inputs::update()
 
     if (k_left_pressed && !k_right_pressed)
     {
-        shift_ = shift::left;
+        shift_ = shift_t::left;
     }
     else if (k_right_pressed && !k_left_pressed)
     {
-        shift_ = shift::right;
+        shift_ = shift_t::right;
     }
     else if (k_down_pressed)
     {
-        shift_ = shift::down;
+        shift_ = shift_t::down;
     }
     else
     {
-        shift_ = shift::none;
+        shift_ = shift_t::none;
     }
 
     bool k_ccw1_pressed = (glfwGetKey(window, K_CCW1) == GLFW_PRESS);
@@ -30,23 +30,23 @@ void inputs::update()
     if ((k_ccw1_pressed && !prev_k_ccw1_pressed) ||
         (k_ccw2_pressed && !prev_k_ccw2_pressed))
     {
-        rotation_ = rotation::ccw_d;
+        rotation_ = rotation_t::ccw_d;
     }
     else if (k_cw_pressed && !prev_k_cw_pressed)
     {
-        rotation_ = rotation::cw_d;
+        rotation_ = rotation_t::cw_d;
     }
     else if (k_ccw1_pressed || k_ccw2_pressed)
     {
-        rotation_ = rotation::ccw_p;
+        rotation_ = rotation_t::ccw_p;
     }
     else if (k_cw_pressed)
     {
-        rotation_ = rotation::cw_p;
+        rotation_ = rotation_t::cw_p;
     }
     else
     {
-        rotation_ = rotation::none;
+        rotation_ = rotation_t::none;
     }
 
     prev_k_ccw1_pressed = k_ccw1_pressed;
@@ -54,8 +54,8 @@ void inputs::update()
     prev_k_ccw2_pressed = k_ccw2_pressed;
 }
 
-void inputs::get(shift &s, rotation &r)
+void inputs::get(shift_t &shift, rotation_t &rotation)
 {
-    s = shift_;
-    r = rotation_;
+    shift = shift_;
+    rotation = rotation_;
 }

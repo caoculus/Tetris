@@ -7,21 +7,21 @@
 /**
  * Represents a piece shift input for the game.
  */
-enum class shift {
+enum class shift_t : uint8_t {
     none, left, down, right
 };
 
 /**
  * Represents a piece rotation input for the game.
  */
-enum class rotation {
+enum class rotation_t : uint8_t {
     none, ccw_d, cw_d, ccw_p, cw_p
 };
 
 /**
  * @brief Represents a locking state of a piece.
  */
-enum class locking_state {
+enum class locking_state : uint8_t {
     none, tick, reset
 };
 
@@ -42,10 +42,10 @@ public:
     /**
      * @brief Get the input state.
      *
-     * @param s reference for storing the shift
-     * @param r reference for storing the rotation
+     * @param shift reference for storing the shift
+     * @param rotation reference for storing the rotation
      */
-    void get(shift &s, rotation &r);
+    void get(shift_t &shift, rotation_t &rotation);
 
 private:
     static constexpr int K_LEFT = GLFW_KEY_A;
@@ -61,8 +61,8 @@ private:
 
     GLFWwindow *window;
 
-    shift shift_{shift::none};
-    rotation rotation_{rotation::none};
+    shift_t shift_{shift_t::none};
+    rotation_t rotation_{rotation_t::none};
 };
 
 /**
@@ -103,6 +103,8 @@ class ivec2
 {
 public:
     int y, x;
+
+    ivec2() = default;
 
     constexpr ivec2(int y, int x) : y(y), x(x)
     {}
