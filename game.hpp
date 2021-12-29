@@ -14,6 +14,10 @@ public:
     void tick();
 
 private:
+    enum locking_state {
+        none, tick, reset
+    };
+
     class piece
     {
     public:
@@ -84,7 +88,7 @@ private:
          * 
          * @return true if the piece would land, false otherwise. 
          */
-        bool tick(uint16_t g);
+        locking_state tick(uint16_t g);
 
         /**
          * @brief Translate the piece horizontally, and does nothing if the 
@@ -95,9 +99,12 @@ private:
          */
         void translate(bool left);
 
-        void rotate_left();
-
-        void rotate_right();
+        /**
+         * @brief 
+         * 
+         * @param left 
+         */
+        void rotate(bool left);
 
     private:
         uint8_t orientation{0};
