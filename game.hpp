@@ -1,4 +1,7 @@
+#pragma once
+
 #include "common.hpp"
+#include <stdexcept>
 
 class tetris
 {
@@ -11,6 +14,10 @@ public:
     void tick();
 
 private:
+    enum class locking_state {
+        none, tick, reset
+    };
+
     class piece
     {
     public:
@@ -66,19 +73,38 @@ private:
             },
         };
 
+        static std::size_t index(square sq);
+
     public:
         piece(square _type, const board_t &_board) : type(_type), board(_board)
         {}
+        
+        /**
+         * @brief Process one tick of the piece with one frame. 
+         * @requires the piece to be in a valid position on the board before the
+         * tick
+         * 
+         * @param g the gravity value divided by 128.
+         * 
+         * @return true if the piece would land, false otherwise. 
+         */
+        locking_state tick(uint16_t g);
 
-        void tick(uint16_t g);
+        /**
+         * @brief Translate the piece horizontally, and does nothing if the 
+         * piece is already at the edge of the board.
+         * @requires the piece to be in a valid position on the board before the
+         * 
+         * @param left true to move left, false to move right.
+         */
+        void translate(bool left);
 
-        void move_left();
-
-        void move_right();
-
-        void rotate_left();
-
-        void rotate_right();
+        /**
+         * @brief 
+         * 
+         * @param left 
+         */
+        void rotate(bool left);
 
     private:
         uint8_t orientation{0};
