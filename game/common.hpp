@@ -7,21 +7,24 @@
 /**
  * Represents a piece shift input for the game.
  */
-enum class shift_t : uint8_t {
+enum class shift_t : uint8_t
+{
     none, left, down, right
 };
 
 /**
  * Represents a piece rotation input for the game.
  */
-enum class rotation_t : uint8_t {
+enum class rotation_t : uint8_t
+{
     none, ccw, cw
 };
 
 /**
  * @brief Represents a locking state of a piece.
  */
-enum class locking_state : uint8_t {
+enum class locking_state : uint8_t
+{
     none, tick, reset
 };
 
@@ -32,7 +35,8 @@ public:
      * @brief Construct a new inputs object by checking for the specific keys
      * the user pressed in the window during the current frame.
      */
-    inputs(GLFWwindow *_window) : window(_window) {};
+    inputs(GLFWwindow *_window) : window(_window)
+    {};
 
     /**
      * @brief Get the shift input based on the keys pressed in the window.
@@ -85,7 +89,10 @@ enum class square
  * 
  * @return bool true if the square is empty and false otherwise.
  */
-bool is_empty(const square &);
+constexpr bool is_empty(const square &sq)
+{
+    return sq == square::none;
+}
 
 /**
  * @brief A row of 10 squares representing a horizontal line of the play-field. 

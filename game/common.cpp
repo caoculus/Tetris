@@ -74,4 +74,3 @@ rotation_t inputs::update_rotation(bool spawn_frame)
 
     return rotation;
 }
-
