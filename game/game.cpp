@@ -37,18 +37,19 @@ void tetris::tick()
 
     switch (active_piece_.tick(level_.g()))
     {
-        case locking_state::tick: 
+        case locking_state::tick:
             if (shift == shift_t::down or lock_ < 0)
             {
                 update_counters(false, true, false);
-                for (auto &sq : active_piece_.piece_squares())
+                for (auto &sq: active_piece_.piece_squares())
                     board_[sq.y][sq.x] = active_piece_.ty();
-                
+
                 // check for line clears
                 for (auto &row: board_)
                 {
                     // find first element where is_empty is true
-                    if (std::find_if(row.begin(), row.end(), is_empty) == row.end())
+                    if (std::find_if(row.begin(), row.end(), is_empty) ==
+                        row.end())
                     {
                         // clear the row
                         std::fill(row.begin(), row.end(), square::clear);
@@ -56,15 +57,16 @@ void tetris::tick()
                     }
                 }
             }
-            update_counters(false, false, true); 
+            update_counters(false, false, true);
             break;
-        case locking_state::reset: 
-            update_counters(false, true, false); 
+        case locking_state::reset:
+            update_counters(false, true, false);
             break;
-        case locking_state::none: 
-            update_counters(); 
+        case locking_state::none:
+            update_counters();
             break;
-        default: break;
+        default:
+            break;
     }
 
 }
