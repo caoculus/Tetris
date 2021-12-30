@@ -31,7 +31,7 @@ shift_t inputs::update_shift()
     }
     else if (shift == prev_shift)
     {
-        das++;
+        ++das;
     }
 
     prev_shift = shift;
