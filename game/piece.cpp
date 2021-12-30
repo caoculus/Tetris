@@ -46,17 +46,12 @@ locking_state piece::tick(uint16_t g)
     return locking_state::reset;
 }
 
-bool piece::translate(bool left)
+bool piece::translate(shift_t shift)
 {
-    int move = left ? -1 : 1;
-    shift_t shift = left ? shift_t::left : shift_t::right;
-
-    if (collide(pos, shift))
-    {
+    if (shift == shift_t::none or collide(pos, shift))
         return false;
-    }
-
-    pos.x += move;
+    
+    pos.x += (shift==shift_t::left) ? -1 : 1;
     return true;
 }
 
@@ -79,11 +74,11 @@ void piece::rotate(bool left)
             orientation = old_orientation;
             return;
         }
-        if (translate(false))
+        if (translate(shift_t::right))
         {
             return;
         }
-        if (translate(true))
+        if (translate(shift_t::left))
         {
             return;
         }

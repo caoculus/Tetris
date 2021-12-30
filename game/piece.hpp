@@ -79,9 +79,9 @@ public:
      * piece is already at the edge of the board.
      * @requires the piece to be in a valid position on the board before the
      * 
-     * @param left true to move left, false to move right.
+     * @param shift the direction to shift. If the direction is none, do nothing.
      */
-    bool translate(bool left);
+    bool translate(shift_t shift);
 
     /**
      * @brief 
