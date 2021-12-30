@@ -60,14 +60,12 @@ public:
     static std::size_t index(square sq);
 
 public:
-    const square type;
-
     piece(square _type, const board_t &_board) : type(_type), board(_board)
     {}
 
     piece(const piece &) = default;
 
-    piece &operator=(const piece &other);
+    piece &operator=(const piece &other) = default;
 
     /**
      * @brief Process one tick of the piece with one frame.
@@ -115,10 +113,13 @@ public:
      * @return the positions of the four squares of the shadow of this piece
      */
     [[nodiscard]] std::array<ivec2, 4> shadow_squares() const;
+
+    [[nodiscard]] constexpr const square ty() const { return type; };
 private:
     uint8_t orientation{0};
     uint8_t subpixel{0};
     ivec2 pos{0, 3};
+    square type;
     const board_t &board;
 
     /**

@@ -45,7 +45,7 @@ void tetris::tick()
             {
                 update_counters(false, true, false);
                 for (auto &sq : active_piece.piece_squares())
-                    board[sq.y][sq.x] = active_piece.type;
+                    board[sq.y][sq.x] = active_piece.ty();
                 
                 // check for line clears
                 for (auto &row: board)

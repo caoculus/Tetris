@@ -171,11 +171,3 @@ ivec2 piece::shadow_position() const
 
     return shadow_pos;
 }
-
-piece &piece::operator=(const piece &other)
-{
-    subpixel = other.subpixel;
-    orientation = other.orientation;
-    pos = other.pos;
-    return *this;
-}
