@@ -60,17 +60,19 @@ public:
     static std::size_t index(square sq);
 
 public:
+    const square type;
+
     piece(square _type, const board_t &_board) : type(_type), board(_board)
     {}
 
     /**
-     * @brief Process one tick of the piece with one frame. 
+     * @brief Process one tick of the piece with one frame.
      * @requires the piece to be in a valid position on the board before the
      * tick
-     * 
+     *
      * @param g the gravity value divided by 128.
-     * 
-     * @return true if the piece would land, false otherwise. 
+     *
+     * @return true if the piece would land, false otherwise.
      */
     locking_state tick(uint16_t g);
 
@@ -78,18 +80,18 @@ public:
      * @brief Translate the piece horizontally unless it collides with another
      * piece or the edge of the board.
      * @requires the piece to be in a valid position on the board before the
-     * 
+     *
      * @param shift the direction to shift. If the direction is none or down, do
      * nothing.
-     * 
-     * @return true if the piece is moved, false if the piece cannot make a 
+     *
+     * @return true if the piece is moved, false if the piece cannot make a
      * valid move.
      */
     bool translate(shift_t shift);
 
     /**
      * @brief Rotate the piece according to Arika Rotation System.
-     * 
+     *
      * @param rotation the direction to rotate. If the direction is none, do
      * nothing.
      */
@@ -100,6 +102,7 @@ public:
      */
     [[nodiscard]] std::array<ivec2, 4> piece_squares() const;
 
+
     /**
      * @details The shadow appears where the piece would land if it is moved
      * down until it collides with another piece or the edge of the board. The
@@ -108,12 +111,9 @@ public:
      * @return the positions of the four squares of the shadow of this piece
      */
     [[nodiscard]] std::array<ivec2, 4> shadow_squares() const;
-
-
 private:
     uint8_t orientation{0};
     uint8_t subpixel{0};
-    const square type;
     ivec2 pos{0, 3};
     const board_t &board;
 
