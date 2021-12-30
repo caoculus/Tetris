@@ -65,6 +65,10 @@ public:
     piece(square _type, const board_t &_board) : type(_type), board(_board)
     {}
 
+    piece(const piece &) = default;
+
+    piece &operator=(const piece &other);
+
     /**
      * @brief Process one tick of the piece with one frame.
      * @requires the piece to be in a valid position on the board before the
@@ -144,5 +148,5 @@ private:
     /**
      * @return the position of the shadow of the piece.
      */
-    ivec2 shadow_position() const;
+    [[nodiscard]] ivec2 shadow_position() const;
 };
