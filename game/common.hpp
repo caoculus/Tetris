@@ -15,7 +15,7 @@ enum class shift_t : uint8_t {
  * Represents a piece rotation input for the game.
  */
 enum class rotation_t : uint8_t {
-    none, ccw_d, cw_d, ccw_p, cw_p
+    none, ccw, cw
 };
 
 /**
@@ -35,17 +35,19 @@ public:
     inputs(GLFWwindow *_window) : window(_window) {};
 
     /**
-     * @brief Update the input state based on the keys pressed in the window.
+     * @brief Get the shift input based on the keys pressed in the window.
+     *
+     * @return shift_t the shift input
      */
-    void update();
+    shift_t get_shift();
 
     /**
-     * @brief Get the input state.
+     * @brief Get the rotation input based on the keys pressed in the window.
      *
-     * @param shift reference for storing the shift
-     * @param rotation reference for storing the rotation
+     * @param spawn_frame whether the game piece spawns on this frame
+     * @return rotation_t the rotation input
      */
-    void get(shift_t &shift, rotation_t &rotation) const;
+    rotation_t get_rotation(bool spawn_frame = false);
 
 private:
     static constexpr int K_LEFT = GLFW_KEY_A;
@@ -55,14 +57,17 @@ private:
     static constexpr int K_CW = GLFW_KEY_K;
     static constexpr int K_CCW2 = GLFW_KEY_L;
 
+    static constexpr int DAS = 15;
+
+    shift_t prev_shift{shift_t::none};
+
     bool prev_k_ccw1_pressed{false};
     bool prev_k_cw_pressed{false};
     bool prev_k_ccw2_pressed{false};
 
-    GLFWwindow *window;
+    uint8_t das{0};
 
-    shift_t shift_{shift_t::none};
-    rotation_t rotation_{rotation_t::none};
+    GLFWwindow *window;
 };
 
 /**
