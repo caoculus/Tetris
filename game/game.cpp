@@ -27,8 +27,7 @@ void tetris::tick()
     if (state == 0)
     {
         keys.update_rotation(true);
-        // TODO: spawn piece
-        auto new_piece = piece(rng.next(), board);
+        active_piece = std::move(piece(rng(), board));
     }
 
     // acquire inputs
@@ -44,11 +43,23 @@ void tetris::tick()
         case locking_state::tick: 
             if (shift == shift_t::down or lock < 0)
             {
-                auto asdf = active_piece;
                 update_counters(false, true, false);
+                for (auto &sq : active_piece.piece_squares())
+                    board[sq.y][sq.x] = active_piece.type;
+                
+                // check for line clears
+                for (auto &row: board)
+                {
+                    // find first element where is_empty is true
+                    if (std::find_if(row.begin(), row.end(), is_empty) == row.end())
+                    {
+                        // clear the row
+                        std::fill(row.begin(), row.end(), square::clear);
+                        update_counters(true);
+                    }
+                }
             }
-            else
-                update_counters(false, false, true); 
+            update_counters(false, false, true); 
             break;
         case locking_state::reset: 
             update_counters(false, true, false); 
@@ -59,17 +70,6 @@ void tetris::tick()
         default: break;
     }
 
-    // check for line clears
-    for (auto &row: board)
-    {
-        // find first element where is_empty is true
-        if (std::find_if(row.begin(), row.end(), is_empty) == row.end())
-        {
-            // clear the row
-            std::fill(row.begin(), row.end(), square::clear);
-            update_counters(true);
-        }
-    }
 }
 
 int tetris::time() const noexcept
