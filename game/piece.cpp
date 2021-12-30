@@ -91,22 +91,22 @@ void piece::rotate(rotation_t rotation)
     }
 }
 
-bool piece::collide(ivec2 old_pos, shift_t shift)
+bool piece::collide(ivec2 piece_pos, shift_t shift) const
 {
     ivec2 new_pos{};
     switch (shift)
     {
         case shift_t::none:
-            new_pos = old_pos;
+            new_pos = piece_pos;
             break;
         case shift_t::left:
-            new_pos = old_pos + ivec2{-1, 0};
+            new_pos = piece_pos + ivec2{0, -1};
             break;
         case shift_t::down:
-            new_pos = old_pos + ivec2{0, 1};
+            new_pos = piece_pos + ivec2{1, 0};
             break;
         case shift_t::right:
-            new_pos = old_pos + ivec2{1, 0};
+            new_pos = piece_pos + ivec2{0, 1};
             break;
     }
 
@@ -137,3 +137,38 @@ bool piece::can_rotate_jlt()
     }
     return true;
 }
+
+std::array<ivec2, 4> piece::piece_squares() const
+{
+    return squares(pos);
+}
+
+std::array<ivec2, 4> piece::shadow_squares() const
+{
+    return squares(shadow_position());
+}
+
+std::array<ivec2, 4> piece::squares(ivec2 piece_pos) const
+{
+    std::array<ivec2, 4> squares{};
+
+    for (int i = 0; i < 4; i++)
+    {
+        squares[i] = piece_pos + LUT[index(type)][orientation][i];
+    }
+
+    return squares;
+}
+
+ivec2 piece::shadow_position() const
+{
+    ivec2 shadow_pos{pos};
+
+    while (!collide(shadow_pos, shift_t::down))
+    {
+        shadow_pos += ivec2{1, 0};
+    }
+
+    return shadow_pos;
+}
+

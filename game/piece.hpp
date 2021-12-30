@@ -95,6 +95,21 @@ public:
      */
     void rotate(rotation_t rotation);
 
+    /**
+     * @return the positions of the four squares of the piece.
+     */
+    [[nodiscard]] std::array<ivec2, 4> piece_squares() const;
+
+    /**
+     * @details The shadow appears where the piece would land if it is moved
+     * down until it collides with another piece or the edge of the board. The
+     * shadow is only drawn up to level 100.
+     *
+     * @return the positions of the four squares of the shadow of this piece
+     */
+    [[nodiscard]] std::array<ivec2, 4> shadow_squares() const;
+
+
 private:
     uint8_t orientation{0};
     uint8_t subpixel{0};
@@ -108,7 +123,7 @@ private:
      * @param shift direction to shift the piece, or none for no shift
      * @return true if the piece would collide, false otherwise.
      */
-    bool collide(ivec2 old_pos, shift_t shift);
+    bool collide(ivec2 piece_pos, shift_t shift) const;
 
     /**
      * @brief Check if this piece can be rotated, according to TGM middle column
@@ -118,4 +133,16 @@ private:
      * @return true if the piece can be rotated, false otherwise.
      */
     bool can_rotate_jlt();
+
+    /**
+     * @param piece_pos the position of the piece
+     * @return the positions of the four squares of this piece type if the
+     * piece's position is piece_pos.
+     */
+    [[nodiscard]] std::array<ivec2, 4> squares(ivec2 piece_pos) const;
+
+    /**
+     * @return the position of the shadow of the piece.
+     */
+    ivec2 shadow_position() const;
 };
