@@ -12,7 +12,8 @@ void tetris::tick()
         }
         if (state == 30)
         {
-            for (int src = board.size()-1, dest = board.size()-1; src > 0; )
+            for (std::size_t src = board.size() - 1, dest = board.size() - 1;
+                 src > 0;)
             {
                 if (board[src][0] == square::clear)
                     src--;
@@ -29,7 +30,7 @@ void tetris::tick()
     active_piece.rotate(rotation);
     active_piece.translate(shift);
 
-    switch(active_piece.tick(level.g()))
+    switch (active_piece.tick(level.g()))
     {
         case locking_state::tick:
             update_counters(false, false, true);
@@ -38,14 +39,14 @@ void tetris::tick()
             update_counters(false, true, false);
             break;
         case locking_state::none:
-            update_counters();         
+            update_counters();
             break;
         default:
-            break;    
+            break;
     }
 
     // check for line clears
-    for (auto &row : board)
+    for (auto &row: board)
     {
         // find first element where is_empty is true
         if (std::find_if(row.begin(), row.end(), is_empty) == row.end())
@@ -57,9 +58,9 @@ void tetris::tick()
     }
 }
 
-int tetris::time() const noexcept 
-{ 
-    return -clk;
+int tetris::time() const noexcept
+{
+    return clk;
 }
 
 square tetris::next() const noexcept
@@ -74,13 +75,13 @@ const board_t &tetris::b() const noexcept
 
 void tetris::update_counters(bool line_clear, bool fall1, bool land)
 {
-    --clk;
-    
+    ++clk;
+
     if (line_clear)
         state = ARE + CLEAR;
     else if (lock == 0)
         state = ARE;
-    else 
+    else
         --state;
 
     if (fall1)
