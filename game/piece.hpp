@@ -68,16 +68,16 @@ public:
     static std::size_t index(square sq);
 
 public:
-    piece(square _type, const board_t &_board) : type(_type), board(_board)
+    piece(square type, const board_t &board) : type_(type), board_(board)
     {}
 
     /**
      * @brief reset the properties of the piece to represent a new piece that 
      * has just spawned on the board. 
      * 
-     * @param _type the type of new piece that has just spawned. 
+     * @param type the type of new piece that has just spawned.
      */
-    void reset(square _type);
+    void reset(square type);
 
     /**
      * @brief Process one tick of the piece with one frame.
@@ -126,13 +126,13 @@ public:
      */
     [[nodiscard]] std::array<ivec2, 4> shadow_squares() const;
 
-    [[nodiscard]] constexpr const square ty() const { return type; };
+    [[nodiscard]] constexpr const square ty() const { return type_; };
 private:
-    uint8_t orientation{0};
-    uint8_t subpixel{0};
-    ivec2 pos{0, 3};
-    square type;
-    const board_t &board;
+    uint8_t orientation_{0};
+    uint8_t subpixel_{0};
+    ivec2 pos_{0, 3};
+    square type_;
+    const board_t &board_;
 
     /**
      * @brief Check if this piece would collide after shifting it in the given direction.

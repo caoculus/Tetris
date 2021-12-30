@@ -3,36 +3,36 @@
 randomizer::randomizer()
 {
     std::uniform_int_distribution<int> first_piece_dist {1, 4};
-    switch(first_piece_dist(rng))
+    switch(first_piece_dist(rng_))
     {
-        case 1: next_piece = square::I; break;
-        case 2: next_piece = square::L; break;
-        case 3: next_piece = square::J; break;
-        case 4: next_piece = square::T; break;
+        case 1: next_piece_ = square::I; break;
+        case 2: next_piece_ = square::L; break;
+        case 3: next_piece_ = square::J; break;
+        case 4: next_piece_ = square::T; break;
         default: break;
     }
-    history.push_back(square::Z);
-    history.push_back(square::Z);
-    history.push_back(square::Z);
-    history.push_back(next_piece);
+    history_.push_back(square::Z);
+    history_.push_back(square::Z);
+    history_.push_back(square::Z);
+    history_.push_back(next_piece_);
 }
 
 square randomizer::operator()()
 {
-    square ret = next_piece;
+    square ret = next_piece_;
     for (int i = 0; i < 4; ++i)
     {
         // generate a new piece
-        next_piece = static_cast<square>(dist(rng));
-        if (std::find(history.begin(), history.end(), next_piece) == history.end())
+        next_piece_ = static_cast<square>(dist_(rng_));
+        if (std::find(history_.begin(), history_.end(), next_piece_) == history_.end())
             break;
     }
-    history.pop_front();
-    history.push_back(next_piece);
+    history_.pop_front();
+    history_.push_back(next_piece_);
     return ret;
 }
 
 [[nodiscard]] square randomizer::next() const noexcept
 {
-    return next_piece;
+    return next_piece_;
 }

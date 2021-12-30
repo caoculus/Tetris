@@ -69,7 +69,7 @@ public:
     operator int() const noexcept;
 
 private:
-    int level{}, step{};
+    int level_{}, step_{};
 
     /**
      * @brief the gravity values of the game depending on the step, (hence 

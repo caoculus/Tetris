@@ -2,8 +2,8 @@
 
 level_counter &level_counter::operator++() noexcept
 {
-    if (level % 100 != 99 and level < 998 and ++level >= LEVEL_STEPS[step])
-        ++step;
+    if (level_ % 100 != 99 and level_ < 998 and ++level_ >= LEVEL_STEPS[step_])
+        ++step_;
     return *this;
 }
 
@@ -16,18 +16,18 @@ level_counter level_counter::operator++(int) noexcept
 
 level_counter &level_counter::operator+= (int n) noexcept
 {
-    level = std::min(999, level + n);
-    while (level >= LEVEL_STEPS[step])
-        ++step;
+    level_ = std::min(999, level_ + n);
+    while (level_ >= LEVEL_STEPS[step_])
+        ++step_;
     return *this;
 }
 
 uint16_t level_counter::g() const noexcept
 {
-    return G_STEPS[step];
+    return G_STEPS[step_];
 }
 
 level_counter::operator int() const noexcept
 {
-    return level;
+    return level_;
 }

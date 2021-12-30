@@ -39,13 +39,13 @@ public:
     [[nodiscard]] square next() const noexcept;
 
 private: 
-    std::mt19937 rng {std::random_device{}()};
+    std::mt19937 rng_ {std::random_device{}()};
     
     /**
      * @brief There are seven pieces in total. 
      * 
      */
-    std::uniform_int_distribution<int> dist {1, 7};
+    std::uniform_int_distribution<int> dist_ {1, 7};
 
     /**
      * @brief Four pieces in the history, which are discriminated against for 
@@ -54,10 +54,10 @@ private:
      * @details The pieces start off with four Z pieces at the beginning.  
      * 
      */
-    std::deque<square> history;
+    std::deque<square> history_;
 
     /**
      * @brief The next piece to return when asked for a piece. 
      */
-    square next_piece;
+    square next_piece_;
 };

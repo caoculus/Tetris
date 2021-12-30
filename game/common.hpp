@@ -35,7 +35,7 @@ public:
      * @brief Construct a new inputs object by checking for the specific keys
      * the user pressed in the window during the current frame.
      */
-    inputs(GLFWwindow *_window) : window(_window)
+    inputs(GLFWwindow *window) : window_(window)
     {};
 
     /**
@@ -57,21 +57,21 @@ private:
     static constexpr int K_LEFT = GLFW_KEY_A;
     static constexpr int K_DOWN = GLFW_KEY_S;
     static constexpr int K_RIGHT = GLFW_KEY_D;
-    static constexpr int K_CCW1 = GLFW_KEY_J;
+    static constexpr int K_CCW_1 = GLFW_KEY_J;
     static constexpr int K_CW = GLFW_KEY_K;
-    static constexpr int K_CCW2 = GLFW_KEY_L;
+    static constexpr int K_CCW_2 = GLFW_KEY_L;
 
     static constexpr int DAS = 15;
 
-    shift_t prev_shift{shift_t::none};
+    shift_t prev_shift_{shift_t::none};
 
-    bool prev_k_ccw1_pressed{false};
-    bool prev_k_cw_pressed{false};
-    bool prev_k_ccw2_pressed{false};
+    bool prev_k_ccw_1_pressed_{false};
+    bool prev_k_cw_pressed_{false};
+    bool prev_k_ccw_2_pressed_{false};
 
-    uint8_t das{0};
+    uint8_t das_{0};
 
-    GLFWwindow *window;
+    GLFWwindow *window_;
 };
 
 /**
@@ -114,21 +114,21 @@ using board_t = std::array<row_t, 21>;
 class ivec2
 {
 public:
-    int y, x;
+    int y_, x_;
 
     ivec2() = default;
 
-    constexpr ivec2(int y, int x) : y(y), x(x)
+    constexpr ivec2(int y, int x) : y_(y), x_(x)
     {}
 
     ivec2 operator+(const ivec2 &other) const
     {
-        return {y + other.y, x + other.x};
+        return {y_ + other.y_, x_ + other.x_};
     }
 
     ivec2 operator-(const ivec2 &other) const
     {
-        return {y - other.y, x - other.x};
+        return {y_ - other.y_, x_ - other.x_};
     }
 
     ivec2 &operator+=(const ivec2 &other)
@@ -138,7 +138,7 @@ public:
 
     bool operator==(const ivec2 &other) const
     {
-        return y == other.y && x == other.x;
+        return y_ == other.y_ && x_ == other.x_;
     }
 
     bool operator!=(const ivec2 &other) const
