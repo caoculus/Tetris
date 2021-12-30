@@ -27,7 +27,7 @@ void tetris::tick()
     if (state == 0)
     {
         keys.update_rotation(true);
-        active_piece = piece(rng(), board);
+        active_piece.reset(rng());
     }
 
     // acquire inputs

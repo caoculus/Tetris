@@ -171,3 +171,11 @@ ivec2 piece::shadow_position() const
 
     return shadow_pos;
 }
+
+void piece::reset(square _type)
+{
+    pos = ivec2{0, 3};
+    orientation = 0;
+    subpixel = 0;
+    type = _type;
+}

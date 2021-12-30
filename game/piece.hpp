@@ -57,15 +57,27 @@ public:
         },
     };
 
+    /**  
+     * @param sq the type of the piece.
+     * 
+     * @pre sq must be a type corresponding to a real piece (not shadow or line clear).
+     * 
+     * @return the index of an array for only non-empty pieces (i.e. the LUT) 
+     * corresponding to a given square type. 
+     */
     static std::size_t index(square sq);
 
 public:
     piece(square _type, const board_t &_board) : type(_type), board(_board)
     {}
 
-    piece(const piece &) = default;
-
-    piece &operator=(const piece &other) = default;
+    /**
+     * @brief reset the properties of the piece to represent a new piece that 
+     * has just spawned on the board. 
+     * 
+     * @param _type the type of new piece that has just spawned. 
+     */
+    void reset(square _type);
 
     /**
      * @brief Process one tick of the piece with one frame.
