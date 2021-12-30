@@ -2,36 +2,58 @@
 
 void tetris::tick()
 {
+    if (state >= 0)
+    {
+        update_counters();
+        if (state > 0)
+            keys.update();
+        if (state == 30)
+        {
+            for (int src = board.size()-1, dest = board.size()-1; src > 0; )
+            {
+                if (board[src][0] == square::clear)
+                    src--;
+                board[dest--] = board[src--];
+            }
+        }
+        return;
+    }
     // acquire inputs
-    shift_t p_shift, shift;
-    rotation_t p_rotation, rotation;
-    keys.get(p_shift, p_rotation);
+    shift_t shift;
+    rotation_t rotation;
     keys.update();
     keys.get(shift, rotation);
 
-    if (state > 30) // line clear state. do nothing.
-    {
-        update_counters();
-        return;
-    }
-    if (state > 0) // wait for piece state. check for das.
-    {
-        const bool reset_das = p_shift == shift and shift != shift_t::none;
-        update_counters();
-        return;
-    }
-    if (state == 0) // exceptional state
-    {
-        update_counters();
-        return;
-    }
-
     // perform translation
-    if (das < 0)
+    active_piece.rotate(rotation == rotation_t::cw_p);
+    active_piece.translate(shift);
+
+    switch(active_piece.tick(level.g()))
     {
-        active_piece.translate(shift);
+        case locking_state::tick:
+            update_counters(false, false, true);
+            break;
+        case locking_state::reset:
+            update_counters(false, true, false);
+            break;
+        case locking_state::none:
+            update_counters();         
+            break;
+        default:
+            break;    
     }
 
+    // check for line clears
+    for (auto &row : board)
+    {
+        // find first element where is_empty is true
+        if (std::find_if(row.begin(), row.end(), is_empty) == row.end())
+        {
+            // clear the row
+            std::fill(row.begin(), row.end(), square::clear);
+            update_counters(true);
+        }
+    }
 }
 
 int tetris::time() const noexcept 
@@ -49,21 +71,19 @@ const board_t &tetris::b() const noexcept
     return board;
 }
 
-void tetris::update_counters(bool line_clear, bool piece_lock)
+void tetris::update_counters(bool line_clear, bool fall1, bool land)
 {
     --clk;
     
     if (line_clear)
         state = ARE + CLEAR;
-    else if (piece_lock)
+    else if (lock == 0)
         state = ARE;
     else 
         --state;
 
-    if (piece_lock)
+    if (fall1)
         lock = LOCK;
-    else
+    else if (land)
         --lock;
-    
-
 }

@@ -28,7 +28,7 @@ private:
     
     
     int clk{}, das{-8}, state{-8}, lock{-8};
-    void update_counters(bool line_clear=false, bool piece_lock=false);
+    void update_counters(bool line_clear=false, bool fall1=false, bool land=false);
 
     static constexpr int DAS = 14, ARE = 30, LOCK = 30, CLEAR = 41;
 };

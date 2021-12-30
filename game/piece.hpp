@@ -80,6 +80,9 @@ public:
      * @requires the piece to be in a valid position on the board before the
      * 
      * @param shift the direction to shift. If the direction is none, do nothing.
+     * 
+     * @return true if the piece is moved, false if the piece cannot make a 
+     * valid move.
      */
     bool translate(shift_t shift);
 

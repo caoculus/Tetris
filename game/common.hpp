@@ -77,7 +77,7 @@ private:
  */
 enum class square
 {
-    none, I, J, L, O, S, T, Z, i, j, l, o, s, t, z
+    none, I, J, L, O, S, T, Z, i, j, l, o, s, t, z, flash, clear
 };
 
 /**
