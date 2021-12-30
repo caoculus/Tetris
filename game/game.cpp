@@ -5,12 +5,9 @@ void tetris::tick()
     if (state_ > 0)
     {
         update_counters();
-        if (state_ > 1 and state_ <= 30)
-        {
+        if (state_ > 1 and state_ <= ARE)
             keys_.update_shift();
-            keys_.update_rotation();
-        }
-        if (state_ == 30)
+        if (state_ == 27)
         {
             // line clear animation complete
             for (std::size_t src = board_.size() - 1, dest = board_.size() - 1;
