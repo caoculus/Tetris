@@ -7,7 +7,7 @@
  * control the level of the game based on TGM rules.
  * 
  * @details The level behaves like an integer with additional features. After a 
- * new piece spawns, the level is incramented using the incrament operator.
+ * new piece spawns, the level is incremented using the increment operator.
  * After n lines are clear, n is added to the level.
  * 
  * Note that if the level ends with 99 or 998, it can only be changed by 
@@ -21,6 +21,11 @@
 class level_counter
 {
 public:
+    /**
+     * @brief The denominator of the g() function.
+     */
+    static constexpr int DENOM = 128;
+
     level_counter() = default;
 
     /**
@@ -73,7 +78,7 @@ private:
 
     /**
      * @brief the gravity values of the game depending on the step, (hence 
-     * level). 
+     * level), as a fraction of DENOM.
      */
     static constexpr std::array<uint16_t, 30> G_STEPS {
         2, 3, 4, 5, 6, 8, 16, 24, 32, 40, 48, 56, 64, 72, 2, 
