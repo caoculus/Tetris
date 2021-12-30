@@ -124,6 +124,11 @@ public:
         return {y - other.y, x - other.x};
     }
 
+    ivec2 &operator+=(const ivec2 &other)
+    {
+        return (*this = *this + other);
+    }
+
     bool operator==(const ivec2 &other) const
     {
         return y == other.y && x == other.x;
