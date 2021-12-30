@@ -124,17 +124,9 @@ bool piece::collide(ivec2 piece_pos, shift_t shift) const
 
 bool piece::can_rotate_jlt()
 {
-    for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 3; j++)
-        {
-            ivec2 square_pos = pos_ + ivec2{i, j};
-            if (!is_empty(board_[square_pos.y][square_pos.x]))
-            {
-                return (j != 1);
-            }
-        }
-    }
+    for (int i = 0; i < 3; i++) for (int j = 0; j < 3; j++) 
+        if (!is_empty(board_[pos_.y][pos_.x]))
+            return (j != 1);
     return true;
 }
 
