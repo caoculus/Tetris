@@ -59,7 +59,7 @@ public:
      * 
      * @return the gravity value as an 16-bit integer.
      */
-    uint16_t g() const noexcept;
+    [[nodiscard]] uint16_t g() const noexcept;
 
     /**
      * @brief get the current level. 

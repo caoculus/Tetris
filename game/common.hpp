@@ -114,21 +114,21 @@ using board_t = std::array<row_t, 21>;
 class ivec2
 {
 public:
-    int y_, x_;
+    int y, x;
 
     ivec2() = default;
 
-    constexpr ivec2(int y, int x) : y_(y), x_(x)
+    constexpr ivec2(int y, int x) : y(y), x(x)
     {}
 
     ivec2 operator+(const ivec2 &other) const
     {
-        return {y_ + other.y_, x_ + other.x_};
+        return {y + other.y, x + other.x};
     }
 
     ivec2 operator-(const ivec2 &other) const
     {
-        return {y_ - other.y_, x_ - other.x_};
+        return {y - other.y, x - other.x};
     }
 
     ivec2 &operator+=(const ivec2 &other)
@@ -138,7 +138,7 @@ public:
 
     bool operator==(const ivec2 &other) const
     {
-        return y_ == other.y_ && x_ == other.x_;
+        return y == other.y && x == other.x;
     }
 
     bool operator!=(const ivec2 &other) const

@@ -22,7 +22,7 @@ locking_state piece::tick(uint16_t g)
 
     // otherwise, move down
     constexpr int DENOM = 128;
-    int final_y = pos_.y_ + (g / DENOM);
+    int final_y = pos_.y + (g / DENOM);
     if (g < DENOM)
     {
         subpixel_ += g;
@@ -36,7 +36,7 @@ locking_state piece::tick(uint16_t g)
         subpixel_ = 0;
 
     // here, we know for sure the piece can move down at least 1 square
-    for (; pos_.y_ <= final_y; pos_.y_++)
+    for (; pos_.y <= final_y; pos_.y++)
     {
         if (collide(pos_, shift_t::down))
         {
@@ -51,7 +51,7 @@ bool piece::translate(shift_t shift)
     if (shift == shift_t::none or collide(pos_, shift))
         return false;
 
-    pos_.x_ += (shift == shift_t::left) ? -1 : 1;
+    pos_.x += (shift == shift_t::left) ? -1 : 1;
     return true;
 }
 
@@ -114,11 +114,11 @@ bool piece::collide(ivec2 piece_pos, shift_t shift) const
                                [&](const ivec2 &offset)
                                {
                                    ivec2 square_pos = new_pos + offset;
-                                   return square_pos.y_ >= board_.size() or
-                                          square_pos.x_ < 0 or
-                                          square_pos.x_ >= board_[0].size() or
+                                   return square_pos.y >= board_.size() or
+                                          square_pos.x < 0 or
+                                          square_pos.x >= board_[0].size() or
                                           !is_empty(
-                                              board_[square_pos.y_][square_pos.x_]);
+                                              board_[square_pos.y][square_pos.x]);
                                });
 }
 
@@ -129,7 +129,7 @@ bool piece::can_rotate_jlt()
         for (int j = 0; j < 3; j++)
         {
             ivec2 square_pos = pos_ + ivec2{i, j};
-            if (!is_empty(board_[square_pos.y_][square_pos.x_]))
+            if (!is_empty(board_[square_pos.y][square_pos.x]))
             {
                 return (j != 1);
             }
