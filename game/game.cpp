@@ -6,7 +6,10 @@ void tetris::tick()
     {
         update_counters();
         if (state > 0)
-            keys.update();
+        {
+            keys.update_shift();
+            keys.update_rotation();
+        }
         if (state == 30)
         {
             for (int src = board.size()-1, dest = board.size()-1; src > 0; )
@@ -19,13 +22,11 @@ void tetris::tick()
         return;
     }
     // acquire inputs
-    shift_t shift;
-    rotation_t rotation;
-    keys.update();
-    keys.get(shift, rotation);
+    shift_t shift = keys.update_shift();
+    rotation_t rotation = keys.update_rotation();
 
     // perform translation
-    active_piece.rotate(rotation == rotation_t::cw_p);
+    active_piece.rotate(rotation);
     active_piece.translate(shift);
 
     switch(active_piece.tick(level.g()))

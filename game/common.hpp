@@ -39,7 +39,7 @@ public:
      *
      * @return shift_t the shift input
      */
-    shift_t get_shift();
+    shift_t update_shift();
 
     /**
      * @brief Get the rotation input based on the keys pressed in the window.
@@ -47,7 +47,7 @@ public:
      * @param spawn_frame whether the game piece spawns on this frame
      * @return rotation_t the rotation input
      */
-    rotation_t get_rotation(bool spawn_frame = false);
+    rotation_t update_rotation(bool spawn_frame = false);
 
 private:
     static constexpr int K_LEFT = GLFW_KEY_A;

@@ -1,6 +1,6 @@
 #include "common.hpp"
 
-shift_t inputs::get_shift()
+shift_t inputs::update_shift()
 {
     bool k_left_pressed = (glfwGetKey(window, K_LEFT) == GLFW_PRESS);
     bool k_down_pressed = (glfwGetKey(window, K_DOWN) == GLFW_PRESS);
@@ -39,7 +39,7 @@ shift_t inputs::get_shift()
     return (das == 0 or das == DAS) ? shift : shift_t::none;
 }
 
-rotation_t inputs::get_rotation(bool spawn_frame)
+rotation_t inputs::update_rotation(bool spawn_frame)
 {
     if (spawn_frame)
     {
