@@ -35,15 +35,17 @@ void tetris::tick()
     active_piece_.rotate(rotation);
     active_piece_.translate(shift);
 
-    switch (active_piece_.tick(level_.g()))
+    uint16_t gravity = std::max(level_.g(), static_cast<uint16_t>(128*(shift==shift_t::down)));
+
+    switch (active_piece_.tick(gravity))
     {
         case locking_state::tick:
             if (shift == shift_t::down or lock_ < 0)
             {
                 update_counters(false, true, false);
-                for (auto &sq: active_piece_.piece_squares())
-                    board_[sq.y][sq.x] = active_piece_.ty();
-
+                for (auto &[y,x] : active_piece_.piece_squares())
+                    board_[y][x] = active_piece_.ty();
+                
                 // check for line clears
                 for (auto &row: board_)
                 {

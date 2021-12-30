@@ -16,6 +16,11 @@
 class randomizer
 {
 public:
+    /**
+     * @details When the new randomizer object is constructed, the first piece
+     * (which cannot be O, S, and Z piece) is generated and placed in the `next`
+     * variable, which should be acquired using the `next` function.
+     */
     randomizer();
 
     /**
