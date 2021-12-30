@@ -55,11 +55,16 @@ bool piece::translate(shift_t shift)
     return true;
 }
 
-void piece::rotate(bool left)
+void piece::rotate(rotation_t rotation)
 {
+    if (rotation == rotation_t::none)
+    {
+        return;
+    }
+
     int old_orientation = orientation;
 
-    orientation = orientation + (left ? -1 : 1);
+    orientation = orientation + (rotation == rotation_t::ccw ? 1 : -1);
     if (orientation < 0)
         orientation = 3;
     else if (orientation > 3)

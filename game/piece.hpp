@@ -75,11 +75,12 @@ public:
     locking_state tick(uint16_t g);
 
     /**
-     * @brief Translate the piece horizontally, and does nothing if the 
-     * piece is already at the edge of the board.
+     * @brief Translate the piece horizontally unless it collides with another
+     * piece or the edge of the board.
      * @requires the piece to be in a valid position on the board before the
      * 
-     * @param shift the direction to shift. If the direction is none, do nothing.
+     * @param shift the direction to shift. If the direction is none or down, do
+     * nothing.
      * 
      * @return true if the piece is moved, false if the piece cannot make a 
      * valid move.
@@ -87,11 +88,12 @@ public:
     bool translate(shift_t shift);
 
     /**
-     * @brief 
+     * @brief Rotate the piece according to Arika Rotation System.
      * 
-     * @param left 
+     * @param rotation the direction to rotate. If the direction is none, do
+     * nothing.
      */
-    void rotate(bool left);
+    void rotate(rotation_t rotation);
 
 private:
     uint8_t orientation{0};
