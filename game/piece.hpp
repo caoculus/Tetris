@@ -95,6 +95,7 @@ public:
      */
     void rotate(rotation_t rotation);
 
+<<<<<<< Updated upstream
     /**
      * @return the positions of the four squares of the piece.
      */
@@ -110,6 +111,9 @@ public:
     [[nodiscard]] std::array<ivec2, 4> shadow_squares() const;
 
 
+=======
+     
+>>>>>>> Stashed changes
 private:
     uint8_t orientation{0};
     uint8_t subpixel{0};

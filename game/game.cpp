@@ -2,16 +2,17 @@
 
 void tetris::tick()
 {
-    if (state >= 0)
+    if (state > 0)
     {
         update_counters();
-        if (state > 0)
+        if (state > 1 and state <= 30)
         {
             keys.update_shift();
             keys.update_rotation();
         }
         if (state == 30)
         {
+            // line clear animation complete
             for (std::size_t src = board.size() - 1, dest = board.size() - 1;
                  src > 0;)
             {
@@ -22,9 +23,17 @@ void tetris::tick()
         }
         return;
     }
+
+    if (state == 0)
+    {
+        keys.update_rotation(true);
+        // TODO: spawn piece
+        auto new_piece = piece(rng.next(), board);
+    }
+
     // acquire inputs
     shift_t shift = keys.update_shift();
-    rotation_t rotation = keys.update_rotation();
+    rotation_t rotation = keys.update_rotation(); 
 
     // perform translation
     active_piece.rotate(rotation);
@@ -32,17 +41,22 @@ void tetris::tick()
 
     switch (active_piece.tick(level.g()))
     {
-        case locking_state::tick:
-            update_counters(false, false, true);
+        case locking_state::tick: 
+            if (shift == shift_t::down or lock < 0)
+            {
+                auto asdf = active_piece;
+                update_counters(false, true, false);
+            }
+            else
+                update_counters(false, false, true); 
             break;
-        case locking_state::reset:
-            update_counters(false, true, false);
+        case locking_state::reset: 
+            update_counters(false, true, false); 
             break;
-        case locking_state::none:
-            update_counters();
+        case locking_state::none: 
+            update_counters(); 
             break;
-        default:
-            break;
+        default: break;
     }
 
     // check for line clears

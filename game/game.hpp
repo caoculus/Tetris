@@ -26,9 +26,9 @@ private:
     level_counter level;
     inputs keys;
     
-    
-    int clk{}, state{-13}, lock{-13};
-    void update_counters(bool line_clear=false, bool fall1=false, bool land=false);
-
     static constexpr int ARE = 30, LOCK = 30, CLEAR = 41;
+    
+    int clk{}, state{-13}, lock{LOCK};
+    void update_counters(bool line_clear=false, bool fall1=false, bool land=false);
+    
 };
