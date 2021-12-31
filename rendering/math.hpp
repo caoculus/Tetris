@@ -5,7 +5,7 @@ struct vec2
 {
     T x, y;
     constexpr vec2() : x{},y{}{}
-    constexpr vec2(T _x, T _y) : x{_x},y{_y}{}
+    constexpr vec2(T x, T y) : x{x}, y{y}{}
     
     constexpr vec2 operator+(const vec2& rhs) const { return vec2{x + rhs.x, y + rhs.y}; }
     constexpr vec2 operator-(const vec2& rhs) const { return vec2{x - rhs.x, y - rhs.y}; }

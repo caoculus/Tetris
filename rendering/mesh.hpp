@@ -13,7 +13,7 @@ protected:
     unsigned int ibo {}, vbo {}, vao {};
     sampler &sampler_;
 
-    mesh(sampler &__sampler);
+    mesh(sampler &sampler);
 
     void set_vertex_layout();
 

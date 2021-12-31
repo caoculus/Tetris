@@ -92,7 +92,7 @@ private:
     /**
      * @brief The width and height of the texture atlas.
      */
-    int width_, height_;
+    int width_{}, height_{};
 
     /**
      * @brief the map between the objects and their normalized texture
@@ -103,7 +103,7 @@ private:
     /**
      * @brief the OpenGL id of the texture unit. 
      */
-    unsigned int id_;
+    unsigned int id_{};
 
     /**
      * @brief load the locations of objects into the map so they can be

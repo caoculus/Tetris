@@ -48,7 +48,7 @@ private:
     /**
      * @brief The map of known uniform locations.
      */
-    mutable std::unordered_map<std::string, unsigned int> uniforms_;
+    mutable std::unordered_map<std::string, int> uniforms_;
 
     /**
      * @brief Compile and link the shader to the active program.

@@ -6,7 +6,7 @@
 class bkgd : public mesh
 {
 public:
-    bkgd(sampler &__sampler, level_counter &level);
+    bkgd(sampler &sampler, level_counter &level);
 
     void draw() override;
 

@@ -2,8 +2,8 @@
 #include <GL/glew.h>
 
 #include <iostream>
-mesh::mesh(sampler &__sampler) 
-    : sampler_(__sampler) 
+mesh::mesh(sampler &sampler)
+    : sampler_(sampler)
 {
     glGenVertexArrays(1, &vao);
     glGenBuffers(1, &ibo);
