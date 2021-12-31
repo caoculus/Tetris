@@ -119,14 +119,14 @@ sampler::tex_rect sampler::operator() (const std::string &thing, std::size_t ind
     return locs_.at(thing)[index];
 }
 
-layout_parsing_error::layout_parsing_error(const std::string &line, std::size_t index)
+layout_parsing_error::layout_parsing_error(const std::string &thing, std::size_t index)
 {
     std::stringstream ss;
-    ss << "Error occured parsing " << line << " index " << index << ".";
+    ss << "Error occured parsing " << thing << " index " << index << ".";
     msg = ss.str();
 }
 
-layout_parsing_error::layout_parsing_error(const std::string &read_failure)
+layout_parsing_error::layout_parsing_error(const std::string &property)
 {
-    msg = "Failed to read " + read_failure + ".";
+    msg = "Failed to read " + property + ".";
 }

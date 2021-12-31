@@ -29,8 +29,18 @@ private:
     };
 
 public:
-    sampler(const std::string &_global_texture_atlas_path);
+    /**
+     * @brief Construct a new sampler object to sample the a texture atlas.
+     * 
+     * @param _global_texture_atlas_path the path to the texture atlas. Make 
+     * sure in the same directory, there is a .layout file.
+     */
+    explicit sampler(const std::string &_global_texture_atlas_path);
 
+    /**
+     * @brief Destroy the sampler object by deleteing the texture off OpenGL
+     * 
+     */
     ~sampler();
 
     /**
@@ -124,8 +134,23 @@ private:
 class layout_parsing_error : public std::exception
 {
 public:
-    layout_parsing_error(const std::string &line, std::size_t index);
-    layout_parsing_error(const std::string &read_failure);
+    /**
+     * @brief Construct a new layout parsing error when the error occurs during
+     * the parsing stage of the individual pixel coordinates.
+     * 
+     * @param thing the thing which failed to parse.
+     * @param index the index whose coordinates cannot be parsed.
+     */
+    layout_parsing_error(const std::string &thing, std::size_t index);
+
+    /**
+     * @brief Construct a new layout parsing error when the error occurs during
+     * any other stage.
+     * 
+     * @param property the property or properties that caused the read 
+     * failure.
+     */
+    layout_parsing_error(const std::string &property);
 
     const char *what() const noexcept override { return msg.c_str(); }
 private:
