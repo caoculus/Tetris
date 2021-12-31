@@ -1,12 +1,12 @@
 #include <GL/glew.h>
 #include "background.hpp"
-
+#include <iostream>
 bkgd::bkgd(sampler &__sampler, level_counter &level)
-    : mesh(__sampler), level_(level)
+    : mesh(__sampler), level_(level), section_(level.section())
 {
     bind();
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_), indices_.data(), GL_STATIC_DRAW);
-    auto coords = sampler_("bkgd", level.section());
+    auto coords = sampler_("bkgd", section_);
 
     vertices_ = {
         -1.0f, -1.0f, coords.Nx, coords.Ny,
@@ -21,9 +21,25 @@ bkgd::bkgd(sampler &__sampler, level_counter &level)
 }
 
 
-void bkgd::draw() const
+void bkgd::draw()
 {
     bind();
+    std::cout << level_.section();
+    if (section_ != level_.section()) 
+    {
+        section_ = level_.section();
+        auto coords = sampler_("bkgd", section_);
+
+        vertices_ = {
+            -1.0f, -1.0f, coords.Nx, coords.Ny,
+            -1.0f,  1.0f, coords.Nx, coords.Py,
+            1.0f,  -1.0f, coords.Px, coords.Ny,
+            1.0f,   1.0f, coords.Px, coords.Py
+        };
+
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_), vertices_.data(), GL_DYNAMIC_DRAW);
+    }
+
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     unbind();
 }

@@ -7,7 +7,7 @@ class mesh
 public:
     virtual ~mesh();
 
-    virtual void draw() const = 0;
+    virtual void draw() = 0;
 
 protected:
     unsigned int ibo {}, vbo {}, vao {};

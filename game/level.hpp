@@ -28,6 +28,9 @@ public:
 
     level_counter() = default;
 
+    level_counter(const level_counter &) = delete;
+    level_counter &operator=(const level_counter &) = delete;
+
     /**
      * @brief update the level counter upon the spawning of a new piece. 
      * 
@@ -37,16 +40,6 @@ public:
      * @return reference of *this to allow chaining.
      */
     level_counter &operator++() noexcept;
-
-    /**
-     * @brief update the level counter upon the locking of a piece.
-     * 
-     * @details The level counter is incremented by 1 if the current level does
-     * not end with 99, or is 998.
-     * 
-     * @return the copy of this before the increment has taken place.
-     */
-    level_counter operator++(int) noexcept;
 
     /**
      * @brief update of the level counter upon a line clear of n lines. 
@@ -73,7 +66,7 @@ public:
      */
     operator int() const noexcept;
 
-    [[nodiscard]] constexpr std::size_t section() const noexcept { return level_/100; }
+    [[nodiscard]] std::size_t section() const noexcept { return level_/100; }
 
 private:
     int level_{}, step_{};

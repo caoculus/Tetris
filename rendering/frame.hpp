@@ -8,7 +8,7 @@ class frame : public mesh
 public:
     frame(sampler &__sampler, const GLFWvidmode *mode);
 
-    void draw() const override;
+    void draw() override;
     
 private:
     static constexpr std::array<unsigned int, 6> indices_ = {

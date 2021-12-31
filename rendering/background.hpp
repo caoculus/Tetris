@@ -8,15 +8,17 @@ class bkgd : public mesh
 public:
     bkgd(sampler &__sampler, level_counter &level);
 
-    void draw() const override;
+    void draw() override;
 
 private:
-    static constexpr std::array<unsigned int, 6> indices_ = {
+    static constexpr std::array<unsigned int, 6> indices_ {
         0, 1, 2,
         1, 2, 3
     };
 
     std::array<float, 16> vertices_;
 
-    level_counter level_;
+    level_counter &level_;
+
+    std::size_t section_;
 };

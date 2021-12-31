@@ -7,13 +7,6 @@ level_counter &level_counter::operator++() noexcept
     return *this;
 }
 
-level_counter level_counter::operator++(int) noexcept
-{
-    auto tmp = *this;
-    ++*this;
-    return tmp;
-}
-
 level_counter &level_counter::operator+= (int n) noexcept
 {
     level_ = std::min(999, level_ + n);

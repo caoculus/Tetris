@@ -26,7 +26,7 @@ frame::frame(sampler &__sampler, const GLFWvidmode *mode)
     unbind();
 }
 
-void frame::draw() const
+void frame::draw()
 {
     bind();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);

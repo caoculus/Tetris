@@ -103,6 +103,8 @@ int main()
 
         bkgd_.draw();
         f.draw();
+        level+=1;
+        std::cout << level << std::endl;
 
         glfwSwapBuffers(window);
 
