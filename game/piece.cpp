@@ -1,4 +1,5 @@
 #include "piece.hpp"
+#include "level.hpp"
 #include <stdexcept>
 #include <algorithm>
 
@@ -21,29 +22,29 @@ locking_state piece::tick(uint16_t g)
     }
 
     // otherwise, move down
-    constexpr int DENOM = 128;
-    int final_y = pos_.y + (g / DENOM);
-    if (g < DENOM)
+    int final_y = pos_.y + (g / level_counter::DENOM);
+    if (g < level_counter::DENOM)
     {
         subpixel_ += g;
-        if (subpixel_ < DENOM) // the piece doesn't move down even though it can
+        // the piece doesn't move down even though it can
+        if (subpixel_ < level_counter::DENOM)
             return locking_state::none;
 
         final_y++;
-        subpixel_ -= DENOM;
+        subpixel_ -= level_counter::DENOM;
     }
-    else
-        subpixel_ = 0;
 
     // here, we know for sure the piece can move down at least 1 square
-    for (; pos_.y <= final_y; pos_.y++)
+    for (; pos_.y < final_y; pos_.y++)
     {
         if (collide(pos_, shift_t::down))
         {
             return locking_state::tick;
         }
     }
-    return locking_state::reset;
+
+    return collide(pos_, shift_t::down) ? locking_state::tick
+                                        : locking_state::none;
 }
 
 bool piece::translate(shift_t shift)
@@ -55,11 +56,11 @@ bool piece::translate(shift_t shift)
     return true;
 }
 
-void piece::rotate(rotation_t rotation)
+bool piece::rotate(rotation_t rotation)
 {
     if (rotation == rotation_t::none)
     {
-        return;
+        return true;
     }
 
     int old_orientation = orientation_;
@@ -72,41 +73,44 @@ void piece::rotate(rotation_t rotation)
 
     if (collide(pos_, shift_t::none))
     {
-        if (type_ == square::I or
-            ((type_ == square::J or type_ == square::L or type_ == square::T) and
-             !can_rotate_jlt()))
+        if (type_ == square::I or type_ == square::O or
+            ((type_ == square::J or type_ == square::L or
+              type_ == square::T) and !can_rotate_jlt()))
         {
             orientation_ = old_orientation;
-            return;
+            return false;
         }
         if (translate(shift_t::right))
         {
-            return;
+            return true;
         }
         if (translate(shift_t::left))
         {
-            return;
+            return true;
         }
         orientation_ = old_orientation;
+        return false;
     }
+
+    return true;
 }
 
-bool piece::collide(ivec2 piece_pos, shift_t shift) const
+bool piece::collide(ivec2 pos, shift_t shift) const
 {
     ivec2 new_pos{};
     switch (shift)
     {
         case shift_t::none:
-            new_pos = piece_pos;
+            new_pos = pos;
             break;
         case shift_t::left:
-            new_pos = piece_pos + ivec2{0, -1};
+            new_pos = pos + ivec2{0, -1};
             break;
         case shift_t::down:
-            new_pos = piece_pos + ivec2{1, 0};
+            new_pos = pos + ivec2{1, 0};
             break;
         case shift_t::right:
-            new_pos = piece_pos + ivec2{0, 1};
+            new_pos = pos + ivec2{0, 1};
             break;
     }
 
@@ -124,9 +128,10 @@ bool piece::collide(ivec2 piece_pos, shift_t shift) const
 
 bool piece::can_rotate_jlt()
 {
-    for (int i = 0; i < 3; i++) for (int j = 0; j < 3; j++) 
-        if (!is_empty(board_[pos_.y+i][pos_.x+j]))
-            return (j != 1);
+    for (int i = 0; i < 3; i++)
+        for (int j = 0; j < 3; j++)
+            if (!is_empty(board_[pos_.y + i][pos_.x + j]))
+                return (j != 1);
     return true;
 }
 
@@ -140,13 +145,13 @@ std::array<ivec2, 4> piece::shadow_squares() const
     return squares(shadow_position());
 }
 
-std::array<ivec2, 4> piece::squares(ivec2 piece_pos) const
+std::array<ivec2, 4> piece::squares(ivec2 pos) const
 {
     std::array<ivec2, 4> squares{};
 
     for (int i = 0; i < 4; i++)
     {
-        squares[i] = piece_pos + LUT[index(type_)][orientation_][i];
+        squares[i] = pos + LUT[index(type_)][orientation_][i];
     }
 
     return squares;
@@ -164,10 +169,12 @@ ivec2 piece::shadow_position() const
     return shadow_pos;
 }
 
-void piece::reset(square type)
+bool piece::spawn(square type, rotation_t rotation)
 {
     pos_ = ivec2{0, 3};
     orientation_ = 0;
     subpixel_ = 0;
     type_ = type;
+    return (rotation == rotation_t::none and !collide(pos_, shift_t::none)) or
+           rotate(rotation);
 }
