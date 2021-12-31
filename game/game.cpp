@@ -118,9 +118,8 @@ inline void tetris::move_piece()
     active_piece_.translate(shift);
 
     // effective gravity
-    uint16_t g = std::max(level_.g(), static_cast<uint16_t>(128 *
-                                                            (shift ==
-                                                             shift_t::down)));
+    uint16_t g = std::max(level_.g(),
+        static_cast<uint16_t>(128 * (shift == shift_t::down)));
 
     // update lock_
     switch (active_piece_.tick(g))
@@ -140,6 +139,7 @@ inline void tetris::move_piece()
     {
         draw_piece();
         clear_lines();
+        lock_ = LOCK;
         state_ = ARE;
     }
 }

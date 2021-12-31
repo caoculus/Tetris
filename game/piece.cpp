@@ -115,15 +115,15 @@ bool piece::collide(ivec2 pos, shift_t shift) const
     }
 
     return std::ranges::any_of(LUT[index(type_)][orientation_],
-                               [&](const ivec2 &offset)
-                               {
-                                   ivec2 square_pos = new_pos + offset;
-                                   return square_pos.y >= board_.size() or
-                                          square_pos.x < 0 or
-                                          square_pos.x >= board_[0].size() or
-                                          !is_empty(
-                                              board_[square_pos.y][square_pos.x]);
-                               });
+        [&](const ivec2 &offset)
+        {
+            ivec2 square_pos = new_pos + offset;
+            return square_pos.y >= board_.size() or
+                   square_pos.x < 0 or
+                   square_pos.x >= board_[0].size() or
+                   !is_empty(
+                       board_[square_pos.y][square_pos.x]);
+        });
 }
 
 bool piece::can_rotate_jlt()
