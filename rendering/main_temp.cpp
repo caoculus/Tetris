@@ -68,10 +68,6 @@ int main()
     // set frame rate to 60 fps
     glfwSwapInterval(1);
 
-    unsigned int vao;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-
     // draw background
     // draw frame
     // draw the "dead pieces"

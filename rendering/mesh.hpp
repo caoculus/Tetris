@@ -5,15 +5,15 @@
 class mesh
 {
 public:
-    mesh(sampler &__sampler);
-
     virtual ~mesh();
 
     virtual void draw() const = 0;
 
 protected:
-    unsigned int ibo {}, vbo {};
+    unsigned int ibo {}, vbo {}, vao {};
     sampler &sampler_;
+
+    mesh(sampler &__sampler);
 
     void set_vertex_layout();
 
