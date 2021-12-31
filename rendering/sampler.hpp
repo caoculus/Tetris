@@ -1,13 +1,8 @@
 #pragma once
 
-#include <array>
 #include <string>
-#include "math.hpp"
-#include <cstdint>
 #include <unordered_map>
 #include <vector>
-#include <fstream>
-#include <sstream>
 
 /**
  * @brief sample textures from a .png texture atlas, alongside the layout of 
@@ -43,19 +38,22 @@ public:
      * 
      * @param slot the slot to bind the texture atlas to. Default is 0.
      */
-    void bind(unsigned int slot = 0);
+    void bind(unsigned int slot = 0) const noexcept;
 
     /**
      * @brief unbind the texture atlas from the given texture slot in OpenGL.
      */
-    void unbind();
+    void unbind() const noexcept;
 
     /**
      * @brief Obtain the normalized texture coordinates for a given object in
      * the game stored in the texture atlas.
      * 
      * @param thing the name of the object in the game.
-     * @param index the index, if there are multiple objects of the same name.
+     * @throws out_of_range exception if the thing is wrong.
+     * @param index the index, only if there are multiple objects of the same 
+     * name.
+     * @throws out_of_range exception if the index is out of range.
      * @return tex_rect the normalized texture coordinates for the given object.
      */
     tex_rect operator() (const std::string &thing, std::size_t index=0) const;
@@ -102,4 +100,34 @@ private:
      * @pre the image must be a .png file.
      */
     void load_texture(const std::string &_global_texture_atlas_path);
+};
+
+/**
+ * @brief exception that is thrown when there is some problem preventing the
+ * texture image from loading.
+ */
+class texture_loading_error : public std::exception
+{
+public:
+    texture_loading_error(const std::string &_msg)
+        : msg(_msg) {}
+
+    const char *what() const noexcept override { return msg.c_str(); }
+private:
+    std::string msg;
+};
+
+/**
+ * @brief exception that is thrown when there is some problem preventing the
+ * layout of the texture atlas to be parsed. 
+ */
+class layout_parsing_error : public std::exception
+{
+public:
+    layout_parsing_error(const std::string &line, std::size_t index);
+    layout_parsing_error(const std::string &read_failure);
+
+    const char *what() const noexcept override { return msg.c_str(); }
+private:
+    std::string msg;
 };

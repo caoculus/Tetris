@@ -5,13 +5,15 @@
 
 #include <GL/glew.h>
 #include <CImg.h>
-#include <vector>
+#include <cstdint>
+#include <fstream>
+#include <sstream>
 
 sampler::sampler(const std::string &_texture_atlas_path)
 {
     std::size_t last_dot = _texture_atlas_path.find_last_of('.');
     if (_texture_atlas_path.substr(last_dot) != ".png")
-        throw std::runtime_error("sampler::sampler: texture atlas must be a .png file");
+        throw texture_loading_error("texture atlas must be a .png file");
     
     std::string atlas_layout_path = _texture_atlas_path.substr(0, last_dot) + ".layout";
     load_atlas(atlas_layout_path);
@@ -22,14 +24,14 @@ void sampler::load_atlas(const std::string &_atlas_layout_path)
 {
     std::ifstream atlas_layout(_atlas_layout_path);
     if (!atlas_layout.is_open())
-        throw std::runtime_error("sampler::sampler: failed to open atlas layout file");
+        throw std::runtime_error("failed to open atlas layout file");
     
     std::string line;
     std::getline(atlas_layout, line);
     std::stringstream ss(line);
     ss >> width_ >> height_;
     if (ss.fail())
-        throw std::runtime_error("failed to read width and height");
+        throw layout_parsing_error("width and height");
 
     while (std::getline(atlas_layout, line))
     {
@@ -40,7 +42,7 @@ void sampler::load_atlas(const std::string &_atlas_layout_path)
         std::size_t num, i;
         std::stringstream(line) >> name >> num;
         if (ss.fail())
-            throw std::runtime_error("sampler::sampler: failed to parse atlas layout file");
+            throw layout_parsing_error("name and number of elements");
         
         std::vector<tex_rect> elems;
         elems.reserve(num);
@@ -50,7 +52,7 @@ void sampler::load_atlas(const std::string &_atlas_layout_path)
             int x1, y1, x2, y2;
             std::stringstream(line) >> x1 >> y1 >> x2 >> y2;
             if (ss.fail())
-                throw std::runtime_error("sampler::sampler: failed to parse atlas layout file");
+                throw layout_parsing_error(line, i);
 
             elems.push_back(tex_rect{
                 static_cast<float>(x1 + width_*(x1<0)) / width_,
@@ -70,11 +72,11 @@ void sampler::load_texture(const std::string &_texture_atlas_path)
     cimg_library::CImg<uint8_t> _tex(_texture_atlas_path.c_str());
     
     if (_tex.spectrum() != 4)
-        throw std::runtime_error("Texture atlas must be RGBA");
+        throw texture_loading_error("Texture atlas must be RGBA.");
     if (_tex.width() != width_)
-        throw std::runtime_error("Texture atlas width is incorrect");
+        throw texture_loading_error("Texture atlas width is incorrect");
     if (_tex.height() != height_)
-        throw std::runtime_error("Texture atlas height is incorrect");
+        throw texture_loading_error("Texture atlas height is incorrect");
     
     std::vector<uint8_t> tex (width_ * height_ * 4, 0);
 
@@ -101,13 +103,13 @@ sampler::~sampler()
     glDeleteTextures(1, &id_);
 }
 
-void sampler::bind(unsigned int slot)
+void sampler::bind(unsigned int slot) const noexcept
 {
     glActiveTexture(GL_TEXTURE0 + slot);
     glBindTexture(GL_TEXTURE_2D, id_);
 }
 
-void sampler::unbind()
+void sampler::unbind() const noexcept
 {
     glBindTexture(GL_TEXTURE_2D, 0);
 }
@@ -115,4 +117,16 @@ void sampler::unbind()
 sampler::tex_rect sampler::operator() (const std::string &thing, std::size_t index) const
 {
     return locs_.at(thing)[index];
+}
+
+layout_parsing_error::layout_parsing_error(const std::string &line, std::size_t index)
+{
+    std::stringstream ss;
+    ss << "Error occured parsing " << line << " index " << index << ".";
+    msg = ss.str();
+}
+
+layout_parsing_error::layout_parsing_error(const std::string &read_failure)
+{
+    msg = "Failed to read " + read_failure + ".";
 }
