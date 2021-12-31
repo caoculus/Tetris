@@ -13,7 +13,7 @@ public:
 private:
     static constexpr std::array<unsigned int, 6> indices_ = {
         0, 1, 2,
-        2, 3, 0
+        1, 2, 3
     };
 
     std::array<float, 16> vertices_;

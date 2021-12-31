@@ -4,6 +4,7 @@
 bkgd::bkgd(sampler &__sampler, level_counter &level)
     : mesh(__sampler), level_(level)
 {
+    bind();
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_), indices_.data(), GL_STATIC_DRAW);
     auto coords = sampler_("bkgd", level.section());
 
@@ -16,6 +17,7 @@ bkgd::bkgd(sampler &__sampler, level_counter &level)
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_), vertices_.data(), GL_DYNAMIC_DRAW);
     set_vertex_layout();
+    unbind();
 }
 
 

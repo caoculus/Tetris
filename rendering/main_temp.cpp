@@ -6,6 +6,7 @@
 #include "sampler.hpp"
 #include "shader.hpp"
 #include "game/level.hpp"
+#include "background.hpp"
 
 #include <iostream>
 
@@ -70,7 +71,6 @@ int main()
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
 
-    unsigned int vbo;
     // draw background
     // draw frame
     // draw the "dead pieces"
@@ -78,16 +78,14 @@ int main()
     // draw the shadow
     // draw the "next piece"
     // draw the numbers
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-    unsigned int ibo;
-    glGenBuffers(1, &ibo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
     sampler s ("../assets/texatlas.png");
     s.bind(10);
 
+    level_counter level;
+
+    bkgd bkgd_(s, level);
 
     shader _s;
     _s.bind();
@@ -105,8 +103,8 @@ int main()
             std::cout << "W pressed" << std::endl;
         }
 
-        // draw elements
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+        bkgd_.draw();
+
 
         glfwSwapBuffers(window);
 
