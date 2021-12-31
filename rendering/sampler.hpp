@@ -34,6 +34,12 @@ public:
      * 
      * @param _global_texture_atlas_path the path to the texture atlas. Make 
      * sure in the same directory, there is a .layout file.
+     *
+     * @throws texture_loading_error if the texture atlas is not RGBA or if the
+     * dimensions do not match the dimensions of the .layout file.
+     * @throws CImg::IOException if the path is incorrect.
+     * @throws std::runtime_error if there is no atlas .layout file.
+     * @throws layout_parsing_error if the .layout file has invalid syntax.
      */
     explicit sampler(const std::string &_global_texture_atlas_path);
 
@@ -71,18 +77,18 @@ public:
     /** 
      * @return the width of the texture atlas.
      */
-    constexpr std::size_t width() const { return width_; }
+    constexpr int width() const { return width_; }
 
     /**
      * @return the height of the texture atlas.
      */
-    constexpr std::size_t height() const { return height_; }
+    constexpr int height() const { return height_; }
 
 private:
     /**
      * @brief The width and height of the texture atlas.
      */
-    std::size_t width_, height_;
+    int width_, height_;
 
     /**
      * @brief the map between the objects and their normalized texture
