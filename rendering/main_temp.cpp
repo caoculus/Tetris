@@ -81,11 +81,17 @@ int main()
 
 
     // 2d rectangle
+    std::cout << s("number", 2).Nx << std::endl;
+    std::cout << s("number", 2).Ny << std::endl;
+    std::cout << s("number", 2).Px << std::endl;
+    std::cout << s("number", 2).Py << std::endl;
+
+
     float vertices[] = {
-        -1.0f, -1.0f, sampler::BKGD[8].Nx, sampler::BKGD[8].Ny,
-        1.0f, -1.0f,  sampler::BKGD[8].Px, sampler::BKGD[8].Ny,
-        -1.0f, 1.0f,  sampler::BKGD[8].Nx, sampler::BKGD[8].Py,
-        1.0f, 1.0f,   sampler::BKGD[8].Px, sampler::BKGD[8].Py
+        -1.0f, -1.0f, s("number", 2).Nx, s("number", 2).Ny,
+        1.0f, -1.0f, s("number", 2).Px, s("number", 2).Ny,
+        -1.0f, 1.0f, s("number", 2).Nx, s("number", 2).Py,
+        1.0f, 1.0f, s("number", 2).Px, s("number", 2).Py,
     };
 
     // indices

@@ -4,60 +4,102 @@
 #include <string>
 #include "math.hpp"
 #include <cstdint>
+#include <unordered_map>
+#include <vector>
+#include <fstream>
+#include <sstream>
 
+/**
+ * @brief sample textures from a .png texture atlas, alongside the layout of 
+ * the texture atlas in a .layout file, to be used in the game.
+ * 
+ * @warning The .layout file MUST have the same filename as the .png file, but 
+ * with the extension .layout instead of .png.
+ * 
+ * @note The .layout file is a text file with the following format:
+ * 
+ */
 class sampler
 {
 private:
+    /**
+     * @brief To obtain the normalized texture coordinates (between 0 and 1),
+     * this struct would be returned by the sampler. Nx and Ny for the negative
+     * x and y vertices of the rect, and Px and Py for the positive x and y 
+     * vertices of the rect. 
+     */
     struct tex_rect
     {
         float Nx, Py, Px, Ny;
     };
 
-    unsigned int id_;
 public:
     sampler(const std::string &_global_texture_atlas_path);
 
     ~sampler();
 
+    /**
+     * @brief binds the texture atlas to the given texture slot in OpenGL.
+     * 
+     * @param slot the slot to bind the texture atlas to. Default is 0.
+     */
     void bind(unsigned int slot = 0);
 
+    /**
+     * @brief unbind the texture atlas from the given texture slot in OpenGL.
+     */
     void unbind();
 
-    static constexpr std::size_t TEX_WIDTH = 1920, TEX_HEIGHT = 6780;
+    /**
+     * @brief Obtain the normalized texture coordinates for a given object in
+     * the game stored in the texture atlas.
+     * 
+     * @param thing the name of the object in the game.
+     * @param index the index, if there are multiple objects of the same name.
+     * @return tex_rect the normalized texture coordinates for the given object.
+     */
+    tex_rect operator() (const std::string &thing, std::size_t index=0) const;
+
+    /** 
+     * @return the width of the texture atlas.
+     */
+    constexpr std::size_t width() const { return width_; }
+
+    /**
+     * @return the height of the texture atlas.
+     */
+    constexpr std::size_t height() const { return height_; }
 
 private:
-    static constexpr float PIECES_TOP = 5880.0f/TEX_HEIGHT;
-    static constexpr float PIECE_WIDTH = 25.0f/TEX_WIDTH;
-    static constexpr float PIECES_BOT = 5905.0f/TEX_HEIGHT;
-public:
-    static constexpr std::array<tex_rect, 10> BKGD = {{
-        {0.0f, 0.0f, 1.0f, 1080.0f/TEX_HEIGHT},
-        {0.0f, 1080.0f/TEX_HEIGHT, 1.0f, 2 * 1080.0f/TEX_HEIGHT},
-        {0.0f, 2 * 1080.0f/TEX_HEIGHT, 1.0f, 3 * 1080.0f/TEX_HEIGHT},
-        {0.0f, 3 * 1080.0f/TEX_HEIGHT, 953.0f/TEX_WIDTH, (3*1080 + 450.0f)/TEX_HEIGHT},
-        {0.0f, 3700.0f/TEX_HEIGHT, 1030.0f/TEX_WIDTH, 4280.0f/TEX_HEIGHT},
-        {0.0f, 4280.0f/TEX_HEIGHT, 887.0f/TEX_WIDTH, (4280.0f+512.0f)/TEX_HEIGHT},
-        {0.0f, 4800.0f/TEX_HEIGHT, 960.0f/TEX_WIDTH, 5340.0f/TEX_HEIGHT},
-        {0.0f, 5340.0f/TEX_HEIGHT, 960.0f/TEX_WIDTH, 5880.0f/TEX_HEIGHT},
-        {1.0f - 672.0f/TEX_WIDTH, 3240.0f/TEX_HEIGHT, 1.0f, 3740.0f/TEX_HEIGHT},
-        {0.0f, 5880.0f/TEX_HEIGHT, 1660.0f/TEX_WIDTH, 1.0f}
-    }};
+    /**
+     * @brief The width and height of the texture atlas.
+     */
+    std::size_t width_, height_;
 
-    static constexpr std::array<tex_rect, 8> PIECE = {{
-        {PIECES_TOP, 1.0f-8*PIECE_WIDTH, PIECES_BOT, 1.0f-7*PIECE_WIDTH},
-        {PIECES_TOP, 1.0f-7*PIECE_WIDTH, PIECES_BOT, 1.0f-6*PIECE_WIDTH},
-        {PIECES_TOP, 1.0f-6*PIECE_WIDTH, PIECES_BOT, 1.0f-5*PIECE_WIDTH},
-        {PIECES_TOP, 1.0f-3*PIECE_WIDTH, PIECES_BOT, 1.0f-2*PIECE_WIDTH},
-        {PIECES_TOP, 1.0f-PIECE_WIDTH, PIECES_BOT, 1.0f},
-        {PIECES_TOP, 1.0f-5*PIECE_WIDTH, PIECES_BOT, 1.0f-4*PIECE_WIDTH},
-        {PIECES_TOP, 1.0f-2*PIECE_WIDTH, PIECES_BOT, 1.0f-PIECE_WIDTH},
-        {PIECES_TOP, 1.0f-4*PIECE_WIDTH, PIECES_BOT, 1.0f-3*PIECE_WIDTH}
-    }};
+    /**
+     * @brief the map between the objects and their normalized texture
+     * coordinates, which are read from the layout file. 
+     */
+    std::unordered_map<std::string, std::vector<tex_rect>> locs_;
 
-    static constexpr tex_rect FRAME {};
+    /**
+     * @brief the OpenGL id of the texture unit. 
+     */
+    unsigned int id_;
 
-    static constexpr std::array<tex_rect, 10> NUMBER = {{
+    /**
+     * @brief load the locations of objects into the map so they can be
+     * referenced by the renderer.
+     * 
+     * @param _atlas_layout_path the path to the layout file.
+     */
+    void load_atlas(const std::string &_atlas_layout_path);
 
-    }};
-
+    /**
+     * @brief load the texture into OpenGL to be used by the renderer.
+     * 
+     * @param _global_texture_atlas_path the path to the texture atlas.
+     * @pre the image must be a .png file.
+     */
+    void load_texture(const std::string &_global_texture_atlas_path);
 };
