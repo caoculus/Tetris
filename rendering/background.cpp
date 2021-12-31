@@ -24,8 +24,7 @@ bkgd::bkgd(sampler &sampler, level_counter &level)
 void bkgd::draw()
 {
     bind();
-    std::cout << level_.section();
-    if (section_ != level_.section()) 
+    if (section_ != level_.section())
     {
         section_ = level_.section();
         auto coords = sampler_("bkgd", section_);
