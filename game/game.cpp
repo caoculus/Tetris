@@ -154,6 +154,8 @@ inline void tetris::draw_piece()
 
 inline void tetris::clear_lines()
 {
+    int num_cleared = 0;
+
     for (auto &row: board_)
     {
         // find first element where is_empty is true
@@ -162,7 +164,18 @@ inline void tetris::clear_lines()
         {
             // clear the row
             std::fill(row.begin(), row.end(), square::clear);
-            line_clear_ = true;
+            ++num_cleared;
         }
+    }
+
+    // update level based on num_cleared and set line clear flag
+    if (num_cleared > 0)
+    {
+        line_clear_ = true;
+        level_ += num_cleared;
+    }
+    else
+    {
+        ++level_;
     }
 }
