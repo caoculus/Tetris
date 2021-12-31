@@ -2,6 +2,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <utility>
 #include <vector>
 
 /**
@@ -125,8 +126,8 @@ private:
 class texture_loading_error : public std::exception
 {
 public:
-    texture_loading_error(const std::string &_msg)
-        : msg(_msg) {}
+    explicit texture_loading_error(std::string _msg)
+        : msg(std::move(_msg)) {}
 
     const char *what() const noexcept override { return msg.c_str(); }
 private:
@@ -156,7 +157,7 @@ public:
      * @param property the property or properties that caused the read 
      * failure.
      */
-    layout_parsing_error(const std::string &property);
+    explicit layout_parsing_error(const std::string &property);
 
     const char *what() const noexcept override { return msg.c_str(); }
 private:
