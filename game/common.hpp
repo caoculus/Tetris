@@ -146,4 +146,3 @@ public:
         return !(*this == other);
     }
 };
-
