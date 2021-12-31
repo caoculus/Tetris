@@ -76,16 +76,16 @@ int main()
     glGenBuffers(1, &ibo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 
-    sampler s ("../assets/lvl0xx.png");
+    sampler s ("../assets/texatlas.png");
     s.bind(10);
 
 
     // 2d rectangle
     float vertices[] = {
-        -1.0f, -1.0f, 0.0f, 0.0f,
-        1.0f, -1.0f, 1.0f, 0.0f,
-        -1.0f, 1.0f, 0.0f, 1.0f, 
-        1.0f, 1.0f, 1.0f, 1.0f 
+        -1.0f, -1.0f, sampler::BKGD[8].Nx, sampler::BKGD[8].Ny,
+        1.0f, -1.0f,  sampler::BKGD[8].Px, sampler::BKGD[8].Ny,
+        -1.0f, 1.0f,  sampler::BKGD[8].Nx, sampler::BKGD[8].Py,
+        1.0f, 1.0f,   sampler::BKGD[8].Px, sampler::BKGD[8].Py
     };
 
     // indices
