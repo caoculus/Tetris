@@ -1,10 +1,17 @@
 #include "mesh.hpp"
 #include <GL/glew.h>
 
-mesh::mesh()
+mesh::mesh(sampler &__sampler) 
+    : sampler_(__sampler) 
 {
     glGenBuffers(1, &ibo);
     glGenBuffers(1, &vbo);
+}
+
+mesh::~mesh() 
+{
+    glDeleteBuffers(1, &ibo);
+    glDeleteBuffers(1, &vbo);
 }
 
 void mesh::set_vertex_layout()

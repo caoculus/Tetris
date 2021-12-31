@@ -50,6 +50,9 @@ public:
      */
     ~sampler();
 
+    sampler(const sampler &) = delete;
+    sampler &operator=(const sampler &) = delete;
+
     /**
      * @brief binds the texture atlas to the given texture slot in OpenGL.
      * 

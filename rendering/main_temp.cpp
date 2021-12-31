@@ -5,6 +5,7 @@
 
 #include "sampler.hpp"
 #include "shader.hpp"
+#include "game/level.hpp"
 
 #include <iostream>
 
@@ -70,6 +71,13 @@ int main()
     glBindVertexArray(vao);
 
     unsigned int vbo;
+    // draw background
+    // draw frame
+    // draw the "dead pieces"
+    // draw the "active piece"
+    // draw the shadow
+    // draw the "next piece"
+    // draw the numbers
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
@@ -80,36 +88,6 @@ int main()
     sampler s ("../assets/texatlas.png");
     s.bind(10);
 
-
-    // 2d rectangle
-    std::cout << s("number", 2).Nx << std::endl;
-    std::cout << s("number", 2).Ny << std::endl;
-    std::cout << s("number", 2).Px << std::endl;
-    std::cout << s("number", 2).Py << std::endl;
-
-
-    float vertices[] = {
-        -1.0f, -1.0f, s("number", 2).Nx, s("number", 2).Ny,
-        1.0f, -1.0f, s("number", 2).Px, s("number", 2).Ny,
-        -1.0f, 1.0f, s("number", 2).Nx, s("number", 2).Py,
-        1.0f, 1.0f, s("number", 2).Px, s("number", 2).Py,
-    };
-
-    // indices
-    unsigned int indices[] = {
-        0, 1, 2,
-        1, 2, 3
-    };
-
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices,
-                 GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float),
-                          (void *)(2 * sizeof(float)));
-    glEnableVertexAttribArray(1);
 
     shader _s;
     _s.bind();

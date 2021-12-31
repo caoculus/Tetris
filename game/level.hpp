@@ -73,6 +73,8 @@ public:
      */
     operator int() const noexcept;
 
+    [[nodiscard]] constexpr std::size_t section() const noexcept { return level_/100; }
+
 private:
     int level_{}, step_{};
 
