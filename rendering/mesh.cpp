@@ -1,6 +1,7 @@
 #include "mesh.hpp"
 #include <GL/glew.h>
 
+#include <iostream>
 mesh::mesh(sampler &__sampler) 
     : sampler_(__sampler) 
 {
@@ -27,6 +28,7 @@ void mesh::bind() const
 {
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+     std::cout << ibo << " " << vbo << std::endl;
 }
 
 void mesh::unbind() const

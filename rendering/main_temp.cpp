@@ -7,6 +7,7 @@
 #include "shader.hpp"
 #include "game/level.hpp"
 #include "background.hpp"
+#include "frame.hpp"
 
 #include <iostream>
 
@@ -86,6 +87,7 @@ int main()
     level_counter level;
 
     bkgd bkgd_(s, level);
+    frame f (s, mode);
 
     shader _s;
     _s.bind();
@@ -104,7 +106,7 @@ int main()
         }
 
         bkgd_.draw();
-
+        f.draw();
 
         glfwSwapBuffers(window);
 

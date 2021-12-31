@@ -17,7 +17,6 @@ bkgd::bkgd(sampler &__sampler, level_counter &level)
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_), vertices_.data(), GL_DYNAMIC_DRAW);
     set_vertex_layout();
-    unbind();
 }
 
 
