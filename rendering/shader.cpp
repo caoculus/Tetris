@@ -68,4 +68,3 @@ void shader::uniform(const char *name, int value) const
     }
     glUniform1i(uniforms_.at(name), value);
 }
-
