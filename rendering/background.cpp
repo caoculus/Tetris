@@ -1,8 +1,8 @@
 #include <GL/glew.h>
 #include "background.hpp"
 #include <iostream>
-bkgd::bkgd(sampler &__sampler, level_counter &level)
-    : mesh(__sampler), level_(level), section_(level.section())
+bkgd::bkgd(sampler &sampler, level_counter &level)
+    : mesh(sampler), level_(level), section_(level.section())
 {
     bind();
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_), indices_.data(), GL_STATIC_DRAW);

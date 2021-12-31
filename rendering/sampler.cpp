@@ -9,20 +9,20 @@
 #include <fstream>
 #include <sstream>
 
-sampler::sampler(const std::string &_texture_atlas_path)
+sampler::sampler(const std::string &texture_atlas_path)
 {
-    std::size_t last_dot = _texture_atlas_path.find_last_of('.');
-    if (_texture_atlas_path.substr(last_dot) != ".png")
+    std::size_t last_dot = texture_atlas_path.find_last_of('.');
+    if (texture_atlas_path.substr(last_dot) != ".png")
         throw texture_loading_error("texture atlas must be a .png file");
     
-    std::string atlas_layout_path = _texture_atlas_path.substr(0, last_dot) + ".layout";
+    std::string atlas_layout_path = texture_atlas_path.substr(0, last_dot) + ".layout";
     load_atlas(atlas_layout_path);
-    load_texture(_texture_atlas_path);
+    load_texture(texture_atlas_path);
 }
 
-void sampler::load_atlas(const std::string &_atlas_layout_path)
+void sampler::load_atlas(const std::string &atlas_layout_path)
 {
-    std::ifstream atlas_layout(_atlas_layout_path);
+    std::ifstream atlas_layout(atlas_layout_path);
     if (!atlas_layout.is_open())
         throw std::runtime_error("failed to open atlas layout file");
     
@@ -67,9 +67,9 @@ void sampler::load_atlas(const std::string &_atlas_layout_path)
 
 }
 
-void sampler::load_texture(const std::string &_texture_atlas_path)
+void sampler::load_texture(const std::string &texture_atlas_path)
 {
-    cimg_library::CImg<uint8_t> _tex(_texture_atlas_path.c_str());
+    cimg_library::CImg<uint8_t> _tex(texture_atlas_path.c_str());
     
     if (_tex.spectrum() != 4)
         throw texture_loading_error("Texture atlas must be RGBA.");

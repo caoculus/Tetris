@@ -33,7 +33,7 @@ public:
     /**
      * @brief Construct a new sampler object to sample the a texture atlas.
      * 
-     * @param _global_texture_atlas_path the path to the texture atlas. Make 
+     * @param texture_atlas_path the path to the texture atlas. Make
      * sure in the same directory, there is a .layout file.
      *
      * @throws texture_loading_error if the texture atlas is not RGBA or if the
@@ -42,7 +42,7 @@ public:
      * @throws std::runtime_error if there is no atlas .layout file.
      * @throws layout_parsing_error if the .layout file has invalid syntax.
      */
-    explicit sampler(const std::string &_global_texture_atlas_path);
+    explicit sampler(const std::string &texture_atlas_path);
 
     /**
      * @brief Destroy the sampler object by deleteing the texture off OpenGL
@@ -109,17 +109,17 @@ private:
      * @brief load the locations of objects into the map so they can be
      * referenced by the renderer.
      * 
-     * @param _atlas_layout_path the path to the layout file.
+     * @param atlas_layout_path the path to the layout file.
      */
-    void load_atlas(const std::string &_atlas_layout_path);
+    void load_atlas(const std::string &atlas_layout_path);
 
     /**
      * @brief load the texture into OpenGL to be used by the renderer.
      * 
-     * @param _global_texture_atlas_path the path to the texture atlas.
+     * @param texture_atlas_path the path to the texture atlas.
      * @pre the image must be a .png file.
      */
-    void load_texture(const std::string &_global_texture_atlas_path);
+    void load_texture(const std::string &texture_atlas_path);
 };
 
 /**

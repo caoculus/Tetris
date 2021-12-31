@@ -6,7 +6,7 @@
 class frame : public mesh
 {
 public:
-    frame(sampler &__sampler, const GLFWvidmode *mode);
+    frame(sampler &sampler, const GLFWvidmode *mode);
 
     void draw() override;
     
