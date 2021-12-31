@@ -68,21 +68,25 @@ public:
     static std::size_t index(square sq);
 
 public:
-    piece(square type, const board_t &board) : type_(type), board_(board)
+    piece(const board_t &board) : board_(board)
     {}
 
     /**
-     * @brief reset the properties of the piece to represent a new piece that 
+     * @brief reset the properties of the piece to represent a new piece that
      * has just spawned on the board. 
      * 
      * @param type the type of new piece that has just spawned.
+     *
+     * @return true if the piece is successfully spawned without collision,
+     * false otherwise.
      */
-    void reset(square type);
+    bool spawn(square type, rotation_t rotation);
 
     /**
      * @brief Process one tick of the piece with one frame.
      * @requires the piece to be in a valid position on the board before the
-     * tick
+     * tick and that the piece is a type corresponding to a real piece (not
+     * shadow or line clear).
      *
      * @param g the gravity value divided by 128.
      *
@@ -108,8 +112,11 @@ public:
      *
      * @param rotation the direction to rotate. If the direction is none, do
      * nothing.
+     *
+     * @return true if the rotation was successful (always true if the
+     * rotation is none), false otherwise.
      */
-    void rotate(rotation_t rotation);
+    bool rotate(rotation_t rotation);
 
     /**
      * @return the positions of the four squares of the piece.
@@ -126,21 +133,23 @@ public:
      */
     [[nodiscard]] std::array<ivec2, 4> shadow_squares() const;
 
-    [[nodiscard]] constexpr const square ty() const { return type_; };
+    [[nodiscard]] constexpr square type() const
+    { return type_; };
 private:
     uint8_t orientation_{0};
     uint8_t subpixel_{0};
     ivec2 pos_{0, 3};
-    square type_;
+    square type_{square::none};
     const board_t &board_;
 
     /**
      * @brief Check if this piece would collide after shifting it in the given direction.
      *
+     * @param pos the position of the piece.
      * @param shift direction to shift the piece, or none for no shift
      * @return true if the piece would collide, false otherwise.
      */
-    bool collide(ivec2 piece_pos, shift_t shift) const;
+    [[nodiscard]] bool collide(ivec2 pos, shift_t shift) const;
 
     /**
      * @brief Check if this piece can be rotated, according to TGM middle column
@@ -152,11 +161,11 @@ private:
     bool can_rotate_jlt();
 
     /**
-     * @param piece_pos the position of the piece
+     * @param pos the position of the piece
      * @return the positions of the four squares of this piece type if the
      * piece's position is piece_pos.
      */
-    [[nodiscard]] std::array<ivec2, 4> squares(ivec2 piece_pos) const;
+    [[nodiscard]] std::array<ivec2, 4> squares(ivec2 pos) const;
 
     /**
      * @return the position of the shadow of the piece.
