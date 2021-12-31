@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 
 #include "sampler.hpp"
+#include "shader.hpp"
 
 #include <iostream>
 
@@ -110,52 +111,9 @@ int main()
                           (void *)(2 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
-    unsigned int shader = glCreateProgram();
-
-    unsigned int vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-
-    const char *vertex_shader_source =
-        "#version 450 core\n"
-        "layout (location = 0) in vec4 position;\n"
-        "layout (location = 1) in vec2 texcoord;\n"
-        "out vec2 texcoord_out;\n"
-        "void main()\n"
-        "{\n"
-        "    gl_Position = position;\n"
-        "    texcoord_out = texcoord;\n"
-        "}\n";
-
-    glShaderSource(vertex_shader, 1, &vertex_shader_source, nullptr);
-    glCompileShader(vertex_shader);
-
-    // fragment shader
-    unsigned int fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-
-    const char *fragment_shader_source =
-        "#version 450 core\n"
-        "in vec2 texcoord_out;\n" 
-        "out vec4 color;\n"
-        "uniform sampler2D tex;\n"
-        "void main()\n"
-        "{\n"
-        "    color = texture(tex, texcoord_out);\n"
-        "}\n";
-
-    glShaderSource(fragment_shader, 1, &fragment_shader_source, nullptr);
-    glCompileShader(fragment_shader);
-
-    glAttachShader(shader, vertex_shader);
-    glAttachShader(shader, fragment_shader);
-
-    glLinkProgram(shader);
-    glValidateProgram(shader);
-
-    glDeleteShader(vertex_shader);
-    glDeleteShader(fragment_shader);
-
-    glUseProgram(shader);
-
-    glUniform1i(glGetUniformLocation(shader, "tex"), 10);
+    shader _s;
+    _s.bind();
+    _s.uniform("tex", 10);
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
