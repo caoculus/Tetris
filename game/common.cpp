@@ -1,4 +1,5 @@
 #include "common.hpp"
+#include <iostream>
 
 shift_t inputs::update_shift()
 {
@@ -29,7 +30,7 @@ shift_t inputs::update_shift()
     {
         das_ = 0;
     }
-    else if (shift == prev_shift_)
+    else if (shift == prev_shift_ && das_ < DAS)
     {
         ++das_;
     }
