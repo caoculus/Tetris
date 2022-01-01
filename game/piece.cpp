@@ -57,7 +57,7 @@ bool game::piece::translate(shift_t shift)
     return true;
 }
 
-bool game::piece::rotate(rotation_t rotation)
+bool game::piece::rotate(rotation_t rotation, bool kick)
 {
     if (rotation == rotation_t::none)
     {
@@ -74,7 +74,7 @@ bool game::piece::rotate(rotation_t rotation)
 
     if (collide(pos_, shift_t::none))
     {
-        if (type_ == square::I or type_ == square::O or
+        if (!kick or type_ == square::I or type_ == square::O or
             ((type_ == square::J or type_ == square::L or
               type_ == square::T) and !can_rotate_jlt()))
         {
@@ -115,7 +115,7 @@ bool game::piece::collide(ivec2 pos, shift_t shift) const
             break;
     }
 
-    return std::ranges::any_of(LUT[index(type_)][orientation_],
+    bool ret = std::ranges::any_of(LUT[index(type_)][orientation_],
         [&](const ivec2 &offset)
         {
             ivec2 square_pos = new_pos + offset;
@@ -125,6 +125,8 @@ bool game::piece::collide(ivec2 pos, shift_t shift) const
                    !is_empty(
                        board_[square_pos.y][square_pos.x]);
         });
+
+    return ret;
 }
 
 bool game::piece::can_rotate_jlt()
@@ -176,6 +178,7 @@ bool game::piece::spawn(square type, rotation_t rotation)
     orientation_ = 0;
     subpixel_ = 0;
     type_ = type;
-    return (rotation == rotation_t::none and !collide(pos_, shift_t::none)) or
-           rotate(rotation);
+    bool is_none = (rotation == rotation_t::none);
+    return (is_none and !collide(pos_, shift_t::none)) or
+        (!is_none and rotate(rotation, false));
 }

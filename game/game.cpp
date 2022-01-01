@@ -27,7 +27,7 @@ void game::tetris::tick()
         move_piece();
     }
 
-    std::cout << active_piece_ << std::endl;
+//    std::cout << active_piece_ << std::endl;
 }
 
 inline void game::tetris::wait_delay()

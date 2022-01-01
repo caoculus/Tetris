@@ -119,7 +119,7 @@ public:
      * @return true if the rotation was successful (always true if the
      * rotation is none), false otherwise.
      */
-    bool rotate(rotation_t rotation);
+    bool rotate(rotation_t rotation, bool kick = true);
 
     /**
      * @return the positions of the four squares of the piece.
