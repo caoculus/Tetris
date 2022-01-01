@@ -17,13 +17,13 @@ void active::draw()
 {
     update();
     bind();
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(p_vertices_), p_vertices_.data());
-    glBufferSubData(GL_ARRAY_BUFFER, sizeof(p_vertices_), sizeof(s_vertices_), s_vertices_.data());
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(s_vertices_), s_vertices_.data());
+    glBufferSubData(GL_ARRAY_BUFFER, sizeof(s_vertices_), sizeof(p_vertices_), p_vertices_.data());
 
     if (level_ < 100)
         glDrawElements(GL_TRIANGLES, INDICES.size(), GL_UNSIGNED_INT, nullptr);
     else
-        glDrawElements(GL_TRIANGLES, INDICES.size() / 2, GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLES, INDICES.size() / 2, GL_UNSIGNED_INT, (void const *)(INDICES.size()/2));
 
     unbind();
 }
