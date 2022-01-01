@@ -82,8 +82,8 @@ int main()
 
     game::level_counter level;
 
-    bkgd bkgd_(s, level);
-    frame f (s, mode);
+    mesh::bkgd bkgd_(s, level);
+    mesh::frame f (s, mode);
 
     shader _s;
     _s.bind();

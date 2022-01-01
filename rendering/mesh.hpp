@@ -2,6 +2,7 @@
 
 #include "sampler.hpp"
 
+namespace mesh {
 class mesh
 {
 public:
@@ -20,3 +21,5 @@ protected:
     void bind() const;
     void unbind() const;
 };
+
+}

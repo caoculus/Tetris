@@ -3,6 +3,8 @@
 #include "mesh.hpp"
 #include <GLFW/glfw3.h>
 
+namespace mesh {
+
 class frame : public mesh
 {
 public:
@@ -18,3 +20,5 @@ private:
 
     std::array<float, 16> vertices_;
 };
+
+}

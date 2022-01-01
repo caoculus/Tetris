@@ -1,6 +1,9 @@
 #include <GL/glew.h>
 #include "background.hpp"
 #include <iostream>
+
+namespace mesh {
+
 bkgd::bkgd(sampler &sampler, game::level_counter &level)
     : mesh(sampler), level_(level), section_(level.section())
 {
@@ -41,4 +44,6 @@ void bkgd::draw()
 
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     unbind();
+}
+
 }

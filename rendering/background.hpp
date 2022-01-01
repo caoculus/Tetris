@@ -3,6 +3,8 @@
 #include "mesh.hpp"
 #include "game/level.hpp"
 
+namespace mesh {
+
 class bkgd : public mesh
 {
 public:
@@ -22,3 +24,5 @@ private:
 
     std::size_t section_;
 };
+
+}

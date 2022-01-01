@@ -1,6 +1,8 @@
 #include <GL/glew.h>
 #include "frame.hpp"
 
+namespace mesh {
+
 frame::frame(sampler &sampler, const GLFWvidmode *mode)
     : mesh(sampler)
 {
@@ -31,4 +33,6 @@ void frame::draw()
     bind();
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
     unbind();
+}
+
 }

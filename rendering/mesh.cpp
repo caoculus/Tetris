@@ -2,6 +2,9 @@
 #include <GL/glew.h>
 
 #include <iostream>
+
+namespace mesh {
+
 mesh::mesh(sampler &sampler)
     : sampler_(sampler)
 {
@@ -38,4 +41,6 @@ void mesh::unbind() const
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
+}
+
 }
