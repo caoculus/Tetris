@@ -72,7 +72,7 @@ public:
 
 public:
 
-    piece(const board_t &board) : board_(board)
+    explicit piece(const board_t &board) : board_(board)
     {}
     /**
      * @brief reset the properties of the piece to represent a new piece that
