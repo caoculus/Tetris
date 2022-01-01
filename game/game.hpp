@@ -55,6 +55,9 @@ public:
     [[nodiscard]] constexpr piece const &active_piece() const noexcept
     { return active_piece_; }
 
+    [[nodiscard]] constexpr const level_counter &level() const noexcept
+    { return level_; }
+
 private:
     static constexpr int ARE = 30, LOCK = 30, CLEAR = 41, FLASH = 3;
     board_t board_{};
