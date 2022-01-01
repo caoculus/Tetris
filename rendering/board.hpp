@@ -15,6 +15,13 @@ public:
 
     void draw() override;
 
+    /**
+     * @brief Update the drawn board in the vertex and index buffer objects to
+     * the current board held in board_;
+     * 
+     * @warning This function rebuffers a large amount of data, hence, it should
+     * only be called when the board has actually changed.
+     */
     void update();
 
 private:
