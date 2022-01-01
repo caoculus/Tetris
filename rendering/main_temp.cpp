@@ -78,6 +78,19 @@ int main()
 
     const GLFWvidmode *mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
+    int width  = mode->width    * 3;
+    int height = mode->height   * 4;
+
+    float x = height > width ? 1.0f : (float)height / (float)width;
+    float y = width > height ? 1.0f : (float)width / (float)height;
+
+    mat4 screen_matrix = {{
+        x, 0.0f, 0.0f, 0.0f,
+        0.0f, y, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f
+    }};
+
     GLFWmonitor *primary_monitor = glfwGetPrimaryMonitor();
 
     GLFWwindow *window = glfwCreateWindow(mode->width, mode->height, "Test",
@@ -124,17 +137,13 @@ int main()
     game::level_counter level;
 
     mesh::bkgd bkgd_(s, level);
-    mesh::frame f (s, mode);
+    mesh::frame f (s);
     mesh::board b (s, g.board());
     
 
     shader _s;
     _s.bind();
     _s.uniform("tex", 10);
-    _s.uniform("transform", {1.0f, 0.0f, 0.0f, 0.0f, 
-                             0.0f, 1.0f, 0.0f, 0.0f,
-                             0.0f, 0.0f, 1.0f, 0.0f,
-                             1.0f, 1.0f, 0.0f, 1.0f});
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
@@ -146,7 +155,10 @@ int main()
         g.tick();
 
         _s.uniform("transform", shader::I);
+        _s.uniform("u_screen", shader::I);
         bkgd_.draw();
+
+        _s.uniform("u_screen", screen_matrix);
         f.draw();
 
         _s.uniform("transform", shader::J);

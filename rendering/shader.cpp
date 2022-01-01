@@ -9,11 +9,12 @@ shader::shader()
         "#version 450 core\n"
         "layout (location = 0) in vec4 position;\n"
         "layout (location = 1) in vec2 texcoord;\n"
+        "uniform mat4 u_screen;\n"
         "uniform mat4 transform;\n"
         "out vec2 texcoord_out;\n"
         "void main()\n"
         "{\n"
-        "    gl_Position = transform * position;\n"
+        "    gl_Position = u_screen * transform * position;\n"
         "    texcoord_out = texcoord;\n"
         "}\n",
     
