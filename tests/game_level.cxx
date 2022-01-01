@@ -1,5 +1,4 @@
 #include "game/level.hpp"
-#include "level.hpp"
 #include <iostream>
 #include <cassert>
 
@@ -19,7 +18,7 @@ int main(int argc, char **argv)
     assert(l2.g() == 72);
     
     // ensure nothing has changed
-    l2++;
+    ++l2;
     assert(l2 == 199);
     assert(l2.g() == 72);
 
@@ -32,7 +31,7 @@ int main(int argc, char **argv)
     assert(l3 == 302);
     assert(l3.g() == 256);
 
-    l4 ++;
+    ++l4;
     assert(l4 == 998);
 
     l4 += 4;
