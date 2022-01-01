@@ -22,21 +22,6 @@ void game::tetris::tick()
     }
 }
 
-int game::tetris::time() const noexcept
-{
-    return clk_;
-}
-
-square game::tetris::next() const noexcept
-{
-    return rng_.next();
-}
-
-const board_t &game::tetris::board() const noexcept
-{
-    return board_;
-}
-
 inline void game::tetris::wait_delay()
 {
     // update shift to track DAS except on frame before piece spawn (to
@@ -142,7 +127,6 @@ inline void game::tetris::move_piece()
     {
         draw_piece();
         clear_lines();
-        active_piece_.clear_type();
         lock_ = LOCK;
         state_ = ARE;
     }

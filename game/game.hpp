@@ -28,23 +28,32 @@ public:
     /**
      * @return the number of frames that have elapsed since the game started.
      */
-    [[nodiscard]] int time() const noexcept;
+    [[nodiscard]] constexpr int time() const noexcept
+    { return clk_; }
 
     /**
      * @return the type of the next piece that will be spawned.
      */
-    [[nodiscard]] square next() const noexcept;
+    [[nodiscard]] square next() const noexcept
+    { return rng_.next(); }
 
     /**
      * @return the contents of the game board.
      */
-    [[nodiscard]] const board_t &board() const noexcept;
+    [[nodiscard]] constexpr const board_t &board() const noexcept
+    { return board_; }
 
-    [[nodiscard]] constexpr bool update() const noexcept { return update_board_; }
+    [[nodiscard]] constexpr const int &state() const noexcept
+    { return state_; }
 
-    void update (bool) noexcept { update_board_ = false; }
+    [[nodiscard]] constexpr bool update() const noexcept
+    { return update_board_; }
 
-    [[nodiscard]] constexpr piece const &active_piece() const noexcept { return active_piece_; }
+    void update(bool) noexcept
+    { update_board_ = false; }
+
+    [[nodiscard]] constexpr piece const &active_piece() const noexcept
+    { return active_piece_; }
 
 private:
     static constexpr int ARE = 30, LOCK = 30, CLEAR = 41, FLASH = 3;
