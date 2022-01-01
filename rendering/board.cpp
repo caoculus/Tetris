@@ -5,7 +5,10 @@ namespace mesh
 board::board(sampler &sampler, const board_t &board)
     : mesh(sampler), board_(board)
 {
+    bind();
     update();
+    set_vertex_layout();
+    unbind();
 }
 
 void board::draw()

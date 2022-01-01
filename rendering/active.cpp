@@ -12,6 +12,7 @@ void active::draw()
 {
     if (!p_vertices_.empty())
     {
+        
     }
     if (!s_vertices_.empty())
     {

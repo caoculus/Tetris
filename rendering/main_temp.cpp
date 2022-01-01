@@ -24,6 +24,48 @@ debugCallback(GLenum source, GLenum type, GLuint id, GLenum severity,
 	}
 }
 
+static std::ostream &operator<< (std::ostream &os, const board_t &board)
+{
+    for (const auto &row : board)
+    {
+        for (const auto &cell : row)
+        {
+            switch (cell)
+            {
+            case square::none:
+                os << ".";
+                break;
+            case square::I:
+                os << "I";
+                break;
+            case square::J:
+                os << "J";
+                break;
+            case square::L:
+                os << "L";
+                break;
+            case square::O:
+                os << "O";
+                break;
+            case square::S:
+                os << "S";
+                break;
+            case square::T:
+                os << "T";
+                break;
+            case square::Z:
+                os << "Z";
+                break;
+            default:
+                os << "?";
+                break;
+            }
+        }
+        os << std::endl;
+    }
+    return os;
+}
+
 int main()
 {
     if (!glfwInit())
@@ -120,6 +162,7 @@ int main()
         if (g.update())
         {
             b.update();
+            std::cout << g.board() << std::endl;
             g.update(false);
         }
         b.draw();
