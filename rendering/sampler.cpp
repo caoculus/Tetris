@@ -9,7 +9,6 @@
 #include <fstream>
 #include <sstream>
 
-namespace mesh {
 
 sampler::sampler(const std::string &texture_atlas_path)
 {
@@ -131,6 +130,4 @@ layout_parsing_error::layout_parsing_error(const std::string &thing, std::size_t
 layout_parsing_error::layout_parsing_error(const std::string &property)
 {
     msg = "Failed to read " + property + ".";
-}
-
 }
