@@ -10,6 +10,7 @@
 #include "frame.hpp"
 #include "board.hpp"
 #include "game/game.hpp"
+#include "active.hpp"
 #include <iostream>
 
 
@@ -134,11 +135,10 @@ int main()
     sampler s ("../assets/texatlas.png");
     s.bind(10);
 
-    game::level_counter level;
-
-    mesh::bkgd bkgd_(s, level);
+    mesh::bkgd bkgd_(s, g.level());
     mesh::frame f (s);
     mesh::board b (s, g.board());
+    mesh::active a(s, g.active_piece(), g.level(), g.state());
     
 
     shader _s;
@@ -170,6 +170,7 @@ int main()
             g.update(false);
         }
         b.draw();
+        a.draw();
 
         glfwSwapBuffers(window);
 

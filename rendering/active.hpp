@@ -1,4 +1,5 @@
 #pragma once
+
 #include "mesh.hpp"
 #include "sampler.hpp"
 #include "game/piece.hpp"
@@ -9,7 +10,7 @@ namespace mesh {
 class active : public mesh
 {
 public:
-    active(sampler &sampler, const game::piece &active_piece, const game::level_counter &level);
+    active(sampler &sampler, const game::piece &active_piece, const game::level_counter &level, const int &state);
 
     void draw() override;
 
@@ -18,6 +19,26 @@ private:
     std::array<unsigned int, 24> p_indices_{}, s_indices_{};
     const game::piece &active_piece_;
     const game::level_counter &level_;
+    const int &state_;
+
+    static constexpr std::array<unsigned int, 48> INDICES {
+        0,   1,  2,
+        1,   2,  3,
+        4,   5,  6,
+        5,   6,  7,
+        8,   9, 10,
+        9,  10, 11,
+        12, 13, 14,
+        13, 14, 15,
+        16, 17, 18,
+        17, 18, 19,
+        20, 21, 22,
+        21, 22, 23,
+        24, 25, 26,
+        25, 26, 27,
+        28, 29, 30,
+        29, 30, 31
+    };
 
     void update();
 };

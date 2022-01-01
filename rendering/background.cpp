@@ -4,7 +4,7 @@
 
 namespace mesh {
 
-bkgd::bkgd(sampler &sampler, game::level_counter &level)
+bkgd::bkgd(sampler &sampler, const game::level_counter &level)
     : mesh(sampler), level_(level), section_(level.section())
 {
     bind();
