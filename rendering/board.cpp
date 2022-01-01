@@ -1,3 +1,4 @@
+#include <GL/glew.h>
 #include "board.hpp"
 namespace mesh
 {
@@ -5,8 +6,8 @@ namespace mesh
 board::board(sampler &sampler, const board_t &board)
     : mesh(sampler), board_(board)
 {
-    bind();
     update();
+    bind();
     set_vertex_layout();
     unbind();
 }
@@ -33,7 +34,7 @@ void board::update()
             if (board_[y][x] == square::none)
                 continue;
 
-            std::size_t begin_index = vertices_.size();
+            std::size_t begin_index = vertices_.size() / 4;
             auto coords = sampler_("piece", static_cast<std::size_t>(board_[y][x]));
 
             for (const auto &index : SQUARE_INDICES)
@@ -47,6 +48,11 @@ void board::update()
             });
         }
     }
+    
+    bind();
+    glBufferData(GL_ARRAY_BUFFER, vertices_.size() * sizeof(float), vertices_.data(), GL_DYNAMIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices_.size() * sizeof(unsigned int), indices_.data(), GL_DYNAMIC_DRAW);
+    unbind();
 }
 
 }

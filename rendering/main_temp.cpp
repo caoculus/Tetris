@@ -17,11 +17,8 @@ static void APIENTRY
 debugCallback(GLenum source, GLenum type, GLuint id, GLenum severity,
 			  GLsizei length, const GLchar *message, const void *userParam)
 {
-	if (severity >= GL_DEBUG_SEVERITY_MEDIUM)
-	{
 		std::cerr << "Error " << id << ":" << message << std::endl;
 		throw std::runtime_error("OpenGL error");
-	}
 }
 
 static std::ostream &operator<< (std::ostream &os, const board_t &board)
@@ -146,11 +143,6 @@ int main()
     {
         glClear(GL_COLOR_BUFFER_BIT);
 
-        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        {
-            std::cout << "W pressed" << std::endl;
-        }
-        
         g.tick();
 
         _s.uniform("transform", shader::I);
