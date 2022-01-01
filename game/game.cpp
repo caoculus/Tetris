@@ -142,6 +142,7 @@ inline void game::tetris::move_piece()
     {
         draw_piece();
         clear_lines();
+        active_piece_.clear_type();
         lock_ = LOCK;
         state_ = ARE;
     }

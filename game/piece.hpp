@@ -85,6 +85,11 @@ public:
     bool spawn(square type, rotation_t rotation);
 
     /**
+     * @brief Set the type of the active piece to square::none.
+     */
+    inline void clear_type() { type_ = square::none; }
+
+    /**
      * @brief Process one tick of the piece with one frame.
      * @requires the piece to be in a valid position on the board before the
      * tick and that the piece is a type corresponding to a real piece (not

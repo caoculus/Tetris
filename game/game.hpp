@@ -42,9 +42,9 @@ public:
 
     [[nodiscard]] constexpr bool update() const noexcept { return update_board_; }
 
-    [[nodiscard]] constexpr piece const &active_piece() const noexcept { return active_piece_; }
-
     void update (bool) noexcept { update_board_ = false; }
+
+    [[nodiscard]] constexpr piece const &active_piece() const noexcept { return active_piece_; }
 
 private:
     static constexpr int ARE = 30, LOCK = 30, CLEAR = 41, FLASH = 3;
