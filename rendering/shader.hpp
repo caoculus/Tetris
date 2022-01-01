@@ -4,6 +4,7 @@
 #include <unordered_map>
 
 using mat3 = std::array<float, 9>;
+using mat4 = std::array<float, 16>;
 
 /**
  * @brief rendering all objects in tetris only requires one shader. The shader
@@ -12,6 +13,20 @@ using mat3 = std::array<float, 9>;
 class shader 
 {
 public:
+    static constexpr mat4 I {
+        1.0f, 0.0f, 0.0f, 0.0f,
+        0.0f, 1.0f, 0.0f, 0.0f,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f
+    };
+    
+    static constexpr mat4 J {
+        0.05f,  0.0f,           0.0f, 0.0f,
+        0.0f,   -1.0f/15.0f,    0.0f, 0.0f,
+        0.0f,   0.0f,           1.0f, 0.0f,
+        -0.25f, -11.0f/15.0f,   0.0f, 1.0f
+    };
+
     shader();
 
     ~shader();
@@ -31,6 +46,8 @@ public:
     void uniform(const char *name, int value) const;
 
     void uniform(const char *name, const mat3 &value) const;
+
+    void uniform(const char *name, const mat4 &value) const;
 
     
     /**

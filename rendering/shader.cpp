@@ -9,7 +9,7 @@ shader::shader()
         "#version 450 core\n"
         "layout (location = 0) in vec4 position;\n"
         "layout (location = 1) in vec2 texcoord;\n"
-        "uniform mat3 transform;\n"
+        "uniform mat4 transform;\n"
         "out vec2 texcoord_out;\n"
         "void main()\n"
         "{\n"
@@ -77,4 +77,13 @@ void shader::uniform(const char *name, const mat3 &value) const
         uniforms_[name] = glGetUniformLocation(id_, name);
     }
     glUniformMatrix3fv(uniforms_.at(name), 1, GL_FALSE, value.data());
+}
+
+void shader::uniform(const char *name, const mat4 &value) const
+{
+    if (uniforms_.find(name) == uniforms_.end())
+    {
+        uniforms_[name] = glGetUniformLocation(id_, name);
+    }
+    glUniformMatrix4fv(uniforms_.at(name), 1, GL_FALSE, value.data());
 }

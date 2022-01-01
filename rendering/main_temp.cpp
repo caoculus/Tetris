@@ -16,7 +16,7 @@ static void APIENTRY
 debugCallback(GLenum source, GLenum type, GLuint id, GLenum severity,
 			  GLsizei length, const GLchar *message, const void *userParam)
 {
-	if (severity == GL_DEBUG_SEVERITY_MEDIUM)
+	if (severity >= GL_DEBUG_SEVERITY_MEDIUM)
 	{
 		std::cerr << "Error " << id << ":" << message << std::endl;
 		throw std::runtime_error("OpenGL error");
@@ -63,7 +63,7 @@ int main()
     glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
     glDebugMessageCallback(debugCallback, nullptr);
 
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
     // set frame rate to 60 fps
     glfwSwapInterval(1);
@@ -88,7 +88,10 @@ int main()
     shader _s;
     _s.bind();
     _s.uniform("tex", 10);
-    _s.uniform("transform", {1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f});
+    _s.uniform("transform", {1.0f, 0.0f, 0.0f, 0.0f, 
+                             0.0f, 1.0f, 0.0f, 0.0f,
+                             0.0f, 0.0f, 1.0f, 0.0f,
+                             1.0f, 1.0f, 0.0f, 1.0f});
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
@@ -101,7 +104,7 @@ int main()
         {
             std::cout << "W pressed" << std::endl;
         }
-        
+
         bkgd_.draw();
         f.draw();
         level+=4;
