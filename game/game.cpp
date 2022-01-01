@@ -161,7 +161,7 @@ inline void game::tetris::clear_lines()
 {
     int num_cleared = 0;
 
-    for (const auto &row: board_)
+    for (auto &row: board_)
     {
         // find first element where is_empty is true
         if (std::find_if(row.begin(), row.end(), is_empty) ==
