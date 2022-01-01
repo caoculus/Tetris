@@ -88,6 +88,7 @@ int main()
     shader _s;
     _s.bind();
     _s.uniform("tex", 10);
+    _s.uniform("transform", {1.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f});
 
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_BLEND);
@@ -100,10 +101,10 @@ int main()
         {
             std::cout << "W pressed" << std::endl;
         }
-
+        
         bkgd_.draw();
         f.draw();
-        level+=1;
+        level+=4;
 
         glfwSwapBuffers(window);
 

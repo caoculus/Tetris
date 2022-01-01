@@ -3,6 +3,8 @@
 #include <string>
 #include <unordered_map>
 
+using mat3 = std::array<float, 9>;
+
 /**
  * @brief rendering all objects in tetris only requires one shader. The shader
  * source code is provided in the definition of the constructor.
@@ -27,6 +29,9 @@ public:
      * @param value the value of the uniform.
      */
     void uniform(const char *name, int value) const;
+
+    void uniform(const char *name, const mat3 &value) const;
+
     
     /**
      * @brief Bind the shader to be used as the active program.
