@@ -141,7 +141,7 @@ public:
 
 private:
     friend std::ostream& operator<<(std::ostream& os, const piece& p);
-    uint8_t orientation_{0};
+    int8_t orientation_{0};
     uint8_t subpixel_{0};
     ivec2 pos_{0, 3};
     square type_{square::none};
