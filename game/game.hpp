@@ -40,6 +40,10 @@ public:
      */
     [[nodiscard]] const board_t &board() const noexcept;
 
+    [[nodiscard]] constexpr bool update() const noexcept { return update_board_; }
+
+    void update (bool) noexcept { update_board_ = false; }
+
 private:
     static constexpr int ARE = 30, LOCK = 30, CLEAR = 41, FLASH = 3;
     board_t board_{};
@@ -49,6 +53,7 @@ private:
     int clk_{0}, state_{0}, lock_{LOCK};
     bool line_clear_{false};
     piece active_piece_;
+    bool update_board_{false};
 
     /**
      * @brief Update the state of the game during the delay between pieces.

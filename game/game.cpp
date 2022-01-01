@@ -75,6 +75,8 @@ inline void game::tetris::drop_lines()
         }
         board_[dest--] = board_[src--];
     }
+
+    update_board_ = true;
 }
 
 inline void game::tetris::spawn_piece()
@@ -151,13 +153,15 @@ inline void game::tetris::draw_piece()
     {
         board_[y][x] = active_piece_.type();
     }
+
+    update_board_ = true;
 }
 
 inline void game::tetris::clear_lines()
 {
     int num_cleared = 0;
 
-    for (auto &row: board_)
+    for (const auto &row: board_)
     {
         // find first element where is_empty is true
         if (std::find_if(row.begin(), row.end(), is_empty) ==
@@ -174,6 +178,7 @@ inline void game::tetris::clear_lines()
     {
         line_clear_ = true;
         level_ += num_cleared;
+        update_board_ = true;
     }
     else
     {

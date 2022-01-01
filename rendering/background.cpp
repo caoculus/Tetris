@@ -8,7 +8,7 @@ bkgd::bkgd(sampler &sampler, game::level_counter &level)
     : mesh(sampler), level_(level), section_(level.section())
 {
     bind();
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_), indices_.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(SQUARE_INDICES), SQUARE_INDICES.data(), GL_STATIC_DRAW);
     auto coords = sampler_("bkgd", section_);
 
     vertices_ = {

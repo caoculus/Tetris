@@ -7,7 +7,7 @@ frame::frame(sampler &sampler, const GLFWvidmode *mode)
     : mesh(sampler)
 {
     bind();
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_), indices_.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(SQUARE_INDICES), SQUARE_INDICES.data(), GL_STATIC_DRAW);
     auto coords = sampler_("frame");
 
     int width  = mode->width    * 3;

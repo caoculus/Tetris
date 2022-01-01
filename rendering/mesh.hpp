@@ -20,6 +20,11 @@ protected:
 
     void bind() const;
     void unbind() const;
+
+    static constexpr std::array<unsigned int, 6> SQUARE_INDICES {
+        0, 1, 2,
+        1, 2, 3
+    };
 };
 
 }
