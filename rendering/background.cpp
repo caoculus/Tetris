@@ -1,7 +1,7 @@
 #include <GL/glew.h>
 #include "background.hpp"
 #include <iostream>
-bkgd::bkgd(sampler &sampler, level_counter &level)
+bkgd::bkgd(sampler &sampler, game::level_counter &level)
     : mesh(sampler), level_(level), section_(level.section())
 {
     bind();

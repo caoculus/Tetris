@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <algorithm>
 
-std::size_t piece::index(square type)
+std::size_t game::piece::index(square type)
 {
     if (type == square::none)
         throw std::invalid_argument(
@@ -12,7 +12,7 @@ std::size_t piece::index(square type)
 
 }
 
-locking_state piece::tick(uint16_t g)
+locking_state game::piece::tick(uint16_t g)
 {
     // check for collision, if it cannot move down, tick and reset subpixel to 0
     if (collide(pos_, shift_t::down))
@@ -22,16 +22,16 @@ locking_state piece::tick(uint16_t g)
     }
 
     // otherwise, move down
-    int final_y = pos_.y + (g / level_counter::DENOM);
-    if (g < level_counter::DENOM)
+    int final_y = pos_.y + (g / game::level_counter::DENOM);
+    if (g < game::level_counter::DENOM)
     {
         subpixel_ += g;
         // the piece doesn't move down even though it can
-        if (subpixel_ < level_counter::DENOM)
+        if (subpixel_ < game::level_counter::DENOM)
             return locking_state::none;
 
         final_y++;
-        subpixel_ -= level_counter::DENOM;
+        subpixel_ -= game::level_counter::DENOM;
     }
 
     // here, we know for sure the piece can move down at least 1 square
@@ -47,7 +47,7 @@ locking_state piece::tick(uint16_t g)
                                         : locking_state::none;
 }
 
-bool piece::translate(shift_t shift)
+bool game::piece::translate(shift_t shift)
 {
     if (shift == shift_t::none or collide(pos_, shift))
         return false;
@@ -56,7 +56,7 @@ bool piece::translate(shift_t shift)
     return true;
 }
 
-bool piece::rotate(rotation_t rotation)
+bool game::piece::rotate(rotation_t rotation)
 {
     if (rotation == rotation_t::none)
     {
@@ -95,7 +95,7 @@ bool piece::rotate(rotation_t rotation)
     return true;
 }
 
-bool piece::collide(ivec2 pos, shift_t shift) const
+bool game::piece::collide(ivec2 pos, shift_t shift) const
 {
     ivec2 new_pos{};
     switch (shift)
@@ -126,7 +126,7 @@ bool piece::collide(ivec2 pos, shift_t shift) const
         });
 }
 
-bool piece::can_rotate_jlt()
+bool game::piece::can_rotate_jlt()
 {
     for (int i = 0; i < 3; i++)
         for (int j = 0; j < 3; j++)
@@ -135,17 +135,17 @@ bool piece::can_rotate_jlt()
     return true;
 }
 
-std::array<ivec2, 4> piece::piece_squares() const
+std::array<ivec2, 4> game::piece::piece_squares() const
 {
     return squares(pos_);
 }
 
-std::array<ivec2, 4> piece::shadow_squares() const
+std::array<ivec2, 4> game::piece::shadow_squares() const
 {
     return squares(shadow_position());
 }
 
-std::array<ivec2, 4> piece::squares(ivec2 pos) const
+std::array<ivec2, 4> game::piece::squares(ivec2 pos) const
 {
     std::array<ivec2, 4> squares{};
 
@@ -157,7 +157,7 @@ std::array<ivec2, 4> piece::squares(ivec2 pos) const
     return squares;
 }
 
-ivec2 piece::shadow_position() const
+ivec2 game::piece::shadow_position() const
 {
     ivec2 shadow_pos{pos_};
 
@@ -169,7 +169,7 @@ ivec2 piece::shadow_position() const
     return shadow_pos;
 }
 
-bool piece::spawn(square type, rotation_t rotation)
+bool game::piece::spawn(square type, rotation_t rotation)
 {
     pos_ = ivec2{0, 3};
     orientation_ = 0;

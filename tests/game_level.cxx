@@ -1,10 +1,11 @@
 #include "game/level.hpp"
+#include "level.hpp"
 #include <iostream>
 #include <cassert>
 
 int main(int argc, char **argv)
 {
-    level_counter l1, l2, l3, l4;
+    game::level_counter l1, l2, l3, l4;
     l2 += 199;
     l3 += 298;
     l4 += 998;

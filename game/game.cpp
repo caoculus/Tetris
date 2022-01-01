@@ -1,6 +1,7 @@
 #include "game.hpp"
+#include "level.hpp"
 
-void tetris::tick()
+void game::tetris::tick()
 {
     ++clk_;
 
@@ -21,22 +22,22 @@ void tetris::tick()
     }
 }
 
-int tetris::time() const noexcept
+int game::tetris::time() const noexcept
 {
     return clk_;
 }
 
-square tetris::next() const noexcept
+square game::tetris::next() const noexcept
 {
     return rng_.next();
 }
 
-const board_t &tetris::board() const noexcept
+const board_t &game::tetris::board() const noexcept
 {
     return board_;
 }
 
-inline void tetris::wait_delay()
+inline void game::tetris::wait_delay()
 {
     // update shift to track DAS except on frame before piece spawn (to
     // emulate TGM)
@@ -63,7 +64,7 @@ inline void tetris::wait_delay()
     }
 }
 
-inline void tetris::drop_lines()
+inline void game::tetris::drop_lines()
 {
     for (std::size_t src = board_.size() - 1, dest = board_.size() - 1;
          src > 0;)
@@ -76,7 +77,7 @@ inline void tetris::drop_lines()
     }
 }
 
-inline void tetris::spawn_piece()
+inline void game::tetris::spawn_piece()
 {
     // get the translation, but don't use it
     // call the rotation with spawn_frame = true
@@ -107,7 +108,7 @@ inline void tetris::spawn_piece()
     --state_;
 }
 
-inline void tetris::move_piece()
+inline void game::tetris::move_piece()
 {
     // acquire inputs
     shift_t shift = keys_.update_shift();
@@ -144,7 +145,7 @@ inline void tetris::move_piece()
     }
 }
 
-inline void tetris::draw_piece()
+inline void game::tetris::draw_piece()
 {
     for (auto &[y, x]: active_piece_.piece_squares())
     {
@@ -152,7 +153,7 @@ inline void tetris::draw_piece()
     }
 }
 
-inline void tetris::clear_lines()
+inline void game::tetris::clear_lines()
 {
     int num_cleared = 0;
 

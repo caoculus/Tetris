@@ -1,6 +1,6 @@
 #include "randomizer.hpp"
 
-randomizer::randomizer()
+game::randomizer::randomizer()
 {
     std::uniform_int_distribution<int> first_piece_dist {1, 4};
     switch(first_piece_dist(rng_))
@@ -17,7 +17,7 @@ randomizer::randomizer()
     history_.push_back(next_piece_);
 }
 
-square randomizer::operator()()
+square game::randomizer::operator()()
 {
     square ret = next_piece_;
     for (int i = 0; i < 4; ++i)
@@ -32,7 +32,7 @@ square randomizer::operator()()
     return ret;
 }
 
-[[nodiscard]] square randomizer::next() const noexcept
+[[nodiscard]] square game::randomizer::next() const noexcept
 {
     return next_piece_;
 }

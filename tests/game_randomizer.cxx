@@ -1,4 +1,5 @@
 #include "game/randomizer.hpp"
+#include "randomizer.hpp"
 #include <iostream>
 #include <cassert>
 
@@ -20,7 +21,7 @@ static std::ostream &operator<< (std::ostream &os, const square &sq)
 
 int main(int argc, char **argv)
 {
-    randomizer r;
+    game::randomizer r;
     square next_one = r.next();
     for (int i = 0; i < 20; ++i)
     {

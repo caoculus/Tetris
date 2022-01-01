@@ -80,7 +80,7 @@ int main()
     sampler s ("../assets/texatlas.png");
     s.bind(10);
 
-    level_counter level;
+    game::level_counter level;
 
     bkgd bkgd_(s, level);
     frame f (s, mode);

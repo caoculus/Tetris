@@ -5,6 +5,8 @@
 #include "piece.hpp"
 #include "level.hpp"
 
+namespace game
+{
 class tetris
 {
 
@@ -91,3 +93,5 @@ class game_over_exception : public std::exception
         return "Game Over";
     }
 };
+}
+

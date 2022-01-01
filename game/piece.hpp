@@ -2,6 +2,8 @@
 
 #include "common.hpp"
 
+namespace game
+{
 class piece
 {
 public:
@@ -57,13 +59,13 @@ public:
         },
     };
 
-    /**  
+    /**
      * @param sq the type of the piece.
-     * 
+     *
      * @pre sq must be a type corresponding to a real piece (not shadow or line clear).
-     * 
-     * @return the index of an array for only non-empty pieces (i.e. the LUT) 
-     * corresponding to a given square type. 
+     *
+     * @return the index of an array for only non-empty pieces (i.e. the LUT)
+     * corresponding to a given square type.
      */
     static std::size_t index(square sq);
 
@@ -73,8 +75,8 @@ public:
 
     /**
      * @brief reset the properties of the piece to represent a new piece that
-     * has just spawned on the board. 
-     * 
+     * has just spawned on the board.
+     *
      * @param type the type of new piece that has just spawned.
      *
      * @return true if the piece is successfully spawned without collision,
@@ -172,3 +174,4 @@ private:
      */
     [[nodiscard]] ivec2 shadow_position() const;
 };
+}
