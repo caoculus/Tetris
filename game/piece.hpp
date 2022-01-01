@@ -74,6 +74,11 @@ public:
 
     explicit piece(const board_t &board) : board_(board)
     {}
+
+    piece(const piece &) = delete;
+
+    piece &operator=(const piece &) = delete;
+
     /**
      * @brief reset the properties of the piece to represent a new piece that
      * has just spawned on the board.
@@ -140,7 +145,8 @@ public:
     { return type_; };
 
 private:
-    friend std::ostream& operator<<(std::ostream& os, const piece& p);
+    friend std::ostream &operator<<(std::ostream &os, const piece &p);
+
     int8_t orientation_{0};
     uint8_t subpixel_{0};
     ivec2 pos_{0, 3};
