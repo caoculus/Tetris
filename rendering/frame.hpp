@@ -1,7 +1,6 @@
 #pragma once
 
 #include "mesh.hpp"
-#include <GLFW/glfw3.h>
 
 namespace mesh {
 
