@@ -8,7 +8,7 @@ namespace mesh {
 class frame : public mesh
 {
 public:
-    frame(sampler &sampler, const GLFWvidmode *mode);
+    explicit frame(sampler &sampler);
 
     void draw() override;
     
