@@ -2,7 +2,7 @@
 namespace mesh
 {
 
-board::board(sampler &sampler, board_t &board)
+board::board(sampler &sampler, const board_t &board)
     : mesh(sampler), board_(board)
 {
     update();
@@ -10,6 +10,9 @@ board::board(sampler &sampler, board_t &board)
 
 void board::draw()
 {
+    if (indices_.empty())
+        return;
+
     bind();
     glDrawElements(GL_TRIANGLES, indices_.size(), GL_UNSIGNED_INT, nullptr);
     unbind();
@@ -28,7 +31,7 @@ void board::update()
                 continue;
 
             std::size_t begin_index = vertices_.size();
-            auto coords = sampler_("board", static_cast<std::size_t>(board_[y][x]));
+            auto coords = sampler_("piece", static_cast<std::size_t>(board_[y][x]));
 
             for (const auto &index : SQUARE_INDICES)
                 indices_.push_back(begin_index + index);

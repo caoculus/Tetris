@@ -8,7 +8,8 @@
 #include "game/level.hpp"
 #include "background.hpp"
 #include "frame.hpp"
-
+#include "board.hpp"
+#include "game/game.hpp"
 #include <iostream>
 
 
@@ -77,6 +78,7 @@ int main()
     // draw the numbers
 
 
+    game::tetris g(window);
     sampler s ("../assets/texatlas.png");
     s.bind(10);
 
@@ -84,6 +86,8 @@ int main()
 
     mesh::bkgd bkgd_(s, level);
     mesh::frame f (s, mode);
+    mesh::board b (s, g.board());
+    
 
     shader _s;
     _s.bind();
@@ -104,10 +108,21 @@ int main()
         {
             std::cout << "W pressed" << std::endl;
         }
+        
+        g.tick();
 
+        _s.uniform("transform", shader::I);
         bkgd_.draw();
         f.draw();
-        level+=4;
+
+        _s.uniform("transform", shader::J);
+
+        if (g.update())
+        {
+            b.update();
+            g.update(false);
+        }
+        b.draw();
 
         glfwSwapBuffers(window);
 

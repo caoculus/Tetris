@@ -81,7 +81,7 @@ void sampler::load_texture(const std::string &texture_atlas_path)
     
     std::vector<uint8_t> tex (width_ * height_ * 4, 0);
 
-#pragma omp parallel default(none) shared(tex, _tex)
+#pragma omp parallel for default(none) shared(tex, _tex)
     for (int x = 0; x < width_; x++)
         for (int y = 0; y < height_; y++)
             for (int c = 0; c < 4; c++)

@@ -11,7 +11,7 @@ namespace mesh
 class board : public mesh
 {
 public:
-    board(sampler &sampler, board_t &board);
+    board(sampler &sampler, const board_t &board);
 
     void draw() override;
 
@@ -20,7 +20,7 @@ public:
 private:
     std::vector <float> vertices_;
     std::vector <unsigned int> indices_;
-    board_t &board_;
+    const board_t &board_;
 };
 
 }
