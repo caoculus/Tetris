@@ -31,7 +31,7 @@ frame::frame(sampler &sampler, const GLFWvidmode *mode)
 void frame::draw()
 {
     bind();
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, SQUARE_INDICES.size(), GL_UNSIGNED_INT, nullptr);
     unbind();
 }
 
