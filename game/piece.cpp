@@ -64,9 +64,11 @@ bool game::piece::rotate(rotation_t rotation, bool kick)
         return true;
     }
 
-    int old_orientation = orientation_;
+    int8_t old_orientation = orientation_;
 
-    orientation_ = orientation_ + (rotation == rotation_t::ccw ? 1 : -1);
+    orientation_ = static_cast<int8_t>(orientation_ +
+                                       (rotation == rotation_t::ccw ? 1 : -1));
+
     if (orientation_ < 0)
         orientation_ = 3;
     else if (orientation_ > 3)
@@ -180,5 +182,5 @@ bool game::piece::spawn(square type, rotation_t rotation)
     type_ = type;
     bool is_none = (rotation == rotation_t::none);
     return (is_none and !collide(pos_, shift_t::none)) or
-        (!is_none and rotate(rotation, false));
+           (!is_none and rotate(rotation, false));
 }
