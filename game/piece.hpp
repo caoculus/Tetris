@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common.hpp"
+#include <iostream>
 
 namespace game
 {
@@ -70,9 +71,9 @@ public:
     static std::size_t index(square sq);
 
 public:
+
     piece(const board_t &board) : board_(board)
     {}
-
     /**
      * @brief reset the properties of the piece to represent a new piece that
      * has just spawned on the board.
@@ -125,7 +126,6 @@ public:
      */
     [[nodiscard]] std::array<ivec2, 4> piece_squares() const;
 
-
     /**
      * @details The shadow appears where the piece would land if it is moved
      * down until it collides with another piece or the edge of the board. The
@@ -135,9 +135,12 @@ public:
      */
     [[nodiscard]] std::array<ivec2, 4> shadow_squares() const;
 
+
     [[nodiscard]] constexpr square type() const
     { return type_; };
+
 private:
+    friend std::ostream& operator<<(std::ostream& os, const piece& p);
     uint8_t orientation_{0};
     uint8_t subpixel_{0};
     ivec2 pos_{0, 3};

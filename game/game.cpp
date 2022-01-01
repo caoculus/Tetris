@@ -1,5 +1,11 @@
 #include "game.hpp"
 #include "level.hpp"
+#include <iostream>
+
+std::ostream& game::operator<<(std::ostream& os, const game::piece &p) {
+    os << "piece(" << p.pos_.y << "," << p.pos_.x << ")";
+    return os;
+}
 
 void game::tetris::tick()
 {
@@ -20,6 +26,8 @@ void game::tetris::tick()
     {
         move_piece();
     }
+
+    std::cout << active_piece_ << std::endl;
 }
 
 inline void game::tetris::wait_delay()

@@ -49,7 +49,8 @@ locking_state game::piece::tick(uint16_t g)
 
 bool game::piece::translate(shift_t shift)
 {
-    if (shift == shift_t::none or collide(pos_, shift))
+    if (shift == shift_t::none or shift == shift_t::down or
+        collide(pos_, shift))
         return false;
 
     pos_.x += (shift == shift_t::left) ? -1 : 1;
