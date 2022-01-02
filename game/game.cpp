@@ -95,16 +95,9 @@ inline void game::tetris::spawn_piece()
     uint16_t g = level_.g();
     uint16_t spawn_g = (g >= level_counter::DENOM) ? g : 0;
 
-    // tick piece and update lock_ if touching stack
-    // otherwise reset lock_
-    if (active_piece_.tick(spawn_g) == locking_state::tick)
-    {
-        --lock_;
-    }
-    else
-    {
-        lock_ = LOCK;
-    }
+    // tick piece and reset lock_
+    active_piece_.tick(spawn_g);
+    lock_ = LOCK;
 
     --state_;
 }
@@ -139,7 +132,6 @@ inline void game::tetris::move_piece()
     {
         draw_piece();
         clear_lines();
-        lock_ = LOCK;
         state_ = ARE;
     }
 }

@@ -64,7 +64,7 @@ private:
     randomizer rng_{};
     inputs keys_;
     level_counter level_{};
-    int clk_{0}, state_{0}, lock_{LOCK};
+    int clk_{0}, state_{0}, lock_{0};
     bool line_clear_{false};
     piece active_piece_;
     bool update_board_{false};
