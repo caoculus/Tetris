@@ -16,15 +16,18 @@ active::active(sampler &sampler, const game::piece &active_piece, const game::le
 void active::draw()
 {
     update();
+
+    if (state_ > 0) return;
+
     bind();
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(s_vertices_), s_vertices_.data());
     glBufferSubData(GL_ARRAY_BUFFER, sizeof(s_vertices_), sizeof(p_vertices_), p_vertices_.data());
 
-    if (level_ < 100)
-        glDrawElements(GL_TRIANGLES, INDICES.size(), GL_UNSIGNED_INT, nullptr);
-    else
+    if (level_ >= 100 or state_ > 0)
         glDrawElements(GL_TRIANGLES, INDICES.size() / 2, GL_UNSIGNED_INT, (void const *)(INDICES.size()/2));
-
+    else
+        glDrawElements(GL_TRIANGLES, INDICES.size(), GL_UNSIGNED_INT, nullptr);
+    
     unbind();
 }
 
