@@ -35,7 +35,10 @@ void board::update()
                 continue;
 
             std::size_t begin_index = vertices_.size() / 4;
-            auto coords = sampler_("piece", static_cast<std::size_t>(board_[y][x]));
+            auto coords = sampler_("clear");
+
+            if (board_[y][x] != square::clear)
+                coords = sampler_("piece", static_cast<std::size_t>(board_[y][x]));
 
             for (const auto &index : SQUARE_INDICES)
                 indices_.push_back(begin_index + index);
