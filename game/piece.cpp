@@ -180,7 +180,7 @@ bool game::piece::spawn(square type, rotation_t rotation)
     orientation_ = 0;
     subpixel_ = 0;
     type_ = type;
-    bool is_none = (rotation == rotation_t::none);
-    return (is_none and !collide(pos_, shift_t::none)) or
-           (!is_none and rotate(rotation, false));
+    // try rotating without kick, and then try not rotating
+    return ((rotation != rotation_t::none and rotate(rotation, false)) or
+            !collide(pos_, shift_t::none));
 }
