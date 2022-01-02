@@ -63,10 +63,9 @@ inline void game::tetris::drop_lines()
          src > 0;)
     {
         if (board_[src][0] == square::clear)
-        {
             src--;
-        }
-        board_[dest--] = board_[src--];
+        else
+            board_[dest--] = board_[src--];
     }
 
     update_board_ = true;
