@@ -24,10 +24,10 @@ void next::update(const square &next)
     sq_ = sq;
 
     vertices_ = {
-        3.0f, -3.0f, sampler_("next", sq_).Nx, sampler_("next", sq_).Py,
-        3.0f, -0.875f, sampler_("next", sq_).Nx, sampler_("next", sq_).Ny,
-        7.0f, -3.0f, sampler_("next", sq_).Px, sampler_("next", sq_).Py,
-        7.0f, -0.875f, sampler_("next", sq_).Px, sampler_("next", sq_).Ny
+        3.0f, -2.0f, sampler_("next", sq_).Nx, sampler_("next", sq_).Py,
+        3.0f, 0.125f, sampler_("next", sq_).Nx, sampler_("next", sq_).Ny,
+        7.0f, -2.0f, sampler_("next", sq_).Px, sampler_("next", sq_).Py,
+        7.0f, 0.125f, sampler_("next", sq_).Px, sampler_("next", sq_).Ny
     };
     
     bind();
