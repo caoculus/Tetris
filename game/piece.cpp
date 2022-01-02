@@ -35,16 +35,17 @@ locking_state game::piece::tick(uint16_t g)
     }
 
     // here, we know for sure the piece can move down at least 1 square
-    for (; pos_.y < final_y; pos_.y++)
+    for (;; pos_.y++)
     {
         if (collide(pos_, shift_t::down))
         {
-            return locking_state::tick;
+            return (locking_state::tick | locking_state::reset);
+        }
+        else if (pos_.y == final_y)
+        {
+            return locking_state::reset;
         }
     }
-
-    return collide(pos_, shift_t::down) ? locking_state::tick
-                                        : locking_state::none;
 }
 
 bool game::piece::translate(shift_t shift)

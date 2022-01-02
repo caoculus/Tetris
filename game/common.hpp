@@ -25,8 +25,22 @@ enum class rotation_t : uint8_t
  */
 enum class locking_state : uint8_t
 {
-    none, tick, reset
+    none = 0x0, tick = 0x1, reset = 0x2
 };
+
+// locking_state or overload
+inline locking_state operator|(locking_state a, locking_state b)
+{
+    return static_cast<locking_state>(static_cast<uint8_t>(a) |
+                                      static_cast<uint8_t>(b));
+}
+
+// locking_state and overload
+inline locking_state operator&(locking_state a, locking_state b)
+{
+    return static_cast<locking_state>(static_cast<uint8_t>(a) &
+                                      static_cast<uint8_t>(b));
+}
 
 class inputs
 {
@@ -35,7 +49,7 @@ public:
      * @brief Construct a new inputs object by checking for the specific keys
      * the user pressed in the window during the current frame.
      */
-    inputs(GLFWwindow *window) : window_(window)
+    explicit inputs(GLFWwindow *window) : window_(window)
     {};
 
     /**
