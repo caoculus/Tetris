@@ -24,7 +24,7 @@ void active::draw()
     glBufferSubData(GL_ARRAY_BUFFER, sizeof(s_vertices_), sizeof(p_vertices_), p_vertices_.data());
 
     if (level_ >= 100 or state_ > 0)
-        glDrawElements(GL_TRIANGLES, INDICES.size() / 2, GL_UNSIGNED_INT, (void const *)(INDICES.size()/2));
+        glDrawElements(GL_TRIANGLES, INDICES.size() / 2, GL_UNSIGNED_INT, (void const *)(sizeof(INDICES) / 2));
     else
         glDrawElements(GL_TRIANGLES, INDICES.size(), GL_UNSIGNED_INT, nullptr);
     

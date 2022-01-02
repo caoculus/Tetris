@@ -159,8 +159,6 @@ int main()
         bkgd_.draw();
 
         _s.uniform("u_screen", screen_matrix);
-        f.draw();
-
         _s.uniform("transform", shader::J);
 
         if (g.update())
@@ -171,6 +169,9 @@ int main()
         }
         b.draw();
         a.draw();
+
+        _s.uniform("transform", shader::I);
+        f.draw();
 
         glfwSwapBuffers(window);
 
