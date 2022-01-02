@@ -9,8 +9,6 @@ std::ostream& game::operator<<(std::ostream& os, const game::piece &p) {
 
 void game::tetris::tick()
 {
-    ++clk_;
-
     // just wait for delay on positive states
     if (state_ > 0)
     {
@@ -20,6 +18,10 @@ void game::tetris::tick()
     else if (state_ == 0)
     {
         spawn_piece();
+        if (clk_ != 0)
+        {
+            ++level_;
+        }
     }
     // normal gameplay when state is -1
     else
@@ -27,7 +29,10 @@ void game::tetris::tick()
         move_piece();
     }
 
+    ++clk_;
+
 //    std::cout << active_piece_ << std::endl;
+    std::cout << "level: " << (int) level_ << std::endl;
 }
 
 inline void game::tetris::wait_delay()
@@ -171,9 +176,5 @@ inline void game::tetris::clear_lines()
         line_clear_ = true;
         level_ += num_cleared;
         update_board_ = true;
-    }
-    else
-    {
-        ++level_;
     }
 }
