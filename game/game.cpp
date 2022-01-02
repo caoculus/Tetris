@@ -32,7 +32,8 @@ void game::tetris::tick()
     ++clk_;
 
 //    std::cout << active_piece_ << std::endl;
-    std::cout << "level: " << (int) level_ << std::endl;
+//    std::cout << "level: " << (int) level_ << std::endl;
+//    std::cout << "state: " << state_ << std::endl;
 }
 
 inline void game::tetris::wait_delay()
@@ -72,6 +73,7 @@ inline void game::tetris::drop_lines()
         else
             board_[dest--] = board_[src--];
     }
+    line_clear_ = false;
 
     update_board_ = true;
 }
