@@ -17,7 +17,7 @@ void active::draw()
 {
     update();
 
-    if (state_ >= 0 or (state_ < 27 and state_ > 29)) 
+    if ((state_ >= 0 and state_ < 27) or (state_ > 29))
         return;
 
     bind();
