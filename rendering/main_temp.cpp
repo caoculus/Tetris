@@ -11,6 +11,7 @@
 #include "board.hpp"
 #include "game/game.hpp"
 #include "active.hpp"
+#include "next.hpp"
 #include <iostream>
 
 
@@ -139,6 +140,7 @@ int main()
     mesh::frame f (s);
     mesh::board b (s, g.board());
     mesh::active a(s, g.active_piece(), g.level(), g.state());
+    mesh::next n(s, g.next());
     
 
     shader _s;
@@ -169,6 +171,8 @@ int main()
         }
         b.draw();
         a.draw();
+        n.update(g.next());
+        n.draw();
 
         _s.uniform("transform", shader::I);
         f.draw();
