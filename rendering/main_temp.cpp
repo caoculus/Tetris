@@ -166,7 +166,6 @@ int main()
         if (g.update())
         {
             b.update();
-            std::cout << g.board() << std::endl;
             g.update(false);
         }
         b.draw();

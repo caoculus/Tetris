@@ -74,6 +74,11 @@ protected:
         0, 1, 2,
         1, 2, 3
     };
+
+    /**
+     * @brief Type of the object that stores the vertices of a square.
+     */
+    using sq_vertex_t = std::array<float, 16>;
 };
 
 }

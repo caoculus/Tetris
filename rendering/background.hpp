@@ -13,7 +13,7 @@ public:
     void draw() override;
 
 private:
-    std::array<float, 16> vertices_;
+    sq_vertex_t vertices_;
 
     const game::level_counter &level_;
 

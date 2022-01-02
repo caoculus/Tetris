@@ -15,7 +15,7 @@ public:
     void update(const square &next);
 
 private:
-    std::array<float, 16> vertices_;
+    sq_vertex_t vertices_;
     std::size_t sq_;
 };
 
