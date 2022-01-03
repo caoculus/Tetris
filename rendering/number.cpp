@@ -3,7 +3,7 @@
 namespace mesh
 {
 
-number::number(sampler &s, const game::level_counter &level, const int &clk)
+number::number(sampler &s, const game::level_counter &level, const uint32_t &clk)
     : mesh(s), level_(level), clk_(clk)
 {
     bind();

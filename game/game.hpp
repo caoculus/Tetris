@@ -61,7 +61,7 @@ public:
     [[nodiscard]] constexpr const level_counter &level() const noexcept
     { return level_; }
 
-    [[nodiscard]] constexpr const int &clk() const noexcept 
+    [[nodiscard]] constexpr const uint32_t &clk() const noexcept 
     { return clk_; }
 
 private:
