@@ -61,6 +61,9 @@ public:
     [[nodiscard]] constexpr const level_counter &level() const noexcept
     { return level_; }
 
+    [[nodiscard]] constexpr const int &clk() const noexcept 
+    { return clk_; }
+
 private:
     static constexpr int ARE = 26, LOCK = 30, CLEAR = 41, FLASH = 3;
     board_t board_{};

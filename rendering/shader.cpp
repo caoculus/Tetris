@@ -71,15 +71,6 @@ void shader::uniform(const char *name, int value) const
     glUniform1i(uniforms_.at(name), value);
 }
 
-void shader::uniform(const char *name, const mat3 &value) const
-{
-    if (uniforms_.find(name) == uniforms_.end())
-    {
-        uniforms_[name] = glGetUniformLocation(id_, name);
-    }
-    glUniformMatrix3fv(uniforms_.at(name), 1, GL_FALSE, value.data());
-}
-
 void shader::uniform(const char *name, const mat4 &value) const
 {
     if (uniforms_.find(name) == uniforms_.end())

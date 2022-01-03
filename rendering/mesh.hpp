@@ -4,6 +4,28 @@
 
 namespace mesh {
 
+template <std::size_t QUADS>
+using quad_vertices = std::array<float, QUADS*16>;
+
+template <std::size_t QUADS>
+class quad_indices : public std::array<unsigned int, QUADS*6>
+{
+public:
+    constexpr quad_indices()
+    {
+        for (std::size_t i {}; i < QUADS; ++i) 
+        {
+            (*this)[i*6+0] = i*4+0;
+            (*this)[i*6+1] = i*4+1;
+            (*this)[i*6+2] = i*4+2;
+            (*this)[i*6+3] = i*4+1;
+            (*this)[i*6+4] = i*4+2;
+            (*this)[i*6+5] = i*4+3;
+        }
+    }
+};
+
+
 /**
  * @brief Any piece of geometry that will be rendered in the game should inherit
  * from this class.
@@ -70,15 +92,8 @@ protected:
     /**
      * @brief Indices (or offsets) for drawing a square.
      */
-    static constexpr std::array<unsigned int, 6> SQUARE_INDICES {
-        0, 1, 2,
-        1, 2, 3
-    };
+    static constexpr quad_indices<1> SQUARE_INDICES {};
 
-    /**
-     * @brief Type of the object that stores the vertices of a square.
-     */
-    using sq_vertex_t = std::array<float, 16>;
 };
 
 }

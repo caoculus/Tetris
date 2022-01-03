@@ -184,6 +184,10 @@ inline void game::tetris::move_piece()
     {
         (shift == shift_t::down) ? frame_num_ = LOCK : ++frame_num_;
     }
+    if (static_cast<bool>(tick_result & locking_state::tick))
+    {
+        (shift == shift_t::down) ? lock_ = 0 : --lock_;
+    }
 
     // if piece locks
     if (frame_num_ == LOCK)

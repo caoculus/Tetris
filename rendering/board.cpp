@@ -44,10 +44,10 @@ void board::update()
                 indices_.push_back(begin_index + index);
 
             vertices_.insert(vertices_.end(), {
-                x + 0.0f, y + 0.0f, coords.Nx, coords.Py,
-                x + 0.0f, y + 1.0f, coords.Nx, coords.Ny,
-                x + 1.0f, y + 0.0f, coords.Px, coords.Py,
-                x + 1.0f, y + 1.0f, coords.Px, coords.Ny
+                x + 0.f, y + 0.f, coords.Nx, coords.Py,
+                x + 0.f, y + 1.f, coords.Nx, coords.Ny,
+                x + 1.f, y + 0.f, coords.Px, coords.Py,
+                x + 1.f, y + 1.f, coords.Px, coords.Ny
             });
         }
     }

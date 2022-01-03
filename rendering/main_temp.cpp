@@ -12,6 +12,7 @@
 #include "game/game.hpp"
 #include "active.hpp"
 #include "next.hpp"
+#include "number.hpp"
 #include <iostream>
 
 
@@ -83,14 +84,14 @@ int main()
     int width  = mode->width    * 3;
     int height = mode->height   * 4;
 
-    float x = height > width ? 1.0f : (float)height / (float)width;
-    float y = width > height ? 1.0f : (float)width / (float)height;
+    float x = height > width ? 1.f : (float)height / (float)width;
+    float y = width > height ? 1.f : (float)width / (float)height;
 
     mat4 screen_matrix = {{
-        x, 0.0f, 0.0f, 0.0f,
-        0.0f, y, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 1.0f
+        x, 0.f, 0.f, 0.f,
+        0.f, y, 0.f, 0.f,
+        0.f, 0.f, 1.f, 0.f,
+        0.f, 0.f, 0.f, 1.f
     }};
 
     GLFWmonitor *primary_monitor = glfwGetPrimaryMonitor();
@@ -141,6 +142,7 @@ int main()
     mesh::board b (s, g.board());
     mesh::active a(s, g.active_piece(), g.level(), g.state(), g.frame_num());
     mesh::next n(s, g.next());
+    mesh::number num(s, g.level(), g.clk());
     
 
     shader _s;
@@ -175,6 +177,7 @@ int main()
 
         _s.uniform("transform", shader::I);
         f.draw();
+        num.draw();
 
         glfwSwapBuffers(window);
 
