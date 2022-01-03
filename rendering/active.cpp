@@ -1,14 +1,20 @@
 #include <GL/glew.h>
 #include "active.hpp"
 
-namespace mesh {
+namespace mesh
+{
 
-active::active(sampler &sampler, const game::piece &active_piece, const game::level_counter &level, const int &state)
-    : mesh(sampler), active_piece_(active_piece), level_(level), state_(state)
+active::active(sampler &sampler, const game::piece &active_piece,
+               const game::level_counter &level, const state_t &state,
+               const int &frame_num)
+    : mesh(sampler), active_piece_(active_piece), level_(level), state_(state),
+      frame_num_(frame_num)
 {
     bind();
-    glBufferData(GL_ARRAY_BUFFER, sizeof(p_vertices_) + sizeof(s_vertices_), nullptr, GL_DYNAMIC_DRAW);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(INDICES), INDICES.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(p_vertices_) + sizeof(s_vertices_),
+        nullptr, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(INDICES), INDICES.data(),
+        GL_STATIC_DRAW);
     set_vertex_layout();
     unbind();
 }
@@ -17,26 +23,32 @@ void active::draw()
 {
     update();
 
-    if ((state_ >= 0 and state_ < 27) or (state_ > 29))
+//    if ((state_ >= 0 and state_ < 27) or (state_ > 29))
+    if (state_ == state_t::spawn or state_ == state_t::are or
+        state_ == state_t::clear)
         return;
 
     bind();
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(s_vertices_), s_vertices_.data());
-    glBufferSubData(GL_ARRAY_BUFFER, sizeof(s_vertices_), sizeof(p_vertices_), p_vertices_.data());
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(s_vertices_),
+        s_vertices_.data());
+    glBufferSubData(GL_ARRAY_BUFFER, sizeof(s_vertices_), sizeof(p_vertices_),
+        p_vertices_.data());
 
-    if (level_ >= 100 or state_ >= 0)
-        glDrawElements(GL_TRIANGLES, INDICES.size() / 2, GL_UNSIGNED_INT, (void const *)(sizeof(INDICES) / 2));
+    if (level_ >= 100 or state_ != state_t::active)
+        glDrawElements(GL_TRIANGLES, INDICES.size() / 2, GL_UNSIGNED_INT,
+            (void const *) (sizeof(INDICES) / 2));
     else
         glDrawElements(GL_TRIANGLES, INDICES.size(), GL_UNSIGNED_INT, nullptr);
-    
+
     unbind();
 }
 
 void active::update()
 {
-    auto coords = sampler_("active", static_cast<std::size_t>(active_piece_.type()));
+    auto coords = sampler_("active",
+        static_cast<std::size_t>(active_piece_.type()));
 
-    if (state_ >= 27 and state_ <= 29)
+    if (state_ == state_t::flash)
         coords = sampler_("flash");
 
     auto active_sq = active_piece_.piece_squares();

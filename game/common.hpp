@@ -5,7 +5,7 @@
 #include <GLFW/glfw3.h>
 
 /**
- * Represents a piece shift input for the game.
+ * @brief Represents a piece shift input for the game.
  */
 enum class shift_t : uint8_t
 {
@@ -13,7 +13,7 @@ enum class shift_t : uint8_t
 };
 
 /**
- * Represents a piece rotation input for the game.
+ * @brief Represents a piece rotation input for the game.
  */
 enum class rotation_t : uint8_t
 {
@@ -41,6 +41,19 @@ inline locking_state operator&(locking_state a, locking_state b)
     return static_cast<locking_state>(static_cast<uint8_t>(a) &
                                       static_cast<uint8_t>(b));
 }
+
+/**
+ * @brief Represents the current state of the game.
+ */
+enum class state_t : uint8_t
+{
+    spawn,  // on frame to spawn a new piece
+    active, // active piece is in play
+    flash,  // flash the current piece
+    dim,    // end of flash, dim the current piece, no border
+    are,    // other frames of ARE
+    clear   // line clear
+};
 
 class inputs
 {

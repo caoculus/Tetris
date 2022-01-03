@@ -10,13 +10,27 @@ std::ostream &game::operator<<(std::ostream &os, const game::piece &p)
 
 void game::tetris::tick()
 {
-    // just wait for delay on positive states
-    if (state_ > 0)
-    {
-        wait_delay();
-    }
-    // when state is 0 (spawning frame), try to spawn a piece
-    else if (state_ == 0)
+//    // just wait for delay on positive states
+//    if (state_ > 0)
+//    {
+//        wait_delay();
+//    }
+//    // when state is 0 (spawning frame), try to spawn a piece
+//    else if (state_ == 0)
+//    {
+//        spawn_piece();
+//        if (clk_ != 0)
+//        {
+//            ++level_;
+//        }
+//    }
+//    // normal gameplay when state is -1
+//    else
+//    {
+//        move_piece();
+//    }
+
+    if (state_ == state_t::spawn)
     {
         spawn_piece();
         if (clk_ != 0)
@@ -24,10 +38,13 @@ void game::tetris::tick()
             ++level_;
         }
     }
-    // normal gameplay when state is -1
-    else
+    else if (state_ == state_t::active)
     {
         move_piece();
+    }
+    else
+    {
+        wait_delay();
     }
 
     ++clk_;
@@ -41,27 +58,59 @@ inline void game::tetris::wait_delay()
 {
     // update shift to track DAS except on frame before piece spawn (to
     // emulate TGM)
-    if (state_ > 1 and state_ <= ARE)
+    if (state_ == state_t::are)
     {
         keys_.update_shift();
     }
 
-    // jump to line clear animation after flash ends in ARE if line clear
-    if (line_clear_ and state_ == ARE - FLASH + 1)
+    ++frame_num_;
+
+    switch (state_)
     {
-        state_ = ARE + CLEAR;
+        case state_t::flash:
+            if (frame_num_ == FLASH)
+            {
+                state_ = state_t::dim;
+                frame_num_ = 0;
+            }
+            break;
+        case state_t::dim:
+            state_ = line_clear_ ? state_t::clear : state_t::are;
+            break;
+        case state_t::are:
+            if (frame_num_ == ARE)
+            {
+                state_ = state_t::spawn;
+                frame_num_ = 0;
+            }
+            break;
+        case state_t::clear:
+            if (frame_num_ == CLEAR)
+            {
+                drop_lines();
+                state_ = state_t::are;
+                frame_num_ = 0;
+            }
+        default:
+            break;
     }
-    // drop lines at end of line clear animation and jump to after flash in ARE
-    else if (state_ == ARE + 1)
-    {
-        drop_lines();
-        state_ = ARE - FLASH;
-    }
-    // just decrement otherwise
-    else
-    {
-        --state_;
-    }
+
+//    // jump to line clear animation after flash ends in ARE if line clear
+//    if (line_clear_ and state_ == ARE - FLASH + 1)
+//    {
+//        state_ = ARE + CLEAR;
+//    }
+//    // drop lines at end of line clear animation and jump to after flash in ARE
+//    else if (state_ == ARE + 1)
+//    {
+//        drop_lines();
+//        state_ = ARE - FLASH;
+//    }
+//    // just decrement otherwise
+//    else
+//    {
+//        --state_;
+//    }
 }
 
 inline void game::tetris::drop_lines()
@@ -106,11 +155,9 @@ inline void game::tetris::spawn_piece()
     uint16_t g = level_.g();
     uint16_t spawn_g = (g >= level_counter::DENOM) ? g : 0;
 
-    // tick piece and reset lock_
+    // tick piece and set state to active (frame_num_ is already 0)
     active_piece_.tick(spawn_g);
-    lock_ = LOCK;
-
-    --state_;
+    state_ = state_t::active;
 }
 
 inline void game::tetris::move_piece()
@@ -127,23 +174,24 @@ inline void game::tetris::move_piece()
     uint16_t g = std::max(level_.g(),
         static_cast<uint16_t>(128 * (shift == shift_t::down)));
 
-    // update lock_
+    // update frame_num_
     auto tick_result = active_piece_.tick(g);
-    if (static_cast<bool>(tick_result & locking_state::tick))
-    {
-        (shift == shift_t::down) ? lock_ = 0 : --lock_;
-    }
     if (static_cast<bool>(tick_result & locking_state::reset))
     {
-        lock_ = LOCK;
+        frame_num_ = 0;
+    }
+    if (static_cast<bool>(tick_result & locking_state::tick))
+    {
+        (shift == shift_t::down) ? frame_num_ = LOCK : ++frame_num_;
     }
 
     // if piece locks
-    if (lock_ == 0)
+    if (frame_num_ == LOCK)
     {
         draw_piece();
         clear_lines();
-        state_ = ARE;
+        state_ = state_t::flash;
+        frame_num_ = 0;
     }
 }
 
