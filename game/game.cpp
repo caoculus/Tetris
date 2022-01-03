@@ -2,7 +2,8 @@
 #include "level.hpp"
 #include <iostream>
 
-std::ostream& game::operator<<(std::ostream& os, const game::piece &p) {
+std::ostream &game::operator<<(std::ostream &os, const game::piece &p)
+{
     os << "piece(" << p.pos_.y << "," << p.pos_.x << ")";
     return os;
 }
@@ -66,13 +67,23 @@ inline void game::tetris::wait_delay()
 inline void game::tetris::drop_lines()
 {
     for (std::size_t src = board_.size() - 1, dest = board_.size() - 1;
-         src > 0;)
+         dest != -1;)
     {
-        if (board_[src][0] == square::clear)
-            src--;
+        if (src == -1)
+        {
+            std::fill(board_[dest].begin(), board_[dest].end(), square::none);
+            --dest;
+        }
+        else if (board_[src][0] == square::clear)
+        {
+            --src;
+        }
         else
+        {
             board_[dest--] = board_[src--];
+        }
     }
+
     line_clear_ = false;
 
     update_board_ = true;
