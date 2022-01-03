@@ -3,7 +3,6 @@
 #include <string>
 #include <unordered_map>
 
-using mat3 = std::array<float, 9>;
 using mat4 = std::array<float, 16>;
 
 /**
@@ -44,8 +43,6 @@ public:
      * @param value the value of the uniform.
      */
     void uniform(const char *name, int value) const;
-
-    void uniform(const char *name, const mat3 &value) const;
 
     void uniform(const char *name, const mat4 &value) const;
 
