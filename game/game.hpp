@@ -28,7 +28,7 @@ public:
     /**
      * @return the number of frames that have elapsed since the game started.
      */
-    [[nodiscard]] constexpr int time() const noexcept
+    [[nodiscard]] constexpr uint32_t time() const noexcept
     { return clk_; }
 
     /**
@@ -43,8 +43,11 @@ public:
     [[nodiscard]] constexpr const board_t &board() const noexcept
     { return board_; }
 
-    [[nodiscard]] constexpr const int &state() const noexcept
+    [[nodiscard]] constexpr const state_t &state() const noexcept
     { return state_; }
+
+    [[nodiscard]] constexpr const uint8_t &frame_num() const noexcept
+    { return frame_num_; }
 
     [[nodiscard]] constexpr bool update() const noexcept
     { return update_board_; }
@@ -62,12 +65,14 @@ public:
     { return clk_; }
 
 private:
-    static constexpr int ARE = 30, LOCK = 30, CLEAR = 41, FLASH = 3;
+    static constexpr int ARE = 26, LOCK = 30, CLEAR = 41, FLASH = 3;
     board_t board_{};
     randomizer rng_{};
     inputs keys_;
     level_counter level_{};
-    int clk_{0}, state_{0}, lock_{0};
+    uint32_t clk_{0};
+    uint8_t frame_num_{0};
+    state_t state_{state_t::spawn};
     bool line_clear_{false};
     piece active_piece_;
     bool update_board_{false};

@@ -140,7 +140,7 @@ int main()
     mesh::bkgd bkgd_(s, g.level());
     mesh::frame f (s);
     mesh::board b (s, g.board());
-    mesh::active a(s, g.active_piece(), g.level(), g.state());
+    mesh::active a(s, g.active_piece(), g.level(), g.state(), g.frame_num());
     mesh::next n(s, g.next());
     mesh::number num(s, g.level(), g.clk());
     
