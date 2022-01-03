@@ -14,17 +14,17 @@ class shader
 {
 public:
     static constexpr mat4 I {
-        1.0f, 0.0f, 0.0f, 0.0f,
-        0.0f, 1.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 1.0f
+        1.f, 0.f, 0.f, 0.f,
+        0.f, 1.f, 0.f, 0.f,
+        0.f, 0.f, 1.f, 0.f,
+        0.f, 0.f, 0.f, 1.f
     };
     
     static constexpr mat4 J {
-        0.05f,  0.0f,           0.0f, 0.0f,
-        0.0f,   -1.0f/15.0f,    0.0f, 0.0f,
-        0.0f,   0.0f,           1.0f, 0.0f,
-        -0.25f, 11.0f/15.0f,   0.0f, 1.0f
+        0.05f,  0.f,           0.f, 0.f,
+        0.f,   -1.f/15.f,    0.f, 0.f,
+        0.f,   0.f,           1.f, 0.f,
+        -0.25f, 11.f/15.f,   0.f, 1.f
     };
 
     shader();

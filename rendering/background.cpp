@@ -12,10 +12,10 @@ bkgd::bkgd(sampler &sampler, const game::level_counter &level)
     auto coords = sampler_("bkgd", section_);
 
     vertices_ = {
-        -1.0f, -1.0f, coords.Nx, coords.Ny,
-        -1.0f,  1.0f, coords.Nx, coords.Py,
-        1.0f,  -1.0f, coords.Px, coords.Ny,
-        1.0f,   1.0f, coords.Px, coords.Py
+        -1.f, -1.f, coords.Nx, coords.Ny,
+        -1.f,  1.f, coords.Nx, coords.Py,
+        1.f,  -1.f, coords.Px, coords.Ny,
+        1.f,   1.f, coords.Px, coords.Py
     };
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_), vertices_.data(), GL_DYNAMIC_DRAW);
@@ -33,10 +33,10 @@ void bkgd::draw()
         auto coords = sampler_("bkgd", section_);
 
         vertices_ = {
-            -1.0f, -1.0f, coords.Nx, coords.Ny,
-            -1.0f,  1.0f, coords.Nx, coords.Py,
-            1.0f,  -1.0f, coords.Px, coords.Ny,
-            1.0f,   1.0f, coords.Px, coords.Py
+            -1.f, -1.f, coords.Nx, coords.Ny,
+            -1.f,  1.f, coords.Nx, coords.Py,
+            1.f,  -1.f, coords.Px, coords.Ny,
+            1.f,   1.f, coords.Px, coords.Py
         };
 
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_), vertices_.data(), GL_DYNAMIC_DRAW);

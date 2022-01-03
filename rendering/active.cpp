@@ -44,20 +44,20 @@ void active::update()
 
     for (int sq = 0; sq < 4; ++sq)
     {
-        p_vertices_[sq * 16 + 0] = active_sq[sq].x + 0.0f;
-        p_vertices_[sq * 16 + 1] = active_sq[sq].y + 0.0f;
+        p_vertices_[sq * 16 + 0] = active_sq[sq].x + 0.f;
+        p_vertices_[sq * 16 + 1] = active_sq[sq].y + 0.f;
         p_vertices_[sq * 16 + 2] = coords.Nx;
         p_vertices_[sq * 16 + 3] = coords.Py;
-        p_vertices_[sq * 16 + 4] = active_sq[sq].x + 0.0f;
-        p_vertices_[sq * 16 + 5] = active_sq[sq].y + 1.0f;
+        p_vertices_[sq * 16 + 4] = active_sq[sq].x + 0.f;
+        p_vertices_[sq * 16 + 5] = active_sq[sq].y + 1.f;
         p_vertices_[sq * 16 + 6] = coords.Nx;
         p_vertices_[sq * 16 + 7] = coords.Ny;
-        p_vertices_[sq * 16 + 8] = active_sq[sq].x + 1.0f;
-        p_vertices_[sq * 16 + 9] = active_sq[sq].y + 0.0f;
+        p_vertices_[sq * 16 + 8] = active_sq[sq].x + 1.f;
+        p_vertices_[sq * 16 + 9] = active_sq[sq].y + 0.f;
         p_vertices_[sq * 16 + 10] = coords.Px;
         p_vertices_[sq * 16 + 11] = coords.Py;
-        p_vertices_[sq * 16 + 12] = active_sq[sq].x + 1.0f;
-        p_vertices_[sq * 16 + 13] = active_sq[sq].y + 1.0f;
+        p_vertices_[sq * 16 + 12] = active_sq[sq].x + 1.f;
+        p_vertices_[sq * 16 + 13] = active_sq[sq].y + 1.f;
         p_vertices_[sq * 16 + 14] = coords.Px;
         p_vertices_[sq * 16 + 15] = coords.Ny;
     }
@@ -68,20 +68,20 @@ void active::update()
     {
         for (int sq = 0; sq < 4; ++sq)
         {
-            s_vertices_[sq * 16 + 0] = shadow_sq[sq].x + 0.0f;
-            s_vertices_[sq * 16 + 1] = shadow_sq[sq].y + 0.0f;
+            s_vertices_[sq * 16 + 0] = shadow_sq[sq].x + 0.f;
+            s_vertices_[sq * 16 + 1] = shadow_sq[sq].y + 0.f;
             s_vertices_[sq * 16 + 2] = coords.Nx;
             s_vertices_[sq * 16 + 3] = coords.Py;
-            s_vertices_[sq * 16 + 4] = shadow_sq[sq].x + 0.0f;
-            s_vertices_[sq * 16 + 5] = shadow_sq[sq].y + 1.0f;
+            s_vertices_[sq * 16 + 4] = shadow_sq[sq].x + 0.f;
+            s_vertices_[sq * 16 + 5] = shadow_sq[sq].y + 1.f;
             s_vertices_[sq * 16 + 6] = coords.Nx;
             s_vertices_[sq * 16 + 7] = coords.Ny;
-            s_vertices_[sq * 16 + 8] = shadow_sq[sq].x + 1.0f;
-            s_vertices_[sq * 16 + 9] = shadow_sq[sq].y + 0.0f;
+            s_vertices_[sq * 16 + 8] = shadow_sq[sq].x + 1.f;
+            s_vertices_[sq * 16 + 9] = shadow_sq[sq].y + 0.f;
             s_vertices_[sq * 16 + 10] = coords.Px;
             s_vertices_[sq * 16 + 11] = coords.Py;
-            s_vertices_[sq * 16 + 12] = shadow_sq[sq].x + 1.0f;
-            s_vertices_[sq * 16 + 13] = shadow_sq[sq].y + 1.0f;
+            s_vertices_[sq * 16 + 12] = shadow_sq[sq].x + 1.f;
+            s_vertices_[sq * 16 + 13] = shadow_sq[sq].y + 1.f;
             s_vertices_[sq * 16 + 14] = coords.Px;
             s_vertices_[sq * 16 + 15] = coords.Ny;
         }
