@@ -129,13 +129,13 @@ inline void game::tetris::move_piece()
 
     // update lock_
     auto tick_result = active_piece_.tick(g);
-    if (static_cast<bool>(tick_result & locking_state::tick))
-    {
-        (shift == shift_t::down) ? lock_ = 0 : --lock_;
-    }
     if (static_cast<bool>(tick_result & locking_state::reset))
     {
         lock_ = LOCK;
+    }
+    if (static_cast<bool>(tick_result & locking_state::tick))
+    {
+        (shift == shift_t::down) ? lock_ = 0 : --lock_;
     }
 
     // if piece locks
