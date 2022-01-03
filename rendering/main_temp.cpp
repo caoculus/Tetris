@@ -142,7 +142,7 @@ int main()
     mesh::board b (s, g.board());
     mesh::active a(s, g.active_piece(), g.level(), g.state());
     mesh::next n(s, g.next());
-    mesh::number num(s, g.level());
+    mesh::number num(s, g.level(), g.clk());
     
 
     shader _s;
