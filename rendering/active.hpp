@@ -15,13 +15,12 @@ public:
     void draw() override;
 
 private:
-    std::array<float, 64> p_vertices_{}, s_vertices_{};
-    std::array<unsigned int, 24> p_indices_{}, s_indices_{};
+    quad_vertices<4> p_vertices_{}, s_vertices_{};
     const game::piece &active_piece_;
     const game::level_counter &level_;
     const int &state_;
 
-    static constexpr std::array<unsigned int, 48> INDICES {
+    static constexpr quad_indices<8> INDICES {
         0,   1,  2,
         1,   2,  3,
         4,   5,  6,

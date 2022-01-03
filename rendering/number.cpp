@@ -19,9 +19,8 @@ void number::draw()
     if (intern_denom_ != (1+level_.section()) * 100)
     {
         intern_denom_ = (1+level_.section()) * 100;
-        if (intern_denom_ == 1000) intern_denom_ = 999;
-
-        std::cout << "new denom: " << intern_denom_ << std::endl;
+        if (intern_denom_ == 1000) 
+            intern_denom_ = 999;
 
         const auto hundred = sampler_("number", intern_denom_ / 100);
         const auto ten = sampler_("number", (intern_denom_ % 100) / 10);
@@ -51,10 +50,6 @@ void number::draw()
         n_ones = intern_numer_ % 10;
         n_tens = (intern_numer_ % 100) / 10;
         n_hundreds = intern_numer_ / 100;
-
-        std::cout << "hundred: " << n_hundreds << std::endl;
-        std::cout << "ten: " << n_tens << std::endl;
-        std::cout << "one: " << n_ones << std::endl;
 
         const auto hundred = sampler_("number", n_hundreds);
         const auto ten = sampler_("number", n_tens);

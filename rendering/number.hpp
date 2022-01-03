@@ -18,8 +18,8 @@ private:
     const game::level_counter &level_;
     int intern_numer_{-5}, intern_denom_{-7};
     int n_hundreds {}, n_tens {}, n_ones {};
-    std::array<float, 48> numer_, denom_;
-    static constexpr std::array<unsigned int, 36> N_INDICES {{
+    quad_vertices<3> numer_, denom_;
+    static constexpr quad_indices<6> N_INDICES {{
         0, 1, 2,
         1, 2, 3,
         4, 5, 6,

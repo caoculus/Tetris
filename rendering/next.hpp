@@ -15,7 +15,7 @@ public:
     void update(const square &next);
 
 private:
-    sq_vertex_t vertices_;
+    quad_vertices<1> vertices_;
     std::size_t sq_;
 };
 

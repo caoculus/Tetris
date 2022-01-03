@@ -13,7 +13,7 @@ public:
     void draw() override;
 
 private:
-    sq_vertex_t vertices_;
+    quad_vertices<1> vertices_;
 
     const game::level_counter &level_;
 
