@@ -25,8 +25,8 @@ void game::tetris::tick()
     {
         wait_delay();
     }
-
-    ++clk_;
+    if (level_ < 999)
+        ++clk_;
 }
 
 inline void game::tetris::wait_delay()
