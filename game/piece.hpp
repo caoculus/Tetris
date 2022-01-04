@@ -145,8 +145,6 @@ public:
     { return type_; };
 
 private:
-    friend std::ostream &operator<<(std::ostream &os, const piece &p);
-
     int8_t orientation_{0};
     uint8_t subpixel_{0};
     ivec2 pos_{0, 3};

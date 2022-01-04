@@ -2,34 +2,8 @@
 #include "level.hpp"
 #include <iostream>
 
-std::ostream &game::operator<<(std::ostream &os, const game::piece &p)
-{
-    os << "piece(" << p.pos_.y << "," << p.pos_.x << ")";
-    return os;
-}
-
 void game::tetris::tick()
 {
-//    // just wait for delay on positive states
-//    if (state_ > 0)
-//    {
-//        wait_delay();
-//    }
-//    // when state is 0 (spawning frame), try to spawn a piece
-//    else if (state_ == 0)
-//    {
-//        spawn_piece();
-//        if (clk_ != 0)
-//        {
-//            ++level_;
-//        }
-//    }
-//    // normal gameplay when state is -1
-//    else
-//    {
-//        move_piece();
-//    }
-
     if (game_over_)
     {
         throw game_over_exception();
@@ -53,10 +27,6 @@ void game::tetris::tick()
     }
 
     ++clk_;
-
-//    std::cout << active_piece_ << std::endl;
-//    std::cout << "level: " << (int) level_ << std::endl;
-//    std::cout << "state: " << state_ << std::endl;
 }
 
 inline void game::tetris::wait_delay()
@@ -99,23 +69,6 @@ inline void game::tetris::wait_delay()
         default:
             break;
     }
-
-//    // jump to line clear animation after flash ends in ARE if line clear
-//    if (line_clear_ and state_ == ARE - FLASH + 1)
-//    {
-//        state_ = ARE + CLEAR;
-//    }
-//    // drop lines at end of line clear animation and jump to after flash in ARE
-//    else if (state_ == ARE + 1)
-//    {
-//        drop_lines();
-//        state_ = ARE - FLASH;
-//    }
-//    // just decrement otherwise
-//    else
-//    {
-//        --state_;
-//    }
 }
 
 inline void game::tetris::drop_lines()
