@@ -8,3 +8,4 @@
 /Makefile
 /CMakeCache.txt
 /.vscode/
+/cmake-build-debug-windows/
