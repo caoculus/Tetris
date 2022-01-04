@@ -24,7 +24,7 @@ public:
 private:
     const game::level_counter &level_;
     int intern_numer_{-5}, intern_denom_{-7};
-    int n_hundreds {}, n_tens {}, n_ones {};
+    int n_hundreds_ {}, n_tens_ {}, n_ones_ {};
     const uint32_t &clk_;
     quad_vertices<6> clk_vertices_;
     quad_vertices<3> numer_, denom_;

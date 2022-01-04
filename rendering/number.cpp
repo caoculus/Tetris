@@ -25,12 +25,12 @@ void number::draw()
     if (level_ != intern_numer_)
         update_numer();
     
-    if (n_hundreds)
+    if (n_hundreds_)
     {
         glBufferSubData(GL_ARRAY_BUFFER, sizeof(clk_vertices_) + sizeof(denom_), sizeof(numer_), numer_.data());
         glDrawElements(GL_TRIANGLES, INDICES.size(), GL_UNSIGNED_INT, nullptr);
     }
-    else if (n_tens)
+    else if (n_tens_)
     {
         glBufferSubData(GL_ARRAY_BUFFER, sizeof(clk_vertices_) + sizeof(denom_), sizeof(numer_) * 2 / 3, numer_.data());
         glDrawElements(GL_TRIANGLES, INDICES.size() - 6, GL_UNSIGNED_INT, nullptr);
@@ -114,13 +114,13 @@ void number::update_denom()
 void number::update_numer()
 {
     intern_numer_ = level_;
-    n_ones = intern_numer_ % 10;
-    n_tens = (intern_numer_ % 100) / 10;
-    n_hundreds = intern_numer_ / 100;
+    n_ones_ = intern_numer_ % 10;
+    n_tens_ = (intern_numer_ % 100) / 10;
+    n_hundreds_ = intern_numer_ / 100;
 
-    const auto hundred = sampler_("number", n_hundreds);
-    const auto ten = sampler_("number", n_tens);
-    const auto one = sampler_("number", n_ones);
+    const auto hundred = sampler_("number", n_hundreds_);
+    const auto ten = sampler_("number", n_tens_);
+    const auto one = sampler_("number", n_ones_);
 
     numer_ = {
         102/ 160.f - 1.f, 1.f - 190 / 120.f, one.Nx, one.Ny,
