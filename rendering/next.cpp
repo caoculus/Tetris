@@ -23,11 +23,12 @@ void next::update(const square &next)
     
     sq_ = sq;
 
+    auto coords = sampler_("next", sq_);
     vertices_ = {
-        3.f, -2.f, sampler_("next", sq_).Nx, sampler_("next", sq_).Py,
-        3.f, 0.125f, sampler_("next", sq_).Nx, sampler_("next", sq_).Ny,
-        7.f, -2.f, sampler_("next", sq_).Px, sampler_("next", sq_).Py,
-        7.f, 0.125f, sampler_("next", sq_).Px, sampler_("next", sq_).Ny
+        3.f, -2.f, coords.Nx, coords.Py,
+        3.f, 0.125f, coords.Nx, coords.Ny,
+        7.f, -2.f, coords.Px, coords.Py,
+        7.f, 0.125f, coords.Px, coords.Ny
     };
     
     bind();
@@ -41,7 +42,5 @@ void next::draw()
     glDrawElements(GL_TRIANGLES, SQUARE_INDICES.size(), GL_UNSIGNED_INT, nullptr);
     unbind();
 }
-
-
 
 }

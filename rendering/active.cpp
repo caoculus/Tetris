@@ -45,8 +45,7 @@ void active::draw()
 
 void active::update()
 {
-    auto coords = [this]
-    {
+    auto coords = [this] {
         switch (state_)
         {
             case state_t::flash:

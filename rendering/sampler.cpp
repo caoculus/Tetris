@@ -9,11 +9,10 @@
 #include <fstream>
 #include <sstream>
 
-
 sampler::sampler(const std::string &texture_atlas_path)
 {
     std::size_t last_dot = texture_atlas_path.find_last_of('.');
-    if (texture_atlas_path.substr(last_dot) != ".png")
+    if (last_dot == std::string::npos or texture_atlas_path.size() <= 4 or texture_atlas_path.substr(last_dot) != ".png")
         throw texture_loading_error("texture atlas must be a .png file");
     
     std::string atlas_layout_path = texture_atlas_path.substr(0, last_dot) + ".layout";

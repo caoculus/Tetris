@@ -14,10 +14,10 @@ include_directories(${OPENGL_INCLUDE_DIR} ${GLFW_INCLUDE_DIRS})
 
 include_directories(.)
 
-add_executable(Tetris game/common.cpp game/game.cpp game/level.cpp
-        game/piece.cpp game/randomizer.cpp rendering/main_temp.cpp
+add_executable(Tetris game/main.cxx game/common.cpp game/game.cpp game/level.cpp
+        game/piece.cpp game/randomizer.cpp
         rendering/sampler.cpp rendering/shader.cpp rendering/mesh.cpp
         rendering/background.cpp rendering/frame.cpp rendering/board.cpp 
-        rendering/active.cpp rendering/next.cpp rendering/number.cpp)
+        rendering/active.cpp rendering/next.cpp rendering/number.cpp rendering/dim.cpp)
 
 target_link_libraries(${PROJECT_NAME} ${OPENGL_gl_LIBRARY} ${OpenGlLinkers})
