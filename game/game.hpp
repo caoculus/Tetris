@@ -73,9 +73,10 @@ private:
     uint32_t clk_{0};
     uint8_t frame_num_{0};
     state_t state_{state_t::spawn};
-    bool line_clear_{false};
     piece active_piece_;
+    bool line_clear_{false};
     bool update_board_{false};
+    bool game_over_{false};
 
     /**
      * @brief Update the state of the game during the delay between pieces.

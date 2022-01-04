@@ -30,6 +30,11 @@ void game::tetris::tick()
 //        move_piece();
 //    }
 
+    if (game_over_)
+    {
+        throw game_over_exception();
+    }
+
     if (state_ == state_t::spawn)
     {
         spawn_piece();
@@ -76,6 +81,7 @@ inline void game::tetris::wait_delay()
             break;
         case state_t::dim:
             state_ = line_clear_ ? state_t::clear : state_t::are;
+            draw_piece();
             break;
         case state_t::are:
             if (frame_num_ == ARE)
@@ -148,7 +154,9 @@ inline void game::tetris::spawn_piece()
     // game over if the piece can't spawn
     if (!active_piece_.spawn(rng_(), rotation))
     {
-        throw game_over_exception();
+        draw_piece();
+        game_over_ = true;
+        return;
     }
 
     // otherwise, move down according to spawn gravity
@@ -188,7 +196,6 @@ inline void game::tetris::move_piece()
     // if piece locks
     if (frame_num_ == LOCK)
     {
-        draw_piece();
         clear_lines();
         state_ = state_t::flash;
         frame_num_ = 0;
