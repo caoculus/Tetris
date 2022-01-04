@@ -45,7 +45,7 @@ void active::draw()
 
 void active::update()
 {
-    auto coords = [&]
+    auto coords = [this]
     {
         switch (state_)
         {
