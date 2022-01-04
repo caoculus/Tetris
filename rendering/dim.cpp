@@ -9,7 +9,7 @@ dim::dim(sampler &sampler, std::size_t dim)
 {
     if (to_draw_)
     {
-        auto coords = sampler("dim", dim);
+        auto coords = sampler("dim", dim - 1);
 
         bind();
 
