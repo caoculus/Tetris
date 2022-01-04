@@ -7,6 +7,13 @@
 namespace mesh
 {
 
+/**
+ * @brief Class for the mesh of all numbers used in the game.
+ * 
+ * @details The numbers are rendered using a single mesh. Each digit is a 
+ * quadralateral using the different numbers as textures. The clock and level
+ * are currently displayed in their respective places.
+ */
 class number : public mesh
 {
 public:
@@ -22,6 +29,10 @@ private:
     quad_vertices<6> clk_vertices_;
     quad_vertices<3> numer_, denom_;
     static constexpr quad_indices<12> INDICES {};
+
+    void update_clk();
+    void update_numer();
+    void update_denom();
 };
 
 }

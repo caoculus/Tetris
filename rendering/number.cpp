@@ -17,7 +17,35 @@ void number::draw()
 {
     bind();
 
-    // update clock
+    update_clk();
+
+    if (intern_denom_ != (1+level_.section()) * 100)
+        update_denom();
+
+    if (level_ != intern_numer_)
+        update_numer();
+    
+    if (n_hundreds)
+    {
+        glBufferSubData(GL_ARRAY_BUFFER, sizeof(clk_vertices_) + sizeof(denom_), sizeof(numer_), numer_.data());
+        glDrawElements(GL_TRIANGLES, INDICES.size(), GL_UNSIGNED_INT, nullptr);
+    }
+    else if (n_tens)
+    {
+        glBufferSubData(GL_ARRAY_BUFFER, sizeof(clk_vertices_) + sizeof(denom_), sizeof(numer_) * 2 / 3, numer_.data());
+        glDrawElements(GL_TRIANGLES, INDICES.size() - 6, GL_UNSIGNED_INT, nullptr);
+    }
+    else
+    {
+        glBufferSubData(GL_ARRAY_BUFFER, sizeof(clk_vertices_) + sizeof(denom_), sizeof(numer_) / 3, numer_.data());
+        glDrawElements(GL_TRIANGLES, INDICES.size() - 12, GL_UNSIGNED_INT, nullptr);
+    }
+
+    unbind();
+}
+
+void number::update_clk()
+{
     const auto mm = sampler_("number", clk_ / 36000);
     const auto m = sampler_("number", (clk_ / 3600) % 10);
     const auto ss = sampler_("number", (clk_ % 3600) / 600);
@@ -53,79 +81,61 @@ void number::draw()
     };
 
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(clk_vertices_), clk_vertices_.data());
+}
 
-    if (intern_denom_ != (1+level_.section()) * 100)
-    {
-        intern_denom_ = (1+level_.section()) * 100;
-        if (intern_denom_ == 1000)
-            intern_denom_ = 999;
+void number::update_denom()
+{
+    intern_denom_ = (1+level_.section()) * 100;
+    if (intern_denom_ == 1000)
+        intern_denom_ = 999;
 
-        const auto hundred = sampler_("number", intern_denom_ / 100);
-        const auto ten = sampler_("number", (intern_denom_ % 100) / 10);
-        const auto one = sampler_("number", intern_denom_ % 10);
+    const auto hundred = sampler_("number", intern_denom_ / 100);
+    const auto ten = sampler_("number", (intern_denom_ % 100) / 10);
+    const auto one = sampler_("number", intern_denom_ % 10);
 
-        denom_ = {
-            86 / 160.f - 1.f, 1.f - 206 / 120.f, hundred.Nx, hundred.Ny,
-            86 / 160.f - 1.f, 1.f - 196 / 120.f, hundred.Nx, hundred.Py,
-            93 / 160.f - 1.f, 1.f - 206 / 120.f, hundred.Px, hundred.Ny,
-            93 / 160.f - 1.f, 1.f - 196 / 120.f, hundred.Px, hundred.Py,
-            94 / 160.f - 1.f, 1.f - 206 / 120.f, ten.Nx, ten.Ny,
-            94 / 160.f - 1.f, 1.f - 196 / 120.f, ten.Nx, ten.Py,
-            101/ 160.f - 1.f, 1.f - 206 / 120.f, ten.Px, ten.Ny,
-            101/ 160.f - 1.f, 1.f - 196 / 120.f, ten.Px, ten.Py,
-            102/ 160.f - 1.f, 1.f - 206 / 120.f, one.Nx, one.Ny,
-            102/ 160.f - 1.f, 1.f - 196 / 120.f, one.Nx, one.Py,
-            109/ 160.f - 1.f, 1.f - 206 / 120.f, one.Px, one.Ny,
-            109/ 160.f - 1.f, 1.f - 196 / 120.f, one.Px, one.Py
-        };
-        
-        glBufferSubData(GL_ARRAY_BUFFER, sizeof(clk_vertices_), sizeof(denom_), denom_.data());
-    }
-
-    if (level_ != intern_numer_)
-    {
-        intern_numer_ = level_;
-        n_ones = intern_numer_ % 10;
-        n_tens = (intern_numer_ % 100) / 10;
-        n_hundreds = intern_numer_ / 100;
-
-        const auto hundred = sampler_("number", n_hundreds);
-        const auto ten = sampler_("number", n_tens);
-        const auto one = sampler_("number", n_ones);
-
-        numer_ = {
-            102/ 160.f - 1.f, 1.f - 190 / 120.f, one.Nx, one.Ny,
-            102/ 160.f - 1.f, 1.f - 180 / 120.f, one.Nx, one.Py,
-            109/ 160.f - 1.f, 1.f - 190 / 120.f, one.Px, one.Ny,
-            109/ 160.f - 1.f, 1.f - 180 / 120.f, one.Px, one.Py,
-            94 / 160.f - 1.f, 1.f - 190 / 120.f, ten.Nx, ten.Ny,
-            94 / 160.f - 1.f, 1.f - 180 / 120.f, ten.Nx, ten.Py,
-            101/ 160.f - 1.f, 1.f - 190 / 120.f, ten.Px, ten.Ny,
-            101/ 160.f - 1.f, 1.f - 180 / 120.f, ten.Px, ten.Py,
-            86 / 160.f - 1.f, 1.f - 190 / 120.f, hundred.Nx, hundred.Ny,
-            86 / 160.f - 1.f, 1.f - 180 / 120.f, hundred.Nx, hundred.Py,
-            93 / 160.f - 1.f, 1.f - 190 / 120.f, hundred.Px, hundred.Ny,
-            93 / 160.f - 1.f, 1.f - 180 / 120.f, hundred.Px, hundred.Py            
-        };
-    }
+    denom_ = {
+        86 / 160.f - 1.f, 1.f - 206 / 120.f, hundred.Nx, hundred.Ny,
+        86 / 160.f - 1.f, 1.f - 196 / 120.f, hundred.Nx, hundred.Py,
+        93 / 160.f - 1.f, 1.f - 206 / 120.f, hundred.Px, hundred.Ny,
+        93 / 160.f - 1.f, 1.f - 196 / 120.f, hundred.Px, hundred.Py,
+        94 / 160.f - 1.f, 1.f - 206 / 120.f, ten.Nx, ten.Ny,
+        94 / 160.f - 1.f, 1.f - 196 / 120.f, ten.Nx, ten.Py,
+        101/ 160.f - 1.f, 1.f - 206 / 120.f, ten.Px, ten.Ny,
+        101/ 160.f - 1.f, 1.f - 196 / 120.f, ten.Px, ten.Py,
+        102/ 160.f - 1.f, 1.f - 206 / 120.f, one.Nx, one.Ny,
+        102/ 160.f - 1.f, 1.f - 196 / 120.f, one.Nx, one.Py,
+        109/ 160.f - 1.f, 1.f - 206 / 120.f, one.Px, one.Ny,
+        109/ 160.f - 1.f, 1.f - 196 / 120.f, one.Px, one.Py
+    };
     
-    if (n_hundreds)
-    {
-        glBufferSubData(GL_ARRAY_BUFFER, sizeof(clk_vertices_) + sizeof(denom_), sizeof(numer_), numer_.data());
-        glDrawElements(GL_TRIANGLES, INDICES.size(), GL_UNSIGNED_INT, nullptr);
-    }
-    else if (n_tens)
-    {
-        glBufferSubData(GL_ARRAY_BUFFER, sizeof(clk_vertices_) + sizeof(denom_), sizeof(numer_) * 2 / 3, numer_.data());
-        glDrawElements(GL_TRIANGLES, INDICES.size() - 6, GL_UNSIGNED_INT, nullptr);
-    }
-    else
-    {
-        glBufferSubData(GL_ARRAY_BUFFER, sizeof(clk_vertices_) + sizeof(denom_), sizeof(numer_) / 3, numer_.data());
-        glDrawElements(GL_TRIANGLES, INDICES.size() - 12, GL_UNSIGNED_INT, nullptr);
-    }
+    glBufferSubData(GL_ARRAY_BUFFER, sizeof(clk_vertices_), sizeof(denom_), denom_.data());
+}
 
-    unbind();
+void number::update_numer()
+{
+    intern_numer_ = level_;
+    n_ones = intern_numer_ % 10;
+    n_tens = (intern_numer_ % 100) / 10;
+    n_hundreds = intern_numer_ / 100;
+
+    const auto hundred = sampler_("number", n_hundreds);
+    const auto ten = sampler_("number", n_tens);
+    const auto one = sampler_("number", n_ones);
+
+    numer_ = {
+        102/ 160.f - 1.f, 1.f - 190 / 120.f, one.Nx, one.Ny,
+        102/ 160.f - 1.f, 1.f - 180 / 120.f, one.Nx, one.Py,
+        109/ 160.f - 1.f, 1.f - 190 / 120.f, one.Px, one.Ny,
+        109/ 160.f - 1.f, 1.f - 180 / 120.f, one.Px, one.Py,
+        94 / 160.f - 1.f, 1.f - 190 / 120.f, ten.Nx, ten.Ny,
+        94 / 160.f - 1.f, 1.f - 180 / 120.f, ten.Nx, ten.Py,
+        101/ 160.f - 1.f, 1.f - 190 / 120.f, ten.Px, ten.Ny,
+        101/ 160.f - 1.f, 1.f - 180 / 120.f, ten.Px, ten.Py,
+        86 / 160.f - 1.f, 1.f - 190 / 120.f, hundred.Nx, hundred.Ny,
+        86 / 160.f - 1.f, 1.f - 180 / 120.f, hundred.Nx, hundred.Py,
+        93 / 160.f - 1.f, 1.f - 190 / 120.f, hundred.Px, hundred.Ny,
+        93 / 160.f - 1.f, 1.f - 180 / 120.f, hundred.Px, hundred.Py            
+    };
 }
 
 }

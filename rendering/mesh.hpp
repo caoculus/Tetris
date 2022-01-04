@@ -4,9 +4,27 @@
 
 namespace mesh {
 
+/**
+ * @brief The array to store the vertices for drawing quadralaterals with the
+ * vertex layout used for all draws in this game.
+ * 
+ * @tparam QUADS number of quadralaterals.
+ * 
+ * @details The vertex layout is {x (pos), y (pos), u (tex), v (tex)} using 
+ * single-precision floating point values for each component.
+ */
 template <std::size_t QUADS>
 using quad_vertices = std::array<float, QUADS*16>;
 
+/**
+ * @brief Indices for drawing quadralaterals using two triangles in OpenGL.
+ * 
+ * @tparam QUADS number of quadralaterals.
+ * 
+ * @details The indices are stored in a std::array. Each quad has two triangles
+ * hence 6 indices. The indices are {0, 1, 2, 1, 2, 3} for the first quad, and
+ * offset by 4 each time for subsequent quads.
+ */
 template <std::size_t QUADS>
 class quad_indices : public std::array<unsigned int, QUADS*6>
 {
@@ -93,7 +111,6 @@ protected:
      * @brief Indices (or offsets) for drawing a square.
      */
     static constexpr quad_indices<1> SQUARE_INDICES {};
-
 };
 
 }

@@ -155,8 +155,20 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT);
-
-        g.tick();
+        try 
+        {
+            g.tick();
+        }
+        catch (game::game_over_exception &e)
+        {
+            std::cout << "Game over" << std::endl;
+            while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
+            {
+                glfwPollEvents();
+            }
+            // close window
+            glfwSetWindowShouldClose(window, GLFW_TRUE);
+        }
 
         _s.uniform("transform", shader::I);
         _s.uniform("u_screen", shader::I);
