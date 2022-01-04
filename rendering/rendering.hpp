@@ -19,5 +19,5 @@
 #define OPENGL_SUBVERSION 5
 #define EMULATED_WIDTH 320
 #define EMULATED_HEIGHT 240
-#define DEFAULT_SAMPLER_PATH "../assets/texatlas.png"
+#define DEFAULT_SAMPLER_PATH "assets/texatlas.png"
 #endif
