@@ -143,7 +143,7 @@ static bool parse_args(int argc, char **argv, std::size_t &transparency, std::st
 {
     if (argc == 1)
     {
-        transparency = 10;
+        transparency = 4;
         sampler_path = DEFAULT_SAMPLER_PATH;
         return true;
     }
@@ -163,7 +163,7 @@ static bool parse_args(int argc, char **argv, std::size_t &transparency, std::st
         else
         {
             sampler_path = argv[1];
-            transparency = 10;
+            transparency = 4;
             return true;
         }
     }

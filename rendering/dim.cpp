@@ -5,11 +5,11 @@ namespace mesh
 {
 
 dim::dim(sampler &sampler, std::size_t dim)
-    : mesh(sampler), to_draw_(dim!=10)
+    : mesh(sampler), to_draw_(dim)
 {
     if (to_draw_)
     {
-        auto coords = sampler("dim", 9 - dim);
+        auto coords = sampler("dim", dim + 1);
 
         bind();
 
