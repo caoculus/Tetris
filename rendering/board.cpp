@@ -39,7 +39,6 @@ void board::update()
             auto coords = sampler_("clear");
 
             if (board_[y][x] != square::clear)
-//                coords = sampler_("piece", static_cast<std::size_t>(board_[y][x]));
                 coords = sampler_("piece", game::piece::index(board_[y][x]));
 
             for (const auto &index : SQUARE_INDICES)

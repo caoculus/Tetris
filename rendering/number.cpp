@@ -44,7 +44,7 @@ void number::draw()
     unbind();
 }
 
-void number::update_clk()
+inline void number::update_clk()
 {
     const auto mm = sampler_("number", clk_ / 36000);
     const auto m = sampler_("number", (clk_ / 3600) % 10);
@@ -83,7 +83,7 @@ void number::update_clk()
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(clk_vertices_), clk_vertices_.data());
 }
 
-void number::update_denom()
+inline void number::update_denom()
 {
     intern_denom_ = (1+level_.section()) * 100;
     if (intern_denom_ == 1000)
@@ -111,7 +111,7 @@ void number::update_denom()
     glBufferSubData(GL_ARRAY_BUFFER, sizeof(clk_vertices_), sizeof(denom_), denom_.data());
 }
 
-void number::update_numer()
+inline void number::update_numer()
 {
     intern_numer_ = level_;
     n_ones_ = intern_numer_ % 10;

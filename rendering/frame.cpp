@@ -10,14 +10,14 @@ frame::frame(sampler &sampler)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(SQUARE_INDICES), SQUARE_INDICES.data(), GL_STATIC_DRAW);
     auto coords = sampler_("frame");
 
-    vertices_ = {
+    quad_vertices<1> vertices = {
         -1.f, -1.f, coords.Nx, coords.Ny,
         -1.f, 1.f, coords.Nx, coords.Py,
         1.f, -1.f, coords.Px, coords.Ny,
         1.f, 1.f, coords.Px, coords.Py
     };
 
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_), vertices_.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_STATIC_DRAW);
     set_vertex_layout();
     unbind();
 }

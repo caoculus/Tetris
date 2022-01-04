@@ -7,7 +7,13 @@
 
 namespace mesh
 {
-
+    
+/**
+ * @brief The mesh for the pieces on the board.
+ * 
+ * @note Only the pieces are drawn. The blank squares are neither buffered nor
+ * drawn.
+ */
 class board : public mesh
 {
 public:
@@ -25,8 +31,19 @@ public:
     void update();
 
 private:
+    /**
+     * @brief The vertices for each piece on the board.
+     */
     std::vector <float> vertices_;
+
+    /**
+     * @brief The indices for each piece on the board.
+     */
     std::vector <unsigned int> indices_;
+
+    /**
+     * @brief The board holding the pieces.
+     */
     const board_t &board_;
 };
 
