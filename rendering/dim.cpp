@@ -14,10 +14,10 @@ dim::dim(sampler &sampler, std::size_t dim)
         bind();
 
         quad_vertices<1> vertices = {
-            0.f, 1.f, coords.Nx, coords.Py,
-            0.f, 21.f, coords.Nx, coords.Ny,
-            10.f, 1.f, coords.Px, coords.Py,
-            10.f, 21.f, coords.Px, coords.Ny
+            -0.5f, 0.5f, coords.Nx, coords.Py,
+            -0.5f, 21.5f, coords.Nx, coords.Ny,
+            10.5f, 0.5f, coords.Px, coords.Py,
+            10.5f, 21.5f, coords.Px, coords.Ny
         };
 
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices.data(), GL_STATIC_DRAW);
