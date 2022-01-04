@@ -81,7 +81,6 @@ inline void game::tetris::wait_delay()
             break;
         case state_t::dim:
             state_ = line_clear_ ? state_t::clear : state_t::are;
-            draw_piece();
             break;
         case state_t::are:
             if (frame_num_ == ARE)
@@ -196,6 +195,7 @@ inline void game::tetris::move_piece()
     // if piece locks
     if (frame_num_ == LOCK)
     {
+        draw_piece();
         clear_lines();
         state_ = state_t::flash;
         frame_num_ = 0;
