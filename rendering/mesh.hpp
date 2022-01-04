@@ -88,10 +88,10 @@ protected:
      * @requires The vertex array object to be bound.
      * 
      * @details The vertex layout is the following:
-     * <list type="bullet">
-     * <li> x, y: The position of the vertex.
-     * <li> u, v: The texture coordinates of the vertex.
-     * </list> 
+     * <ul>
+     * <li> x, y: The position of the vertex. </li>
+     * <li> u, v: The texture coordinates of the vertex. </li>
+     * </ul>
      */
     void set_vertex_layout();
 
