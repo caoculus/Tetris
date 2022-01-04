@@ -45,11 +45,20 @@ void active::draw()
 
 void active::update()
 {
-    auto coords = sampler_("active",
-        static_cast<std::size_t>(active_piece_.type()));
-
-    if (state_ == state_t::flash)
-        coords = sampler_("flash");
+    auto coords = [&]
+    {
+        switch (state_)
+        {
+            case state_t::flash:
+                return sampler_("flash");
+            case state_t::dim:
+                return sampler_("piece",
+                    static_cast<std::size_t>(active_piece_.type()));
+            default:
+                return sampler_("active",
+                    static_cast<std::size_t>(active_piece_.type()));
+        }
+    }();
 
     auto active_sq = active_piece_.piece_squares();
     auto shadow_sq = active_piece_.shadow_squares();
