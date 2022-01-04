@@ -7,7 +7,7 @@ namespace mesh
 
 active::active(sampler &sampler, const game::piece &active_piece,
                const game::level_counter &level, const state_t &state,
-               const int &frame_num)
+               const uint8_t &frame_num)
     : mesh(sampler), active_piece_(active_piece), level_(level), state_(state),
       frame_num_(frame_num)
 {
@@ -24,7 +24,6 @@ void active::draw()
 {
     update();
 
-//    if ((state_ >= 0 and state_ < 27) or (state_ > 29))
     if (state_ == state_t::spawn or state_ == state_t::are or
         state_ == state_t::clear)
         return;
@@ -57,7 +56,7 @@ void active::update()
                     game::piece::index(active_piece_.type()));
             default:
                 return sampler_("active",
-                    game::piece::index(active_piece_.type()));
+                    game::piece::index(active_piece_.type()) + 7 * frame_num_);
         }
     }();
 
