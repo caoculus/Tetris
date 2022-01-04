@@ -13,7 +13,7 @@ class active : public mesh
 public:
     active(sampler &sampler, const game::piece &active_piece,
            const game::level_counter &level, const state_t &state,
-           const int &frame_num);
+           const uint8_t &frame_num);
 
     void draw() override;
 
@@ -22,7 +22,7 @@ private:
     const game::piece &active_piece_;
     const game::level_counter &level_;
     const state_t &state_;
-    const int &frame_num_;
+    const uint8_t &frame_num_;
 
     static constexpr quad_indices<8> INDICES {};
 

@@ -1,12 +1,13 @@
 #include <GL/glew.h>
 #include "active.hpp"
+#include "game/piece.hpp"
 
 namespace mesh
 {
 
 active::active(sampler &sampler, const game::piece &active_piece,
                const game::level_counter &level, const state_t &state,
-               const int &frame_num)
+               const uint8_t &frame_num)
     : mesh(sampler), active_piece_(active_piece), level_(level), state_(state),
       frame_num_(frame_num)
 {
@@ -23,7 +24,6 @@ void active::draw()
 {
     update();
 
-//    if ((state_ >= 0 and state_ < 27) or (state_ > 29))
     if (state_ == state_t::spawn or state_ == state_t::are or
         state_ == state_t::clear)
         return;
@@ -53,10 +53,10 @@ void active::update()
                 return sampler_("flash");
             case state_t::dim:
                 return sampler_("piece",
-                    static_cast<std::size_t>(active_piece_.type()));
+                    game::piece::index(active_piece_.type()));
             default:
                 return sampler_("active",
-                    static_cast<std::size_t>(active_piece_.type()));
+                    game::piece::index(active_piece_.type()) + 7 * frame_num_);
         }
     }();
 
@@ -83,7 +83,7 @@ void active::update()
         p_vertices_[sq * 16 + 15] = coords.Ny;
     }
 
-    coords = sampler_("shadow", static_cast<std::size_t>(active_piece_.type()));
+    coords = sampler_("shadow", game::piece::index(active_piece_.type()));
 
     if (level_ < 100)
     {
