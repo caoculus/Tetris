@@ -28,12 +28,12 @@ private:
     /**
      * @brief Vertices for the next piece.
      */
-    quad_vertices<1> vertices_;
+    quad_vertices<1> vertices_{};
 
     /**
      * @brief The integer representing the next piece (start from 1).
      */
-    std::size_t sq_;
+    std::size_t sq_{};
 };
 
 }

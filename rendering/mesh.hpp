@@ -5,10 +5,10 @@
 namespace mesh {
 
 /**
- * @brief The array to store the vertices for drawing quadralaterals with the
+ * @brief The array to store the vertices for drawing quadrilaterals with the
  * vertex layout used for all draws in this game.
  * 
- * @tparam QUADS number of quadralaterals.
+ * @tparam QUADS number of quadrilaterals.
  * 
  * @details The vertex layout is {x (pos), y (pos), u (tex), v (tex)} using 
  * single-precision floating point values for each component.
@@ -17,9 +17,9 @@ template <std::size_t QUADS>
 using quad_vertices = std::array<float, QUADS*16>;
 
 /**
- * @brief Indices for drawing quadralaterals using two triangles in OpenGL.
+ * @brief Indices for drawing quadrilaterals using two triangles in OpenGL.
  * 
- * @tparam QUADS number of quadralaterals.
+ * @tparam QUADS number of quadrilaterals.
  * 
  * @details The indices are stored in a std::array. Each quad has two triangles
  * hence 6 indices. The indices are {0, 1, 2, 1, 2, 3} for the first quad, and
@@ -80,7 +80,7 @@ protected:
      * @param sampler The sampler that is used by the texture atlas load the 
      * texture for the mesh.
      */
-    mesh(sampler &sampler);
+    explicit mesh(sampler &sampler);
 
     /**
      * @brief Set the vertex layout for the mesh. This should be called in the 

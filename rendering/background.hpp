@@ -19,7 +19,7 @@ private:
     /**
      * @brief The vertices for the background.
      */
-    quad_vertices<1> vertices_;
+    quad_vertices<1> vertices_{};
 
     /**
      * @brief The background changes every 100 levels.

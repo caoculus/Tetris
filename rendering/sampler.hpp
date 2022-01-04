@@ -45,7 +45,7 @@ public:
     explicit sampler(const std::string &texture_atlas_path);
 
     /**
-     * @brief Destroy the sampler object by deleteing the texture off OpenGL
+     * @brief Destroy the sampler object by deleting the texture off OpenGL
      * 
      */
     ~sampler();

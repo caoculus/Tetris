@@ -1,5 +1,4 @@
 #include "common.hpp"
-#include <iostream>
 
 shift_t inputs::update_shift()
 {

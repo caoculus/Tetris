@@ -11,7 +11,7 @@ namespace mesh
  * @brief Class for the mesh of all numbers used in the game.
  * 
  * @details The numbers are rendered using a single mesh. Each digit is a 
- * quadralateral using the different numbers as textures. The clock and level
+ * quadrilateral using the different numbers as textures. The clock and level
  * are currently displayed in their respective places.
  */
 class number : public mesh
@@ -76,7 +76,7 @@ private:
      * @brief Update the denominator (which is tied with the section) that is
      * rendered on the screen.
      * @note This function should only be called when the section changes (i.e.
-     * when the backgroud changes).
+     * when the background changes).
      */
     void update_denom();
 };

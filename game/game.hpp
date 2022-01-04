@@ -26,12 +26,6 @@ public:
     void tick();
 
     /**
-     * @return the number of frames that have elapsed since the game started.
-     */
-    [[nodiscard]] constexpr uint32_t time() const noexcept
-    { return clk_; }
-
-    /**
      * @return the type of the next piece that will be spawned.
      */
     [[nodiscard]] square next() const noexcept

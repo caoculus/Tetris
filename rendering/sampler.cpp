@@ -122,7 +122,7 @@ sampler::tex_rect sampler::operator() (const std::string &thing, std::size_t ind
 layout_parsing_error::layout_parsing_error(const std::string &thing, std::size_t index)
 {
     std::stringstream ss;
-    ss << "Error occured parsing " << thing << " index " << index << ".";
+    ss << "Error occurred parsing " << thing << " index " << index << ".";
     msg = ss.str();
 }
 

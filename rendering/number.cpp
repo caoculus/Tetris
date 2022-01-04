@@ -1,5 +1,4 @@
 #include "number.hpp"
-#include <iostream>
 namespace mesh
 {
 

@@ -1,6 +1,5 @@
 #include <GL/glew.h>
 #include "background.hpp"
-#include <iostream>
 
 namespace mesh {
 

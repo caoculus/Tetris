@@ -1,8 +1,6 @@
 #include "mesh.hpp"
 #include <GL/glew.h>
 
-#include <iostream>
-
 namespace mesh {
 
 mesh::mesh(sampler &sampler)
