@@ -1,5 +1,6 @@
 #include <GL/glew.h>
 #include "board.hpp"
+#include "game/piece.hpp"
 namespace mesh
 {
 
@@ -38,7 +39,8 @@ void board::update()
             auto coords = sampler_("clear");
 
             if (board_[y][x] != square::clear)
-                coords = sampler_("piece", static_cast<std::size_t>(board_[y][x]));
+//                coords = sampler_("piece", static_cast<std::size_t>(board_[y][x]));
+                coords = sampler_("piece", game::piece::index(board_[y][x]));
 
             for (const auto &index : SQUARE_INDICES)
                 indices_.push_back(begin_index + index);

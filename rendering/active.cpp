@@ -1,5 +1,6 @@
 #include <GL/glew.h>
 #include "active.hpp"
+#include "game/piece.hpp"
 
 namespace mesh
 {
@@ -46,7 +47,7 @@ void active::draw()
 void active::update()
 {
     auto coords = sampler_("active",
-        static_cast<std::size_t>(active_piece_.type()));
+        game::piece::index(active_piece_.type()));
 
     if (state_ == state_t::flash)
         coords = sampler_("flash");
@@ -74,7 +75,7 @@ void active::update()
         p_vertices_[sq * 16 + 15] = coords.Ny;
     }
 
-    coords = sampler_("shadow", static_cast<std::size_t>(active_piece_.type()));
+    coords = sampler_("shadow", game::piece::index(active_piece_.type()));
 
     if (level_ < 100)
     {
