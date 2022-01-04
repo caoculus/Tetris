@@ -22,20 +22,37 @@ enum class rotation_t : uint8_t
 
 /**
  * @brief Represents a locking state of a piece.
+ *
+ * @details <code> tick </code> is set when the lock counter for the active
+ * piece should be ticked.<br> <code> reset </code> is set when the lock
+ * counter for the active piece should be reset.
  */
 enum class locking_state : uint8_t
 {
     none = 0x0, tick = 0x1, reset = 0x2
 };
 
-// locking_state or overload
+/**
+ * @brief Or overload for locking_state so it can be used for bit flags.
+ *
+ * @param a The first locking_state.
+ * @param b The second locking_state.
+ * @return the bitwise or of the two locking states.
+ */
 inline locking_state operator|(locking_state a, locking_state b)
 {
     return static_cast<locking_state>(static_cast<uint8_t>(a) |
                                       static_cast<uint8_t>(b));
 }
 
-// locking_state and overload
+
+/**
+ * @brief And overload for locking_state so it can be used for bit flags.
+ *
+ * @param a The first locking_state.
+ * @param b The second locking_state.
+ * @return the bitwise and of the two locking states.
+ */
 inline locking_state operator&(locking_state a, locking_state b)
 {
     return static_cast<locking_state>(static_cast<uint8_t>(a) &
@@ -44,6 +61,10 @@ inline locking_state operator&(locking_state a, locking_state b)
 
 /**
  * @brief Represents the current state of the game.
+ *
+ * @details The meaning of each state is as follows:<br>
+ * <ul>
+ * <li> <code> spawn </code> - A piece will be spawned next frame. </li>
  */
 enum class state_t : uint8_t
 {
@@ -81,11 +102,11 @@ public:
     rotation_t update_rotation(bool spawn_frame = false);
 
 private:
-    static constexpr int K_LEFT = GLFW_KEY_LEFT;
-    static constexpr int K_DOWN = GLFW_KEY_LEFT_SHIFT;
-    static constexpr int K_RIGHT = GLFW_KEY_RIGHT;
-    static constexpr int K_CCW_1 = GLFW_KEY_DOWN;
-    static constexpr int K_CW = GLFW_KEY_UP;
+    static constexpr int K_LEFT = GLFW_KEY_A;
+    static constexpr int K_DOWN = GLFW_KEY_S;
+    static constexpr int K_RIGHT = GLFW_KEY_D;
+    static constexpr int K_CCW_1 = GLFW_KEY_J;
+    static constexpr int K_CW = GLFW_KEY_K;
     static constexpr int K_CCW_2 = GLFW_KEY_L;
 
     static constexpr int DAS = 15;
@@ -108,7 +129,7 @@ private:
  */
 enum class square
 {
-    none, I, J, L, O, S, T, Z, i, j, l, o, s, t, z, flash, clear
+    none, I, J, L, O, S, T, Z, clear
 };
 
 /**
