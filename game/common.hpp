@@ -102,11 +102,11 @@ public:
     rotation_t update_rotation(bool spawn_frame = false);
 
 private:
-    static constexpr int K_LEFT = GLFW_KEY_A;
-    static constexpr int K_DOWN = GLFW_KEY_S;
-    static constexpr int K_RIGHT = GLFW_KEY_D;
-    static constexpr int K_CCW_1 = GLFW_KEY_J;
-    static constexpr int K_CW = GLFW_KEY_K;
+    static constexpr int K_LEFT = GLFW_KEY_LEFT;
+    static constexpr int K_DOWN = GLFW_KEY_LEFT_SHIFT;
+    static constexpr int K_RIGHT = GLFW_KEY_RIGHT;
+    static constexpr int K_CCW_1 = GLFW_KEY_DOWN;
+    static constexpr int K_CW = GLFW_KEY_UP;
     static constexpr int K_CCW_2 = GLFW_KEY_L;
 
     static constexpr int DAS = 15;
