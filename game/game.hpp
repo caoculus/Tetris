@@ -9,7 +9,6 @@ namespace game
 {
 class tetris
 {
-
 public:
     /**
      * @brief Create a new instance of the tetris game.
@@ -79,8 +78,17 @@ public:
     [[nodiscard]] constexpr const uint32_t &clk() const noexcept 
     { return clk_; }
 
+    /**
+     * @return a const reference to the current score.
+     */
     [[nodiscard]] constexpr const uint32_t &score() const noexcept
     { return score_; }
+    
+    /** 
+     * @return a const reference to the current grade.
+     */
+    [[nodiscard]] constexpr const uint8_t &grade() const noexcept
+    { return grade_; }
 
 private:
     /**
@@ -131,6 +139,8 @@ private:
      * @brief The number of lines the current piece was soft dropped.
      */
     uint32_t dropped_{0};
+
+    uint8_t grade_{0};
 
     // TODO: comments
     uint8_t frame_num_{0};

@@ -199,6 +199,11 @@ inline void game::tetris::clear_lines()
         combo_ += 2 * num_cleared - 2;
 
         score_ += (dropped_ + (3 + level_ + num_cleared) / 4) * num_cleared * combo_;
+        
+        while (score_ > GRADES[grade_])
+        {
+            ++grade_;
+        }
     }
     else
     {

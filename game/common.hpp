@@ -76,6 +76,11 @@ enum class state_t : uint8_t
     clear   // line clear
 };
 
+constexpr std::array<int, 18> GRADES {
+    400, 800, 1400, 2000, 3500, 5500, 8000, 12000, 16000, 22000, 30000, 
+    40000, 52000, 66000, 82000, 100000, 120000, 126000
+};
+
 class inputs
 {
 public:
@@ -102,11 +107,11 @@ public:
     rotation_t update_rotation(bool spawn_frame = false);
 
 private:
-    static constexpr int K_LEFT = GLFW_KEY_A;
-    static constexpr int K_DOWN = GLFW_KEY_S;
-    static constexpr int K_RIGHT = GLFW_KEY_D;
-    static constexpr int K_CCW_1 = GLFW_KEY_J;
-    static constexpr int K_CW = GLFW_KEY_K;
+    static constexpr int K_LEFT = GLFW_KEY_LEFT;
+    static constexpr int K_DOWN = GLFW_KEY_LEFT_SHIFT;
+    static constexpr int K_RIGHT = GLFW_KEY_RIGHT;
+    static constexpr int K_CCW_1 = GLFW_KEY_DOWN;
+    static constexpr int K_CW = GLFW_KEY_UP;
     static constexpr int K_CCW_2 = GLFW_KEY_L;
 
     static constexpr int DAS = 15;

@@ -1,16 +1,16 @@
 #include "number.hpp"
-
+#include "game/game.hpp"
 namespace mesh
 {
 
 number::number(sampler &s, const game::level_counter &level,
-               const uint32_t &clk, const uint32_t &score)
-    : mesh(s), level_(level), clk_(clk), score_(score)
+               const uint32_t &clk, const uint32_t &score, const uint8_t &grade)
+    : mesh(s), level_(level), clk_(clk), score_(score), grade_(grade)
 {
     bind();
     glBufferData(GL_ARRAY_BUFFER,
         sizeof(clk_vertices_) + sizeof(numer_) + sizeof(denom_) +
-        sizeof(score_vertices_), nullptr, GL_DYNAMIC_DRAW);
+        sizeof(score_vertices_) + sizeof(next_grade_vertices_), nullptr, GL_DYNAMIC_DRAW);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(INDICES), INDICES.data(),
         GL_STATIC_DRAW);
     set_vertex_layout();
@@ -32,23 +32,10 @@ void number::draw()
     if (level_ != intern_numer_)
         update_numer();
 
-    if (1 /*n_hundreds_*/)
-    {
-        glBufferSubData(GL_ARRAY_BUFFER, sizeof(clk_vertices_) + sizeof(denom_),
-            sizeof(numer_), numer_.data());
-        glDrawElements(GL_TRIANGLES, INDICES.size(), GL_UNSIGNED_INT, nullptr);
-    }
-    // else if (n_tens_)
-    // {
-    //     glBufferSubData(GL_ARRAY_BUFFER, sizeof(clk_vertices_) + sizeof(denom_), sizeof(numer_) * 2 / 3, numer_.data());
-    //     glDrawElements(GL_TRIANGLES, INDICES.size() - 6, GL_UNSIGNED_INT, nullptr);
-    // }
-    // else
-    // {
-    //     glBufferSubData(GL_ARRAY_BUFFER, sizeof(clk_vertices_) + sizeof(denom_), sizeof(numer_) / 3, numer_.data());
-    //     glDrawElements(GL_TRIANGLES, INDICES.size() - 12, GL_UNSIGNED_INT, nullptr);
-    // }
+    if (grade_ != intern_grade_)
+        update_grade();
 
+    glDrawElements(GL_TRIANGLES, INDICES.size(), GL_UNSIGNED_INT, nullptr);
     unbind();
 }
 
@@ -146,6 +133,9 @@ inline void number::update_numer()
         93 / 160.f - 1.f, 1.f - 190 / 120.f, hundred.Px, hundred.Ny,
         93 / 160.f - 1.f, 1.f - 180 / 120.f, hundred.Px, hundred.Py
     };
+
+    glBufferSubData(GL_ARRAY_BUFFER, sizeof(clk_vertices_) + sizeof(denom_),
+        sizeof(numer_), numer_.data());
 }
 
 inline void number::update_score()
@@ -193,6 +183,49 @@ inline void number::update_score()
     glBufferSubData(GL_ARRAY_BUFFER,
         sizeof(clk_vertices_) + sizeof(denom_) + sizeof(numer_),
         sizeof(score_vertices_), score_vertices_.data());
+}
+
+inline void number::update_grade()
+{
+    intern_grade_ = grade_;
+    const auto num = GRADES[grade_];
+    const auto s0 = sampler_("number", 0);
+    const auto s1 = s0;
+    const auto s2 = sampler_("number", (num % 1000) / 100);
+    const auto s3 = sampler_("number", (num >= 1000) ? (num % 10000) / 1000 : 10);
+    const auto s4 = sampler_("number", (num >= 10000) ? (num % 100000) / 10000 : 10);
+    const auto s5 = sampler_("number", (num >= 100000) ? (num % 1000000) / 100000 : 10);
+
+    next_grade_vertices_ = {
+        103/160.f - 1.f, 1.f - 89/120.f, s0.Nx, s0.Ny,
+        103/160.f - 1.f, 1.f - 79/120.f, s0.Nx, s0.Py,
+        110/160.f - 1.f, 1.f - 89/120.f, s0.Px, s0.Ny,
+        110/160.f - 1.f, 1.f - 79/120.f, s0.Px, s0.Py,
+        95/160.f - 1.f, 1.f - 89/120.f, s1.Nx, s1.Ny,
+        95/160.f - 1.f, 1.f - 79/120.f, s1.Nx, s1.Py,
+        102/160.f - 1.f, 1.f - 89/120.f, s1.Px, s1.Ny,
+        102/160.f - 1.f, 1.f - 79/120.f, s1.Px, s1.Py,
+        86/160.f - 1.f, 1.f - 89/120.f, s2.Nx, s2.Ny,
+        86/160.f - 1.f, 1.f - 79/120.f, s2.Nx, s2.Py,
+        93/160.f - 1.f, 1.f - 89/120.f, s2.Px, s2.Ny,
+        93/160.f - 1.f, 1.f - 79/120.f, s2.Px, s2.Py,
+        78/160.f - 1.f, 1.f - 89/120.f, s3.Nx, s3.Ny,
+        78/160.f - 1.f, 1.f - 79/120.f, s3.Nx, s3.Py,
+        85/160.f - 1.f, 1.f - 89/120.f, s3.Px, s3.Ny,
+        85/160.f - 1.f, 1.f - 79/120.f, s3.Px, s3.Py,
+        70/160.f - 1.f, 1.f - 89/120.f, s4.Nx, s4.Ny,
+        70/160.f - 1.f, 1.f - 79/120.f, s4.Nx, s4.Py,
+        77/160.f - 1.f, 1.f - 89/120.f, s4.Px, s4.Ny,
+        77/160.f - 1.f, 1.f - 79/120.f, s4.Px, s4.Py,
+        62/160.f - 1.f, 1.f - 89/120.f, s5.Nx, s5.Ny,
+        62/160.f - 1.f, 1.f - 79/120.f, s5.Nx, s5.Py,
+        69/160.f - 1.f, 1.f - 89/120.f, s5.Px, s5.Ny,
+        69/160.f - 1.f, 1.f - 79/120.f, s5.Px, s5.Py
+    };
+
+    glBufferSubData(GL_ARRAY_BUFFER,
+        sizeof(clk_vertices_) + sizeof(denom_) + sizeof(numer_) + sizeof(score_vertices_),
+        sizeof(next_grade_vertices_), next_grade_vertices_.data());
 }
 
 }

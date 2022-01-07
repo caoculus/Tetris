@@ -17,7 +17,7 @@ namespace mesh
 class number : public mesh
 {
 public:
-    number(sampler &s, const game::level_counter &level, const uint32_t &clk, const uint32_t &score);
+    number(sampler &s, const game::level_counter &level, const uint32_t &clk, const uint32_t &score, const uint8_t &grade);
 
     void draw() override;
 
@@ -32,7 +32,7 @@ private:
      * @brief The internal numbers, kept so that the level counter only updates
      * when it has to and not on every frame. 
      */
-    int intern_numer_{-5}, intern_denom_{-7}, intern_score_{-8};
+    int intern_numer_{-5}, intern_denom_{-7}, intern_score_{-8}, intern_grade_{-3};
 
     /**
      * @brief The hundreds, tens, and ones digit for the level.
@@ -42,7 +42,18 @@ private:
     /**
      * @brief Reference to the clock, used to display the clock.
      */
-    const uint32_t &clk_, &score_;
+    const uint32_t &clk_;
+    
+    /**
+     * @brief Reference to the score, used to display the score.
+     */
+    const uint32_t &score_;
+
+    /**
+     * @brief Reference to the grade, used to display the grade and the points
+     * to the next grade.
+     */
+    const uint8_t &grade_;
 
     /**
      * @brief The vertices for the 6 quads to draw the clock.
@@ -55,11 +66,11 @@ private:
      */
     quad_vertices<3> numer_, denom_;
 
-    quad_vertices<6> score_vertices_;
+    quad_vertices<6> score_vertices_, next_grade_vertices_;
     /**
      * @brief The indices for the 12 quads (for now) to draw.
      */
-    static constexpr quad_indices<18> INDICES {};
+    static constexpr quad_indices<24> INDICES {};
 
     /**
      * @brief Update the clock that is rendered on the screen.
@@ -82,6 +93,8 @@ private:
     void update_denom();
 
     void update_score();
+
+    void update_grade();
 };
 
 }
