@@ -17,7 +17,7 @@ namespace mesh
 class number : public mesh
 {
 public:
-    number(sampler &s, const game::level_counter &level, const uint32_t &clk);
+    number(sampler &s, const game::level_counter &level, const uint32_t &clk, const uint32_t &score);
 
     void draw() override;
 
@@ -32,7 +32,7 @@ private:
      * @brief The internal numbers, kept so that the level counter only updates
      * when it has to and not on every frame. 
      */
-    int intern_numer_{-5}, intern_denom_{-7};
+    int intern_numer_{-5}, intern_denom_{-7}, intern_score_{-8};
 
     /**
      * @brief The hundreds, tens, and ones digit for the level.
@@ -42,7 +42,7 @@ private:
     /**
      * @brief Reference to the clock, used to display the clock.
      */
-    const uint32_t &clk_;
+    const uint32_t &clk_, &score_;
 
     /**
      * @brief The vertices for the 6 quads to draw the clock.
@@ -55,10 +55,11 @@ private:
      */
     quad_vertices<3> numer_, denom_;
 
+    quad_vertices<6> score_vertices_;
     /**
      * @brief The indices for the 12 quads (for now) to draw.
      */
-    static constexpr quad_indices<12> INDICES {};
+    static constexpr quad_indices<18> INDICES {};
 
     /**
      * @brief Update the clock that is rendered on the screen.
@@ -79,6 +80,8 @@ private:
      * when the background changes).
      */
     void update_denom();
+
+    void update_score();
 };
 
 }

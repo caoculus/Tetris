@@ -79,6 +79,9 @@ public:
     [[nodiscard]] constexpr const uint32_t &clk() const noexcept 
     { return clk_; }
 
+    [[nodiscard]] constexpr const uint32_t &score() const noexcept
+    { return score_; }
+
 private:
     /**
      * @brief Some of the main delays present in the TGM game.
@@ -111,6 +114,23 @@ private:
      * and ends when the player reaches level 999 or the game is over.
      */
     uint32_t clk_{0};
+
+    /**
+     * @brief The score.
+     */
+    uint32_t score_{0};
+    
+    /**
+     * @brief The combo. 
+     * @details Locking a piece without clearing lines resets Combo to 1. 
+     * Otherwise, the game updates Combo as follows, before calculating Score.
+     */
+    uint32_t combo_{1};
+
+    /**
+     * @brief The number of lines the current piece was soft dropped.
+     */
+    uint32_t dropped_{0};
 
     // TODO: comments
     uint8_t frame_num_{0};
