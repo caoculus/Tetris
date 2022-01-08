@@ -80,7 +80,7 @@ int main(int argc, char **argv)
             std::cout << "Game over" << std::endl;
             while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS)
             {
-                glfwPollEvents();
+                glfwWaitEvents();
             }
             // close window
             glfwSetWindowShouldClose(window, GLFW_TRUE);
