@@ -6,6 +6,47 @@
 
 namespace mesh
 {
+template <std::size_t DIGITS>
+void update_number(quad_vertices<DIGITS> &vertices, const sampler &s, const int number, 
+                   int x_max, int y_min, 
+                   int spacing=1, int digit_width=7, int digit_height=10, float e_width=320.f, float e_height=240.f)
+{
+    uint32_t unit = 1, base = 10;
+
+    const float Py = 1.f - (2*y_min/e_height);
+    const float Ny = 1.f - (2*(y_min+digit_height)/e_height);
+    float Px = (2*x_max/e_width) - 1.f;
+    float Nx = (2*(x_max-digit_width)/e_width) - 1.f;
+
+    const float step = 2*(digit_width + spacing) / e_width;
+
+    for (std::size_t i = 0; i < DIGITS; ++i)
+    {
+        const bool leading_zero = number < unit and i;
+        const auto &coords = s("number", leading_zero ? 10 : (number % base / unit));
+        vertices[16*i+0] = Nx;
+        vertices[16*i+1] = Ny;
+        vertices[16*i+2] = coords.Nx;
+        vertices[16*i+3] = coords.Ny;
+        vertices[16*i+4] = Nx;
+        vertices[16*i+5] = Py;
+        vertices[16*i+6] = coords.Nx;
+        vertices[16*i+7] = coords.Py;
+        vertices[16*i+8] = Px;
+        vertices[16*i+9] = Ny;
+        vertices[16*i+10] = coords.Px;
+        vertices[16*i+11] = coords.Ny;
+        vertices[16*i+12] = Px;
+        vertices[16*i+13] = Py;
+        vertices[16*i+14] = coords.Px;
+        vertices[16*i+15] = coords.Py;
+
+        unit *= 10;
+        base *= 10;
+        Px -= step;
+        Nx -= step;
+    }
+}
 
 /**
  * @brief Class for the mesh of all numbers used in the game.

@@ -85,24 +85,7 @@ inline void number::update_denom()
     if (intern_denom_ == 1000)
         intern_denom_ = 999;
 
-    const auto hundred = sampler_("number", intern_denom_ / 100);
-    const auto ten = sampler_("number", (intern_denom_ % 100) / 10);
-    const auto one = sampler_("number", intern_denom_ % 10);
-
-    denom_ = {
-        86 / 160.f - 1.f, 1.f - 206 / 120.f, hundred.Nx, hundred.Ny,
-        86 / 160.f - 1.f, 1.f - 196 / 120.f, hundred.Nx, hundred.Py,
-        93 / 160.f - 1.f, 1.f - 206 / 120.f, hundred.Px, hundred.Ny,
-        93 / 160.f - 1.f, 1.f - 196 / 120.f, hundred.Px, hundred.Py,
-        94 / 160.f - 1.f, 1.f - 206 / 120.f, ten.Nx, ten.Ny,
-        94 / 160.f - 1.f, 1.f - 196 / 120.f, ten.Nx, ten.Py,
-        101 / 160.f - 1.f, 1.f - 206 / 120.f, ten.Px, ten.Ny,
-        101 / 160.f - 1.f, 1.f - 196 / 120.f, ten.Px, ten.Py,
-        102 / 160.f - 1.f, 1.f - 206 / 120.f, one.Nx, one.Ny,
-        102 / 160.f - 1.f, 1.f - 196 / 120.f, one.Nx, one.Py,
-        109 / 160.f - 1.f, 1.f - 206 / 120.f, one.Px, one.Ny,
-        109 / 160.f - 1.f, 1.f - 196 / 120.f, one.Px, one.Py
-    };
+    update_number<3>(denom_, sampler_, intern_denom_, 109, 196);
 
     glBufferSubData(GL_ARRAY_BUFFER, sizeof(clk_vertices_), sizeof(denom_),
         denom_.data());
@@ -111,28 +94,7 @@ inline void number::update_denom()
 inline void number::update_numer()
 {
     intern_numer_ = level_;
-    n_ones_ = intern_numer_ % 10;
-    n_tens_ = (intern_numer_ >= 10) ? (intern_numer_ % 100) / 10 : 10;
-    n_hundreds_ = (intern_numer_ >= 100) ? intern_numer_ / 100 : 10;
-
-    const auto hundred = sampler_("number", n_hundreds_);
-    const auto ten = sampler_("number", n_tens_);
-    const auto one = sampler_("number", n_ones_);
-
-    numer_ = {
-        102 / 160.f - 1.f, 1.f - 190 / 120.f, one.Nx, one.Ny,
-        102 / 160.f - 1.f, 1.f - 180 / 120.f, one.Nx, one.Py,
-        109 / 160.f - 1.f, 1.f - 190 / 120.f, one.Px, one.Ny,
-        109 / 160.f - 1.f, 1.f - 180 / 120.f, one.Px, one.Py,
-        94 / 160.f - 1.f, 1.f - 190 / 120.f, ten.Nx, ten.Ny,
-        94 / 160.f - 1.f, 1.f - 180 / 120.f, ten.Nx, ten.Py,
-        101 / 160.f - 1.f, 1.f - 190 / 120.f, ten.Px, ten.Ny,
-        101 / 160.f - 1.f, 1.f - 180 / 120.f, ten.Px, ten.Py,
-        86 / 160.f - 1.f, 1.f - 190 / 120.f, hundred.Nx, hundred.Ny,
-        86 / 160.f - 1.f, 1.f - 180 / 120.f, hundred.Nx, hundred.Py,
-        93 / 160.f - 1.f, 1.f - 190 / 120.f, hundred.Px, hundred.Ny,
-        93 / 160.f - 1.f, 1.f - 180 / 120.f, hundred.Px, hundred.Py
-    };
+    update_number<3>(numer_, sampler_, intern_numer_, 109, 180);
 
     glBufferSubData(GL_ARRAY_BUFFER, sizeof(clk_vertices_) + sizeof(denom_),
         sizeof(numer_), numer_.data());
@@ -141,45 +103,8 @@ inline void number::update_numer()
 inline void number::update_score()
 {
     intern_score_ = score_;
-    const auto s0 = sampler_("number", intern_score_ % 10);
-    const auto s1 = sampler_("number",
-        (intern_score_ >= 10) ? (intern_score_ % 100) / 10 : 10);
-    const auto s2 = sampler_("number",
-        (intern_score_ >= 100) ? (intern_score_ % 1000) / 100 : 10);
-    const auto s3 = sampler_("number",
-        (intern_score_ >= 1000) ? (intern_score_ % 10000) / 1000 : 10);
-    const auto s4 = sampler_("number",
-        (intern_score_ >= 10000) ? (intern_score_ % 100000) / 10000 : 10);
-    const auto s5 = sampler_("number",
-        (intern_score_ >= 100000) ? (intern_score_ % 1000000) / 100000 : 10);
-
-    score_vertices_ = {
-        103 / 160.f - 1.f, 1.f - 155 / 120.f, s0.Nx, s0.Ny,
-        103 / 160.f - 1.f, 1.f - 145 / 120.f, s0.Nx, s0.Py,
-        110 / 160.f - 1.f, 1.f - 155 / 120.f, s0.Px, s0.Ny,
-        110 / 160.f - 1.f, 1.f - 145 / 120.f, s0.Px, s0.Py,
-        95 / 160.f - 1.f, 1.f - 155 / 120.f, s1.Nx, s1.Ny,
-        95 / 160.f - 1.f, 1.f - 145 / 120.f, s1.Nx, s1.Py,
-        102 / 160.f - 1.f, 1.f - 155 / 120.f, s1.Px, s1.Ny,
-        102 / 160.f - 1.f, 1.f - 145 / 120.f, s1.Px, s1.Py,
-        86 / 160.f - 1.f, 1.f - 155 / 120.f, s2.Nx, s2.Ny,
-        86 / 160.f - 1.f, 1.f - 145 / 120.f, s2.Nx, s2.Py,
-        93 / 160.f - 1.f, 1.f - 155 / 120.f, s2.Px, s2.Ny,
-        93 / 160.f - 1.f, 1.f - 145 / 120.f, s2.Px, s2.Py,
-        78 / 160.f - 1.f, 1.f - 155 / 120.f, s3.Nx, s3.Ny,
-        78 / 160.f - 1.f, 1.f - 145 / 120.f, s3.Nx, s3.Py,
-        85 / 160.f - 1.f, 1.f - 155 / 120.f, s3.Px, s3.Ny,
-        85 / 160.f - 1.f, 1.f - 145 / 120.f, s3.Px, s3.Py,
-        70 / 160.f - 1.f, 1.f - 155 / 120.f, s4.Nx, s4.Ny,
-        70 / 160.f - 1.f, 1.f - 145 / 120.f, s4.Nx, s4.Py,
-        77 / 160.f - 1.f, 1.f - 155 / 120.f, s4.Px, s4.Ny,
-        77 / 160.f - 1.f, 1.f - 145 / 120.f, s4.Px, s4.Py,
-        62 / 160.f - 1.f, 1.f - 155 / 120.f, s5.Nx, s5.Ny,
-        62 / 160.f - 1.f, 1.f - 145 / 120.f, s5.Nx, s5.Py,
-        69 / 160.f - 1.f, 1.f - 155 / 120.f, s5.Px, s5.Ny,
-        69 / 160.f - 1.f, 1.f - 145 / 120.f, s5.Px, s5.Py
-    };
-
+    update_number<6>(score_vertices_, sampler_, intern_score_, 110, 145);
+    
     glBufferSubData(GL_ARRAY_BUFFER,
         sizeof(clk_vertices_) + sizeof(denom_) + sizeof(numer_),
         sizeof(score_vertices_), score_vertices_.data());
@@ -188,40 +113,8 @@ inline void number::update_score()
 inline void number::update_grade()
 {
     intern_grade_ = grade_;
-    const auto num = GRADES[grade_];
-    const auto s0 = sampler_("number", 0);
-    const auto s1 = s0;
-    const auto s2 = sampler_("number", (num % 1000) / 100);
-    const auto s3 = sampler_("number", (num >= 1000) ? (num % 10000) / 1000 : 10);
-    const auto s4 = sampler_("number", (num >= 10000) ? (num % 100000) / 10000 : 10);
-    const auto s5 = sampler_("number", (num >= 100000) ? (num % 1000000) / 100000 : 10);
 
-    next_grade_vertices_ = {
-        103/160.f - 1.f, 1.f - 89/120.f, s0.Nx, s0.Ny,
-        103/160.f - 1.f, 1.f - 79/120.f, s0.Nx, s0.Py,
-        110/160.f - 1.f, 1.f - 89/120.f, s0.Px, s0.Ny,
-        110/160.f - 1.f, 1.f - 79/120.f, s0.Px, s0.Py,
-        95/160.f - 1.f, 1.f - 89/120.f, s1.Nx, s1.Ny,
-        95/160.f - 1.f, 1.f - 79/120.f, s1.Nx, s1.Py,
-        102/160.f - 1.f, 1.f - 89/120.f, s1.Px, s1.Ny,
-        102/160.f - 1.f, 1.f - 79/120.f, s1.Px, s1.Py,
-        86/160.f - 1.f, 1.f - 89/120.f, s2.Nx, s2.Ny,
-        86/160.f - 1.f, 1.f - 79/120.f, s2.Nx, s2.Py,
-        93/160.f - 1.f, 1.f - 89/120.f, s2.Px, s2.Ny,
-        93/160.f - 1.f, 1.f - 79/120.f, s2.Px, s2.Py,
-        78/160.f - 1.f, 1.f - 89/120.f, s3.Nx, s3.Ny,
-        78/160.f - 1.f, 1.f - 79/120.f, s3.Nx, s3.Py,
-        85/160.f - 1.f, 1.f - 89/120.f, s3.Px, s3.Ny,
-        85/160.f - 1.f, 1.f - 79/120.f, s3.Px, s3.Py,
-        70/160.f - 1.f, 1.f - 89/120.f, s4.Nx, s4.Ny,
-        70/160.f - 1.f, 1.f - 79/120.f, s4.Nx, s4.Py,
-        77/160.f - 1.f, 1.f - 89/120.f, s4.Px, s4.Ny,
-        77/160.f - 1.f, 1.f - 79/120.f, s4.Px, s4.Py,
-        62/160.f - 1.f, 1.f - 89/120.f, s5.Nx, s5.Ny,
-        62/160.f - 1.f, 1.f - 79/120.f, s5.Nx, s5.Py,
-        69/160.f - 1.f, 1.f - 89/120.f, s5.Px, s5.Ny,
-        69/160.f - 1.f, 1.f - 79/120.f, s5.Px, s5.Py
-    };
+    update_number<6>(next_grade_vertices_, sampler_, GRADES[intern_grade_], 110, 79);
 
     glBufferSubData(GL_ARRAY_BUFFER,
         sizeof(clk_vertices_) + sizeof(denom_) + sizeof(numer_) + sizeof(score_vertices_),
