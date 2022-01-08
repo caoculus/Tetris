@@ -108,10 +108,13 @@ private:
     quad_vertices<3> numer_, denom_;
 
     quad_vertices<6> score_vertices_, next_grade_vertices_;
+
+    quad_vertices<1> sprite_vertices_;
+    
     /**
      * @brief The indices for the 12 quads (for now) to draw.
      */
-    static constexpr quad_indices<24> INDICES {};
+    static constexpr quad_indices<25> INDICES {};
 
     /**
      * @brief Update the clock that is rendered on the screen.

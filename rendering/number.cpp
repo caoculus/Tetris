@@ -8,9 +8,10 @@ number::number(sampler &s, const game::level_counter &level,
     : mesh(s), level_(level), clk_(clk), score_(score), grade_(grade)
 {
     bind();
-    glBufferData(GL_ARRAY_BUFFER,
-        sizeof(clk_vertices_) + sizeof(numer_) + sizeof(denom_) +
-        sizeof(score_vertices_) + sizeof(next_grade_vertices_), nullptr, GL_DYNAMIC_DRAW);
+    constexpr auto const VBO_SIZE = sizeof(clk_vertices_) + sizeof(numer_) + sizeof(denom_) +
+        sizeof(score_vertices_) + sizeof(next_grade_vertices_) + sizeof(sprite_vertices_);
+
+    glBufferData(GL_ARRAY_BUFFER, VBO_SIZE, nullptr, GL_DYNAMIC_DRAW);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(INDICES), INDICES.data(),
         GL_STATIC_DRAW);
     set_vertex_layout();
@@ -115,10 +116,22 @@ inline void number::update_grade()
     intern_grade_ = grade_;
 
     update_number<6>(next_grade_vertices_, sampler_, GRADES[intern_grade_], 110, 79);
+    
+    auto const &sprite = sampler_("grade", intern_grade_);
 
-    glBufferSubData(GL_ARRAY_BUFFER,
-        sizeof(clk_vertices_) + sizeof(denom_) + sizeof(numer_) + sizeof(score_vertices_),
-        sizeof(next_grade_vertices_), next_grade_vertices_.data());
+    sprite_vertices_ = {
+        86 / 160.f - 1.f, 1.f - 58 / 120.f, sprite.Nx, sprite.Ny,
+        86 / 160.f - 1.f, 1.f - 35 / 120.f, sprite.Nx, sprite.Py,
+        110/ 160.f - 1.f, 1.f - 58 / 120.f, sprite.Px, sprite.Ny,
+        110/ 160.f - 1.f, 1.f - 35 / 120.f, sprite.Px, sprite.Py
+    };
+
+    constexpr auto const OFFSET = sizeof(clk_vertices_) + sizeof(denom_) + sizeof(numer_) + sizeof(score_vertices_);
+
+    glBufferSubData(GL_ARRAY_BUFFER, OFFSET, sizeof(next_grade_vertices_), next_grade_vertices_.data());
+    
+    glBufferSubData(GL_ARRAY_BUFFER, OFFSET + sizeof(next_grade_vertices_),
+        sizeof(sprite_vertices_), sprite_vertices_.data());
 }
 
 }
