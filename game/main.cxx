@@ -61,7 +61,7 @@ int main(int argc, char **argv)
     mesh::active active_piece(tex_atlas, game.active_piece(), game.level(),
         game.state(), game.frame_num());
     mesh::next next_piece(tex_atlas, game.next());
-    mesh::number numbers(tex_atlas, game.level(), game.clk());
+    mesh::number numbers(tex_atlas, game.level(), game.clk(), game.score(), game.grade());
     mesh::dim dim_board(tex_atlas, bkgd_dim);
 
     shader program;
@@ -106,8 +106,8 @@ int main(int argc, char **argv)
         next_piece.draw();
 
         program.uniform("transform", shader::I);
-        frame.draw();
         numbers.draw();
+        frame.draw();
 
         glfwSwapBuffers(window);
         glfwPollEvents();

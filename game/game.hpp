@@ -9,7 +9,6 @@ namespace game
 {
 class tetris
 {
-
 public:
     /**
      * @brief Create a new instance of the tetris game.
@@ -79,6 +78,18 @@ public:
     [[nodiscard]] constexpr const uint32_t &clk() const noexcept 
     { return clk_; }
 
+    /**
+     * @return a const reference to the current score.
+     */
+    [[nodiscard]] constexpr const uint32_t &score() const noexcept
+    { return score_; }
+    
+    /** 
+     * @return a const reference to the current grade.
+     */
+    [[nodiscard]] constexpr const uint8_t &grade() const noexcept
+    { return grade_; }
+
 private:
     /**
      * @brief Some of the main delays present in the TGM game.
@@ -112,6 +123,28 @@ private:
      */
     uint32_t clk_{0};
 
+    /**
+     * @brief The score.
+     */
+    uint32_t score_{0};
+    
+    /**
+     * @brief The combo. 
+     * @details Locking a piece without clearing lines resets Combo to 1. 
+     * Otherwise, the game updates Combo as follows, before calculating Score.
+     */
+    uint32_t combo_{1};
+
+    /**
+     * @brief The number of lines the current piece was soft dropped.
+     */
+    uint32_t dropped_{0};
+
+    /**
+     * @brief The internal grade value (from 0 to 18, with 18 being Grand Master).
+     */
+    uint8_t grade_{0};
+
     // TODO: comments
     uint8_t frame_num_{0};
     state_t state_{state_t::spawn};
@@ -119,7 +152,7 @@ private:
     bool line_clear_{false};
     bool update_board_{false};
     bool game_over_{false};
-
+    bool GM_possible{true};
     /**
      * @brief Update the state of the game during the delay between pieces.
      */

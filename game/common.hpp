@@ -76,6 +76,11 @@ enum class state_t : uint8_t
     clear   // line clear
 };
 
+constexpr std::array<int, 18> GRADES {
+    400, 800, 1400, 2000, 3500, 5500, 8000, 12000, 16000, 22000, 30000, 
+    40000, 52000, 66000, 82000, 100000, 120000, 999999
+};
+
 class inputs
 {
 public:
