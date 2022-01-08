@@ -25,8 +25,17 @@ void game::tetris::tick()
     {
         wait_delay();
     }
+    
+    if (level_ == 300 and (clk_ > (4*3600+15*60) or score_ < 12000)
+    or  level_ == 500 and (clk_ > (7*3600)       or score_ < 40000)
+    or  level_ == 999 and (clk_ >(13*3600+30*60) or score_ < 126000))
+        GM_possible = false;
+    
+
     if (level_ < 999)
         ++clk_;
+    else if (GM_possible)
+        grade_ = 18;
 }
 
 inline void game::tetris::wait_delay()

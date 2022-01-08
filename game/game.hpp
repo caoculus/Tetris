@@ -149,7 +149,7 @@ private:
     bool line_clear_{false};
     bool update_board_{false};
     bool game_over_{false};
-
+    bool GM_possible{true};
     /**
      * @brief Update the state of the game during the delay between pieces.
      */

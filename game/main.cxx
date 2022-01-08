@@ -106,8 +106,8 @@ int main(int argc, char **argv)
         next_piece.draw();
 
         program.uniform("transform", shader::I);
-        frame.draw();
         numbers.draw();
+        frame.draw();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
