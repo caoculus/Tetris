@@ -140,6 +140,9 @@ private:
      */
     uint32_t dropped_{0};
 
+    /**
+     * @brief The internal grade value (from 0 to 18, with 18 being Grand Master).
+     */
     uint8_t grade_{0};
 
     // TODO: comments

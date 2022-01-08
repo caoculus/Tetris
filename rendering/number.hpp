@@ -6,8 +6,29 @@
 
 namespace mesh
 {
+/**
+ * @brief Update the vertex buffer for rendering a particular number in the game.
+ * 
+ * @tparam DIGITS The maximum number of digits the number can have.
+ * @param vertices Reference to the vertex buffer to be updated.
+ * @param sampler The sampler to acquire the texture coordinates for the number 
+ * using the "number" query.
+ * @param number The number to be rendered.
+ * @param x_max The maximum x coordinate of the number (the right side of the
+ * ones digit) represented in emulator coordinates.
+ * @param y_min The minimum y coordinate of the number (the top of the digits)
+ * represented in emulator coordinates.
+ * @param spacing The space between digits in emulator coordinates. Defaults to
+ * 1 pixel.
+ * @param digit_width The width of a digit in emulator coordinates. Defaults to
+ * 7 pixels.
+ * @param digit_height The height of a digit in emulator coordinates. Defaults
+ * to 10 pixels.
+ * @param e_width The width of the emulator window. Defaults to 320 pixels. 
+ * @param e_height The height of the emulator window. Defaults to 240 pixels.
+ */
 template <std::size_t DIGITS>
-void update_number(quad_vertices<DIGITS> &vertices, const sampler &s, const int number, 
+void update_number(quad_vertices<DIGITS> &vertices, const sampler &sampler, const int number, 
                    int x_max, int y_min, 
                    int spacing=1, int digit_width=7, int digit_height=10, float e_width=320.f, float e_height=240.f)
 {
@@ -23,7 +44,7 @@ void update_number(quad_vertices<DIGITS> &vertices, const sampler &s, const int 
     for (std::size_t i = 0; i < DIGITS; ++i)
     {
         const bool leading_zero = number < unit and i;
-        const auto &coords = s("number", leading_zero ? 10 : (number % base / unit));
+        const auto &coords = sampler("number", leading_zero ? 10 : (number % base / unit));
         vertices[16*i+0] = Nx;
         vertices[16*i+1] = Ny;
         vertices[16*i+2] = coords.Nx;
@@ -107,12 +128,18 @@ private:
      */
     quad_vertices<3> numer_, denom_;
 
+    /**
+     * @brief The vertices for the 6 quads to draw the scores.
+     */
     quad_vertices<6> score_vertices_, next_grade_vertices_;
 
+    /**
+     * @brief The vertices for the sprite of the grade.
+     */
     quad_vertices<1> sprite_vertices_;
     
     /**
-     * @brief The indices for the 12 quads (for now) to draw.
+     * @brief The indices for the 25 quads (for now) to draw.
      */
     static constexpr quad_indices<25> INDICES {};
 
@@ -136,8 +163,17 @@ private:
      */
     void update_denom();
 
+    /**
+     * @brief Update the score that is rendered on the screen.
+     * @note This function should only be called when the score changes.
+     */
     void update_score();
 
+    /**
+     * @brief Update the grade that is rendered on the screen as well as the 
+     * number of points to the next grade.
+     * @note This function should only be called when the grade changes.
+     */
     void update_grade();
 };
 
