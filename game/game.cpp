@@ -25,8 +25,17 @@ void game::tetris::tick()
     {
         wait_delay();
     }
+    
+    if (level_ == 300 and (clk_ > (4*3600+15*60) or score_ < 12000)
+    or  level_ == 500 and (clk_ > (7*3600)       or score_ < 40000)
+    or  level_ == 999 and (clk_ >(13*3600+30*60) or score_ < 126000))
+        GM_possible = false;
+    
+
     if (level_ < 999)
         ++clk_;
+    else if (GM_possible)
+        grade_ = 18;
 }
 
 inline void game::tetris::wait_delay()
@@ -118,6 +127,9 @@ inline void game::tetris::spawn_piece()
     // tick piece and set state to active (frame_num_ is already 0)
     active_piece_.tick(spawn_g);
     state_ = state_t::active;
+
+    // reset the lines dropped
+    dropped_ = 0;
 }
 
 inline void game::tetris::move_piece()
@@ -130,12 +142,17 @@ inline void game::tetris::move_piece()
     active_piece_.rotate(rotation);
     active_piece_.translate(shift);
 
+    bool soft_drop = (shift == shift_t::down);
     // effective gravity
     uint16_t g = std::max(level_.g(),
-        static_cast<uint16_t>(128 * (shift == shift_t::down)));
+        static_cast<uint16_t>(128 * soft_drop));
+
+    // update the lines dropped if soft drop
+    dropped_ += soft_drop * g / 128;
 
     // update frame_num_
     auto tick_result = active_piece_.tick(g);
+
     if (static_cast<bool>(tick_result & locking_state::reset))
     {
         frame_num_ = 0;
@@ -187,5 +204,18 @@ inline void game::tetris::clear_lines()
         line_clear_ = true;
         level_ += num_cleared;
         update_board_ = true;
+    
+        combo_ += 2 * num_cleared - 2;
+
+        score_ += (dropped_ + (3 + level_ + num_cleared) / 4) * num_cleared * combo_;
+        
+        while (score_ > GRADES[grade_])
+        {
+            ++grade_;
+        }
+    }
+    else
+    {
+        combo_ = 1;
     }
 }

@@ -54,20 +54,20 @@ public:
     level_counter &operator+= (int n) noexcept;
 
     /**
-     * @brief get the gravity (as 128-ths of lines per frame) at the current
-     * level.
-     *
-     * @return the gravity value as an 16-bit integer.
+     * @return the gravity value at the current level (as 128-ths of lines per 
+     * frame) as an 16-bit integer.
      */
     [[nodiscard]] uint16_t g() const noexcept;
 
     /**
-     * @brief get the current level.
-     *
      * @return the current level.
      */
     operator int() const noexcept;
 
+    /** 
+     * @return The section the level is in. 
+     * @note There are a total of 10 sections. 
+     */
     [[nodiscard]] std::size_t section() const noexcept { return level_/100; }
 
 private:
