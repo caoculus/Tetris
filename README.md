@@ -32,6 +32,12 @@ If you want to build on windows, please use [WSL](https://docs.microsoft.com/en-
 
 ## Screenshots:
 
-![image](https://user-images.githubusercontent.com/71615343/148182568-b13dbca6-1521-476b-999c-12eba090119f.png)
+First 100 levels with default dimming during a line clear.
+![image](https://user-images.githubusercontent.com/71615343/148637532-5395e4f3-1ced-44ab-a327-fd666acb217d.png)
 
-![image](https://user-images.githubusercontent.com/71615343/148182964-f142f877-3d2c-4527-9ed7-04d50063b357.png)
+S1 with 0 dimming.
+![image](https://user-images.githubusercontent.com/71615343/148637474-0ea49e90-a686-44b8-a0fb-e652dd40835d.png)
+
+Death at S2 with full dimming (9)
+![image](https://user-images.githubusercontent.com/71615343/148637204-b8c2b68a-0e74-4282-b01d-fe1e7a63cd8e.png)
+
