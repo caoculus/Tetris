@@ -136,7 +136,8 @@ static GLFWwindow *init(float &proj_xx, float &proj_yy)
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OPENGL_VERSION);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OPENGL_SUBVERSION);
-
+    glfwWindowHint(GLFW_REFRESH_RATE, 60);
+    
     GLFWmonitor *primary_monitor = glfwGetPrimaryMonitor();
     const GLFWvidmode *mode = glfwGetVideoMode(primary_monitor);
 
