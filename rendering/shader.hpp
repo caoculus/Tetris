@@ -2,6 +2,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <array>
 
 using mat4 = std::array<float, 16>;
 

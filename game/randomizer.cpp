@@ -1,4 +1,5 @@
 #include "randomizer.hpp"
+#include <algorithm>
 
 game::randomizer::randomizer()
 {

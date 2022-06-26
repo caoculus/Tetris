@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sampler.hpp"
+#include <array>
 
 namespace mesh {
 
